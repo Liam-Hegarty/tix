@@ -9,12 +9,13 @@ export const SplashScreens = ({
   setSplashScreen: Dispatch<SetStateAction<string | undefined>>;
 }) => {
   useEffect(() => {
-    new Audio(`${process.env.PUBLIC_URL}/audio/cool.mp3`).play();
+    const coolSound = setTimeout(() => new Audio(`${process.env.PUBLIC_URL}/audio/cool.mp3`).play(), 500);
     const tix = setTimeout(() => setSplashScreen("tix"), 3000);
     const end = setTimeout(() => setSplashScreen(undefined), 6000);
     return () => {
       clearTimeout(tix);
       clearTimeout(end);
+      clearTimeout(coolSound);
     };
   }, [setSplashScreen]);
 
