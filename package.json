@@ -1,0 +1,84 @@
+{
+  "name": "tix",
+  "version": "0.0.1",
+  "homepage": "/tix",
+  "dependencies": {
+    "@pixi/app": "^7.2.4",
+    "@pixi/assets": "^7.2.4",
+    "@pixi/constants": "^7.2.4",
+    "@pixi/core": "^7.2.4",
+    "@pixi/display": "^7.2.4",
+    "@pixi/extensions": "^7.2.4",
+    "@pixi/graphics": "^7.2.4",
+    "@pixi/math": "^7.2.4",
+    "@pixi/mesh": "^7.2.4",
+    "@pixi/mesh-extras": "^7.2.4",
+    "@pixi/particle-container": "^7.2.4",
+    "@pixi/react": "^7.0.1",
+    "@pixi/sprite": "^7.2.4",
+    "@pixi/sprite-animated": "^7.2.4",
+    "@pixi/sprite-tiling": "^7.2.4",
+    "@pixi/text": "^7.2.4",
+    "@pixi/text-bitmap": "^7.2.4",
+    "@pixi/ticker": "^7.2.4",
+    "@pixi/utils": "^7.2.4",
+    "prop-types": "^15.8.1",
+    "react": "^18.0.2",
+    "react-dom": "^18.0.2"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "CI=false react-scripts build",
+    "test": "CI=true react-scripts test",
+    "lint": "eslint src --ext .tsx --fix --fix",
+    "format": "npx prettier src --write",
+    "fmt": "yarn format"
+  },
+  "eslintConfig": {
+    "parser": "@typescript-eslint/parser",
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ],
+    "ignorePatterns": [
+      "node_modules/**/*"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "@babel/core": "^7.0.0-0",
+    "@babel/plugin-syntax-flow": "^7.14.5",
+    "@babel/plugin-transform-react-jsx": "^7.14.9",
+    "@babel/runtime": "^7.14.8",
+    "@types/jest": "^27.4.0",
+    "@types/node": "^17.0.13",
+    "@types/pixi.js": "^5.0.0",
+    "@types/react": "^18.0.2",
+    "@types/react-dom": "^18.0.2",
+    "@typescript-eslint/eslint-plugin": "^5.23.0",
+    "@typescript-eslint/parser": "^5.23.0",
+    "eslint": "^8.15.0",
+    "eslint-config-airbnb": "^19.0.4",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-jsx-a11y": "^6.5.1",
+    "eslint-plugin-react": "^7.29.4",
+    "eslint-plugin-react-hooks": "^4.5.0",
+    "jest": "^27.0.0",
+    "jest-watch-typeahead": "^0.6.5",
+    "jest-watcher": "^27.4.2",
+    "prettier": "2.6.2",
+    "react-scripts": "5.0.0",
+    "typescript": "^4.5.5"
+  }
+}
