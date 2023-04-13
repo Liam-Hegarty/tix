@@ -4,6 +4,9 @@
   "homepage": "/tix",
   "license": "GPL-3.0",
   "dependencies": {
+    "@emotion/react": "^11.10.6",
+    "@emotion/styled": "^11.10.6",
+    "@mui/material": "^5.12.0",
     "@pixi/app": "^7.2.4",
     "@pixi/assets": "^7.2.4",
     "@pixi/constants": "^7.2.4",

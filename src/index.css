@@ -1,11 +1,16 @@
+@font-face {
+  font-family: "VCR";
+  src: url(fonts/VCR.ttf) format("truetype");
+  font-weight: bold;
+}
+
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
+  font-family: "VCR";
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: #282c34;
+  background-color: #111111;
+  color: white;
   overflow-x: hidden;
 }
 
@@ -19,4 +24,17 @@ body {
   justify-content: top;
   font-size: calc(10px + 2vmin);
   color: white;
+}
+
+.fade-in {
+  animation: fadeIn 1s;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }
