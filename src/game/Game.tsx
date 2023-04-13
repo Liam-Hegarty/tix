@@ -3,8 +3,10 @@ import React from "react";
 import palette from "../Palette";
 import { Stage } from "@pixi/react";
 import { Tix } from "./Tix";
+import { Ticker } from "./Ticker";
 
 export const Game = () => {
+
   return (
     <Box
       sx={{
@@ -25,6 +27,13 @@ export const Game = () => {
         options={{ backgroundAlpha: 1, backgroundColor: palette.lightBlue }}
       >
         <Tix />
+        <Ticker 
+          rhythm={[
+            { tock: false, time: 500 },
+            { tock: false, time: 500 },
+            { tock: false, time: 500 },
+            { tock: true, time: 500 },
+          ]} />
       </Stage>
     </Box>
   );
