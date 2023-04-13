@@ -9,13 +9,14 @@ export const SplashScreens = ({
   setSplashScreen: Dispatch<SetStateAction<string | undefined>>;
 }) => {
   useEffect(() => {
+    new Audio(`${process.env.PUBLIC_URL}/audio/cool.mp3`).play();
     const tix = setTimeout(() => setSplashScreen("tix"), 3000);
     const end = setTimeout(() => setSplashScreen(undefined), 6000);
     return () => {
       clearTimeout(tix);
       clearTimeout(end);
     };
-  });
+  }, [setSplashScreen]);
 
   switch (splashScreen) {
     case "cool":
@@ -51,7 +52,7 @@ export const SplashScreens = ({
             width: "100%",
             height: "100vh",
             flexDirection: "column",
-            fontSize: "50"
+            fontSize: "50",
           }}
         >
           TIX
