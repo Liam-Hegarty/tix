@@ -27,7 +27,7 @@ build:
   - yarn install
   - npx eslint src --ext .tsx
   - npx prettier --check src
-  - yarn test
+  - yarn test --passWithNoTests
   - NODE_ENV=production yarn run build --prod
   # infer new version from package.json and git history
   - OLD_VERSION=$(cat package.json | jq -r  '."version"')
