@@ -1,6 +1,8 @@
 import { Box } from "@mui/material";
 import React from "react";
 import palette from "../Palette";
+import { Stage } from "@pixi/react";
+import { Tix } from "./Tix";
 
 export const Game = () => {
   return (
@@ -17,7 +19,13 @@ export const Game = () => {
         color: "white",
       }}
     >
-      TIX
+      <Stage
+        width={window.innerWidth}
+        height={window.innerHeight}
+        options={{ backgroundAlpha: 1, backgroundColor: palette.lightBlue }}
+      >
+        <Tix />
+      </Stage>
     </Box>
   );
 };
