@@ -9,7 +9,7 @@ body {
   font-family: "VCR";
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: #111111;
+  background-color: white;
   color: white;
   overflow-x: hidden;
 }
@@ -36,5 +36,18 @@ body {
   }
   100% {
     opacity: 1;
+  }
+}
+
+.fade-out {
+  animation: fadeout 0.5s;
+}
+
+@keyframes fadeout {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
   }
 }
