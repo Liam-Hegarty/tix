@@ -12,9 +12,9 @@ function App() {
     case "menu":
       return <MainMenu {...{ setStage }} />;
     case "game":
-      return <Game />
+      return <Game />;
     default:
-      return <></>
+      return <></>;
   }
 }
 

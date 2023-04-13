@@ -2,12 +2,12 @@ import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { Box } from "@mui/material";
 
 export const SplashScreens = ({
-  setStage
+  setStage,
 }: {
   setStage: Dispatch<SetStateAction<string>>;
 }) => {
   const [className, setClassName] = useState("fade-in");
-  const [splash, setSplash] = useState("cool")
+  const [splash, setSplash] = useState("cool");
 
   useEffect(() => {
     const coolSound = setTimeout(

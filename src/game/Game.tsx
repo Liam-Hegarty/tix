@@ -20,4 +20,4 @@ export const Game = () => {
       TIX
     </Box>
   );
-}
+};
