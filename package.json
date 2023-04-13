@@ -2,6 +2,7 @@
   "name": "tix",
   "version": "0.0.1",
   "homepage": "/tix",
+  "license": "GPL-3.0",
   "dependencies": {
     "@pixi/app": "^7.2.4",
     "@pixi/assets": "^7.2.4",
