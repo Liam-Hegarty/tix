@@ -6,7 +6,6 @@ import { Tix } from "./Tix";
 import { Ticker } from "./Ticker";
 
 export const Game = () => {
-
   return (
     <Box
       sx={{
@@ -27,13 +26,14 @@ export const Game = () => {
         options={{ backgroundAlpha: 1, backgroundColor: palette.lightBlue }}
       >
         <Tix />
-        <Ticker 
+        <Ticker
           rhythm={[
             { tock: false, time: 500 },
             { tock: false, time: 500 },
             { tock: false, time: 500 },
             { tock: true, time: 500 },
-          ]} />
+          ]}
+        />
       </Stage>
     </Box>
   );

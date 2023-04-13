@@ -50,7 +50,6 @@ export const MainMenu = ({
 }: {
   setStage: Dispatch<SetStateAction<string>>;
 }) => {
-
   const [highlighted, setHighlighted] = useState<number>(0);
   const buttonRef = useRef(0);
   buttonRef.current = highlighted;
@@ -63,7 +62,6 @@ export const MainMenu = ({
   ];
 
   useEffect(() => {
-
     const handleKeyDown = (e: any) => {
       switch (e.key) {
         case "w":
