@@ -1,15 +1,18 @@
 import { Text } from "@pixi/react";
-import React, { useEffect } from "react";
+import React, { MutableRefObject, useEffect } from "react";
 
 export const Ticker = ({
   rhythm,
+  startTime
 }: {
   rhythm: Array<{ tock: boolean; time: number }>;
+  startTime: MutableRefObject<number>
 }) => {
   useEffect(() => {
     const timeouts: NodeJS.Timeout[] = [];
     const intervals: NodeJS.Timer[] = [];
     const loopLength = rhythm.map((b) => b.time).reduce((a, b) => a + b, 0);
+
     var loopTime = 0;
 
     rhythm.forEach((beat) => {
@@ -29,11 +32,13 @@ export const Ticker = ({
       loopTime += beat.time;
     });
 
+    startTime.current = performance.now()
+
     return () => {
       intervals.forEach((i) => clearInterval(i));
       timeouts.forEach((t) => clearTimeout(t));
     };
-  }, rhythm);
+  }, [rhythm]);
 
   return (
     <Text
