@@ -100,7 +100,7 @@ export const Game = () => {
       >
         <Grid level={level} spacing={spacing} offset={offset} />
         <Ticker rhythm={rhythm} startTime={startTime} />
-        <Tix {...{ moveIsAllowed, spacing, offset, start: level.start }} />
+        <Tix {...{ moveIsAllowed, spacing, offset, setOffset, start: level.start }} />
       </Stage>
     </Box>
   );

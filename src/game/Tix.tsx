@@ -1,16 +1,18 @@
 import { Sprite, useTick } from "@pixi/react";
-import React, { useEffect, useRef, useState } from "react";
+import React, { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
 import { TixEvent } from "./Events";
 
 export const Tix = ({
   moveIsAllowed,
   spacing,
   offset,
+  setOffset,
   start
 }: {
   moveIsAllowed: (e: TixEvent) => boolean;
   spacing: number;
   offset: {x: number, y: number};
+  setOffset: Dispatch<SetStateAction<{x: number, y: number}>>
   start: {x: number, y: number}
 }) => {
   const [tix, setTix] = useState({ new: start, old: start });
@@ -28,6 +30,11 @@ export const Tix = ({
       setAnim({
         x: offset.x + (tix.old.x + (tix.new.x - tix.old.x) * (diff / animTime)),
         y: offset.y + (tix.old.y + (tix.new.y - tix.old.y) * (diff / animTime)),
+      });
+    } else {
+      setAnim({
+        x: offset.x + tix.new.x,
+        y: offset.y + tix.new.y,
       });
     }
   });
