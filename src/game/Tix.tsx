@@ -5,15 +5,19 @@ import { TixEvent } from "./Events";
 export const Tix = ({
   moveIsAllowed,
   spacing,
+  offset,
+  start
 }: {
   moveIsAllowed: (e: TixEvent) => boolean;
   spacing: number;
+  offset: {x: number, y: number};
+  start: {x: number, y: number}
 }) => {
-  const [tix, setTix] = useState({ new: { x: 0, y: 0 }, old: { x: 0, y: 0 } });
+  const [tix, setTix] = useState({ new: start, old: start });
   const setNewTix = (newTix: { x: number; y: number }) => {
     setTix({ old: tix.new, new: newTix });
   };
-  const [anim, setAnim] = useState({ x: 0, y: 0 });
+  const [anim, setAnim] = useState({x: offset.x + (start.x * spacing), y: offset.y + (start.y * spacing)});
 
   const lastKeyPressTs = useRef(0);
 
@@ -22,8 +26,8 @@ export const Tix = ({
     const diff = performance.now() - lastKeyPressTs.current;
     if (diff < animTime) {
       setAnim({
-        x: tix.old.x + (tix.new.x - tix.old.x) * (diff / animTime),
-        y: tix.old.y + (tix.new.y - tix.old.y) * (diff / animTime),
+        x: offset.x + (tix.old.x + (tix.new.x - tix.old.x) * (diff / animTime)),
+        y: offset.y + (tix.old.y + (tix.new.y - tix.old.y) * (diff / animTime)),
       });
     }
   });
@@ -79,7 +83,7 @@ export const Tix = ({
       image={`${process.env.PUBLIC_URL}/sprite/robot.jpeg`}
       x={anim.x}
       y={anim.y}
-      anchor={{ x: 0.5, y: 0.5 }}
+      anchor={{ x: 0.5, y: 1 }}
       scale={{ x: 0.1, y: 0.1 }}
     />
   );

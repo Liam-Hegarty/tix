@@ -54,6 +54,12 @@ export const Game = () => {
     width: window.innerWidth,
     height: window.innerHeight,
   });
+  const [offset, setOffset] = useState(
+    {
+      x: (width / 2) - level.start.x * spacing,
+      y: (height / 2) - level.start.y * spacing
+    }
+  )
 
   useEffect(() => {
     const resize = (ev: UIEvent) => {
@@ -92,9 +98,9 @@ export const Game = () => {
         height={height}
         options={{ backgroundAlpha: 1, backgroundColor: palette.lightBlue }}
       >
+        <Grid level={level} spacing={spacing} offset={offset} />
         <Ticker rhythm={rhythm} startTime={startTime} />
-        <Tix {...{ moveIsAllowed, spacing }} />
-        <Grid level={level} spacing={spacing} />
+        <Tix {...{ moveIsAllowed, spacing, offset, start: level.start }} />
       </Stage>
     </Box>
   );
