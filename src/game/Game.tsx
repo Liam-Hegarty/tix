@@ -1,5 +1,5 @@
 import { Box } from "@mui/material";
-import React, { useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import palette from "../Palette";
 import { Stage } from "@pixi/react";
 import { Tix } from "./Tix";
@@ -46,6 +46,21 @@ export const Game = () => {
     return distanceFromBeat < tolerance;
   };
 
+  const [{width, height}, setScreenDimensions] = useState({width: window.innerWidth, height: window.innerHeight})
+
+  useEffect(() => {
+    const resize = (ev: UIEvent) => {
+      if (ev.view) {
+        setScreenDimensions({width: ev.view.innerWidth, height: ev.view?.innerHeight});
+      }
+      else {
+        setScreenDimensions({width: window.innerWidth, height: window.innerHeight});
+      }
+    };
+    window.addEventListener("resize", resize);
+    return () => window.removeEventListener("resize", resize);
+  })
+
   return (
     <Box
       sx={{
@@ -61,8 +76,8 @@ export const Game = () => {
       }}
     >
       <Stage
-        width={window.innerWidth}
-        height={window.innerHeight}
+        width={width}
+        height={height}
         options={{ backgroundAlpha: 1, backgroundColor: palette.lightBlue }}
       >
         <Tix {...{ moveIsAllowed }} />
