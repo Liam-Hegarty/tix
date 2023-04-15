@@ -26,13 +26,10 @@ export const Grid = ({ level, spacing, offset }: { level: Level; spacing: number
   return (
     <>
       {level.grid.map((row, y) =>
-        row.map((point, x) => {
-          if (point) {
-            return (
-              <GraphicsElement key={`grid-point-${x}-${y}`} draw={dot(x, y)} />
-            );
-          }
-        })
+        row.filter(p => p).map((point, x) => 
+          point &&
+            <GraphicsElement key={`grid-point-${x}-${y}`} draw={dot(x, y)} />
+        )
       )}
     </>
   );

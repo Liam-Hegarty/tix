@@ -1,5 +1,4 @@
 import { Level } from "./Level";
-import fs from "fs";
 
 export const parseGrid = (raw: string): Level => {
   const lines = raw.split("\n").filter((l) => l && !l.includes("//"));
