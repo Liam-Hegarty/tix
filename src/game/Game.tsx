@@ -5,7 +5,6 @@ import { Stage } from "@pixi/react";
 import { Tix } from "./Tix";
 import { Ticker } from "./Ticker";
 import { TixEvent } from "./Events";
-import { time } from "console";
 
 type Beat = { tock: boolean; time: number };
 type Rhythm = Beat[];
