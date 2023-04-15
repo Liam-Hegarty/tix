@@ -21,7 +21,8 @@ export const MainMenu = ({
   const buttons = [
     { text: "Start Game", action: () => setStage("game") },
     { text: "Load Game", action: () => {} },
-    { text: "Options Game", action: () => {} },
+    { text: "Credits", action: () => setStage("credits") },
+    { text: "Options", action: () => {} },
     { text: "Exit", action: () => window.close() },
   ];
 
@@ -69,7 +70,7 @@ export const MainMenu = ({
       >
         Tix
       </Box>
-      <Menu {...{buttons, highlighted, setHighlighted}} />
+      <Menu {...{ buttons, highlighted, setHighlighted }} />
     </Box>
   );
 };
