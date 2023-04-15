@@ -45,20 +45,28 @@ export const Game = () => {
     return distanceFromBeat < tolerance;
   };
 
-  const [{width, height}, setScreenDimensions] = useState({width: window.innerWidth, height: window.innerHeight})
+  const [{ width, height }, setScreenDimensions] = useState({
+    width: window.innerWidth,
+    height: window.innerHeight,
+  });
 
   useEffect(() => {
     const resize = (ev: UIEvent) => {
       if (ev.view) {
-        setScreenDimensions({width: ev.view.innerWidth, height: ev.view?.innerHeight});
-      }
-      else {
-        setScreenDimensions({width: window.innerWidth, height: window.innerHeight});
+        setScreenDimensions({
+          width: ev.view.innerWidth,
+          height: ev.view?.innerHeight,
+        });
+      } else {
+        setScreenDimensions({
+          width: window.innerWidth,
+          height: window.innerHeight,
+        });
       }
     };
     window.addEventListener("resize", resize);
     return () => window.removeEventListener("resize", resize);
-  })
+  });
 
   return (
     <Box
