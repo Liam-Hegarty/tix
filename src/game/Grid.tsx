@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React from "react";
 import { Level } from "./levels/Level";
 import { Graphics as GraphicsElement } from "@pixi/react";
 import { Graphics } from "@pixi/graphics";
@@ -8,8 +8,19 @@ export const Grid = ({ level, spacing }: { level: Level; spacing: number }) => {
     g.clear();
     g.beginFill(0x000000);
     g.lineStyle();
-    g.drawCircle(x, y, 2);
+    g.drawCircle(x * spacing, y * spacing, 4);
     g.endFill();
+    console.log(x, y);
+    if (level.grid[y + 1] && level.grid[y + 1][x]) {
+      g.lineStyle(2, 0x000000, 1);
+      g.moveTo(x * spacing, y * spacing);
+      g.lineTo(x * spacing, (y + 1) * spacing);
+    }
+    if (level.grid[y][x + 1]) {
+      g.lineStyle(2, 0x000000, 1);
+      g.moveTo(x * spacing, y * spacing);
+      g.lineTo((x + 1) * spacing, y * spacing);
+    }
   };
 
   return (
@@ -18,10 +29,7 @@ export const Grid = ({ level, spacing }: { level: Level; spacing: number }) => {
         row.map((point, x) => {
           if (point) {
             return (
-              <GraphicsElement
-                key={`grid-point-${x}-${y}`}
-                draw={dot(x * spacing, y * spacing)}
-              />
+              <GraphicsElement key={`grid-point-${x}-${y}`} draw={dot(x, y)} />
             );
           }
         })
