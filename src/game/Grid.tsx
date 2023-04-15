@@ -26,7 +26,7 @@ export const Grid = ({ level, spacing, offset }: { level: Level; spacing: number
   return (
     <>
       {level.grid.map((row, y) =>
-        row.filter(p => p).map((point, x) => 
+        row.map((point, x) => 
           point &&
             <GraphicsElement key={`grid-point-${x}-${y}`} draw={dot(x, y)} />
         )
