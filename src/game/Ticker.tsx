@@ -3,10 +3,10 @@ import React, { MutableRefObject, useEffect } from "react";
 
 export const Ticker = ({
   rhythm,
-  startTime
+  startTime,
 }: {
   rhythm: Array<{ tock: boolean; time: number }>;
-  startTime: MutableRefObject<number>
+  startTime: MutableRefObject<number>;
 }) => {
   useEffect(() => {
     const timeouts: NodeJS.Timeout[] = [];
@@ -32,7 +32,7 @@ export const Ticker = ({
       loopTime += beat.time;
     });
 
-    startTime.current = performance.now()
+    startTime.current = performance.now();
 
     return () => {
       intervals.forEach((i) => clearInterval(i));

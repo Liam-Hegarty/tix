@@ -2,9 +2,11 @@ import { Sprite, useTick } from "@pixi/react";
 import React, { useEffect, useRef, useState } from "react";
 import { TixEvent } from "./Events";
 
-export const Tix = (
-  { moveIsAllowed } : { moveIsAllowed: (e: TixEvent) => boolean }
-) => {
+export const Tix = ({
+  moveIsAllowed,
+}: {
+  moveIsAllowed: (e: TixEvent) => boolean;
+}) => {
   const [tix, setTix] = useState({ new: { x: 0, y: 0 }, old: { x: 0, y: 0 } });
   const setNewTix = (newTix: { x: number; y: number }) => {
     setTix({ old: tix.new, new: newTix });
@@ -36,11 +38,11 @@ export const Tix = (
     const moveEvent = {
       action: false,
       location: tix.new,
-      ts: performance.now()
-    }
+      ts: performance.now(),
+    };
 
     if (!moveIsAllowed(moveEvent)) {
-      return
+      return;
     }
 
     switch (e.key) {
