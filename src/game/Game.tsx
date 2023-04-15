@@ -5,6 +5,8 @@ import { Stage } from "@pixi/react";
 import { Tix } from "./Tix";
 import { Ticker } from "./Ticker";
 import { TixEvent } from "./Events";
+import { levelOne } from "./levels/LevelOne";
+import { Grid } from "./Grid";
 
 type Beat = { tock: boolean; time: number };
 type Rhythm = Beat[];
@@ -15,7 +17,10 @@ const sumRhythmTimes = (rhythm: Rhythm) =>
 export const Game = () => {
   const startTime = useRef<number>(-10000);
 
+  const level = levelOne;
+
   const tolerance = 100;
+  const spacing = 100;
 
   const rhythm = [
     { tock: false, time: 400 },
@@ -87,8 +92,9 @@ export const Game = () => {
         height={height}
         options={{ backgroundAlpha: 1, backgroundColor: palette.lightBlue }}
       >
-        <Tix {...{ moveIsAllowed }} />
         <Ticker rhythm={rhythm} startTime={startTime} />
+        <Tix {...{ moveIsAllowed, spacing }} />
+        <Grid level={level} spacing={spacing} />
       </Stage>
     </Box>
   );

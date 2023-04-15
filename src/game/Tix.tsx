@@ -4,8 +4,10 @@ import { TixEvent } from "./Events";
 
 export const Tix = ({
   moveIsAllowed,
+  spacing,
 }: {
   moveIsAllowed: (e: TixEvent) => boolean;
+  spacing: number;
 }) => {
   const [tix, setTix] = useState({ new: { x: 0, y: 0 }, old: { x: 0, y: 0 } });
   const setNewTix = (newTix: { x: number; y: number }) => {
@@ -33,8 +35,6 @@ export const Tix = ({
       return;
     }
 
-    const speed = 50;
-
     const moveEvent = {
       action: false,
       location: tix.new,
@@ -48,22 +48,22 @@ export const Tix = ({
     switch (e.key) {
       case "w":
       case "ArrowUp":
-        setNewTix({ x: tix.new.x, y: tix.new.y - speed });
+        setNewTix({ x: tix.new.x, y: tix.new.y - spacing });
         lastKeyPressTs.current = e.timeStamp;
         break;
       case "a":
       case "ArrowLeft":
-        setNewTix({ x: tix.new.x - speed, y: tix.new.y });
+        setNewTix({ x: tix.new.x - spacing, y: tix.new.y });
         lastKeyPressTs.current = e.timeStamp;
         break;
       case "s":
       case "ArrowDown":
-        setNewTix({ x: tix.new.x, y: tix.new.y + speed });
+        setNewTix({ x: tix.new.x, y: tix.new.y + spacing });
         lastKeyPressTs.current = e.timeStamp;
         break;
       case "d":
       case "ArrowRight":
-        setNewTix({ x: tix.new.x + speed, y: tix.new.y });
+        setNewTix({ x: tix.new.x + spacing, y: tix.new.y });
         lastKeyPressTs.current = e.timeStamp;
         break;
     }
