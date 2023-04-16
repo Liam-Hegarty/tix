@@ -31,11 +31,19 @@ export const Robot = ({
     x: offset.x + start.x * spacing,
     y: offset.y + start.y * spacing,
   });
+  const crashPenalty = 1000;
+  const [isCrashed, setIsCrashed] = useState(false);
 
-  const lastMoveTs = useRef(0);
+  const lastMoveTs = useRef(-100000);
+  const lastCrashTs = useRef(-100000);
 
   useTick((delta) => {
     const panSpeed = 3 * delta;
+    const now = performance.now();
+
+    if (isCrashed && now > lastCrashTs.current + crashPenalty) {
+      setIsCrashed(false);
+    }
 
     if (anim.x > window.innerWidth * 0.75) {
       setOffset({ x: offset.x - panSpeed, y: offset.y });
@@ -51,7 +59,7 @@ export const Robot = ({
     }
 
     const animTime = 100;
-    const diff = performance.now() - lastMoveTs.current;
+    const diff = now - lastMoveTs.current;
     if (diff < animTime) {
       const animProgress = diff / animTime;
       const deltaX = tix.new.x - tix.old.x;
@@ -69,7 +77,7 @@ export const Robot = ({
   });
 
   const handleMovement = (e: any) => {
-    if (e.repeat || paused) {
+    if (e.repeat || paused || isCrashed) {
       return;
     }
 
@@ -104,6 +112,9 @@ export const Robot = ({
       if (moveIsAllowed(moveEvent)) {
         setNewTix(newTix);
         lastMoveTs.current = moveEvent.ts;
+      } else {
+        lastCrashTs.current = moveEvent.ts;
+        setIsCrashed(true);
       }
     }
   };
@@ -115,7 +126,9 @@ export const Robot = ({
 
   return (
     <Sprite
-      image={`${process.env.PUBLIC_URL}/sprite/robot.png`}
+      image={`${process.env.PUBLIC_URL}/sprite/${
+        isCrashed ? "bad-robot.png" : "robot.png"
+      }`}
       x={anim.x}
       y={anim.y}
       anchor={{ x: 0.5, y: 1 }}
