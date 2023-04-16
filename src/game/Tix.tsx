@@ -1,5 +1,11 @@
 import { Sprite, useTick } from "@pixi/react";
-import React, { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
+import React, {
+  Dispatch,
+  SetStateAction,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { TixEvent } from "./Events";
 
 export const Tix = ({
@@ -7,19 +13,24 @@ export const Tix = ({
   spacing,
   offset,
   setOffset,
-  start
+  start,
+  paused
 }: {
   moveIsAllowed: (e: TixEvent) => boolean;
   spacing: number;
-  offset: {x: number, y: number};
-  setOffset: Dispatch<SetStateAction<{x: number, y: number}>>
-  start: {x: number, y: number}
+  offset: { x: number; y: number };
+  setOffset: Dispatch<SetStateAction<{ x: number; y: number }>>;
+  start: { x: number; y: number };
+  paused: boolean;
 }) => {
   const [tix, setTix] = useState({ new: start, old: start });
   const setNewTix = (newTix: { x: number; y: number }) => {
     setTix({ old: tix.new, new: newTix });
   };
-  const [anim, setAnim] = useState({x: offset.x + (start.x * spacing), y: offset.y + (start.y * spacing)});
+  const [anim, setAnim] = useState({
+    x: offset.x + start.x * spacing,
+    y: offset.y + start.y * spacing,
+  });
 
   const lastKeyPressTs = useRef(0);
 
@@ -40,9 +51,8 @@ export const Tix = ({
   });
 
   const handleMovement = (e: any) => {
-    console.log(e.timeStamp);
 
-    if (e.repeat) {
+    if (e.repeat || paused) {
       return;
     }
 
