@@ -8,7 +8,7 @@ import React, {
 } from "react";
 import { TixEvent } from "./Events";
 
-export const Tix = ({
+export const Robot = ({
   moveIsAllowed,
   spacing,
   offset,

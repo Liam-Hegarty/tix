@@ -8,7 +8,7 @@ import React, {
 } from "react";
 import palette from "../Palette";
 import { Stage } from "@pixi/react";
-import { Tix } from "./Tix";
+import { Robot } from "./Robot";
 import { Ticker } from "./Ticker";
 import { TixEvent } from "./Events";
 import { levelOne } from "./levels/LevelOne";
@@ -129,7 +129,7 @@ export const Game = ({
       >
         <Grid level={level} spacing={spacing} offset={offset} />
         <Ticker rhythm={rhythm} startTime={startTime} />
-        <Tix
+        <Robot
           {...{
             moveIsAllowed,
             spacing,
