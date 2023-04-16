@@ -14,7 +14,6 @@ export const Grid = ({
   spacing: number;
   offset: { x: number; y: number };
 }) => {
-
   const dot = (x: number, y: number) => (g: Graphics) => {
     g.clear();
 
@@ -49,11 +48,11 @@ export const Grid = ({
   };
 
   const tile = (x: number, y: number, isTile: boolean) => (g: Graphics) => {
-    g.clear()
+    g.clear();
 
-    const borderColor = isTile ? 0xAAAAAA : 0x000000
-    const fillColor = isTile ? palette.lightBlue : 0x000000
-    
+    const borderColor = isTile ? 0xaaaaaa : 0x000000;
+    const fillColor = isTile ? palette.lightBlue : 0x000000;
+
     g.lineStyle(1, borderColor, 1);
     g.beginFill(fillColor);
     g.drawRect(
@@ -63,16 +62,17 @@ export const Grid = ({
       spacing
     );
     g.endFill();
-
-  }
+  };
 
   return (
     <>
       {level.grid.map((row, y) =>
-        row.map(
-          (point, x) =>
-            <GraphicsElement key={`grid-tile-${x}-${y}`} draw={tile(x, y, point)} />
-        )
+        row.map((point, x) => (
+          <GraphicsElement
+            key={`grid-tile-${x}-${y}`}
+            draw={tile(x, y, point)}
+          />
+        ))
       )}
       {level.grid.map((row, y) =>
         row.map(
