@@ -1,6 +1,6 @@
 import React, { Dispatch, SetStateAction } from "react";
 import { Box } from "@mui/material";
-import colors from "../palette";
+import { mui as palette } from "../palette";
 import { Menu } from "./Menu";
 
 export const MainMenu = ({
@@ -22,10 +22,10 @@ export const MainMenu = ({
         justifyContent: "center",
         alignItems: "center",
         display: "flex",
-        width: "100%",
+        width: "100vw",
         height: "100vh",
         flexDirection: "column",
-        color: colors.darkBlue,
+        color: palette.darkBlue,
       }}
     >
       <Box

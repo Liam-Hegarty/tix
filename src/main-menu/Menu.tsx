@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import colors from "../palette";
+import { mui as colors } from "../palette";
 import { Box } from "@mui/material";
 
 const Button = ({

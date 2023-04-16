@@ -38,7 +38,7 @@ export const Grid = ({
     g.clear();
 
     const borderColor = isTile ? 0xaaaaaa : colors.black;
-    const fillColor = isTile ? colors.lightBlue : colors.white;
+    const fillColor = isTile ? colors.lightBlue : colors.black;
 
     g.lineStyle(1, borderColor, 1);
     g.beginFill(fillColor);
