@@ -39,13 +39,13 @@ export const Robot = ({
     const diff = performance.now() - lastKeyPressTs.current;
     if (diff < animTime) {
       setAnim({
-        x: offset.x + (tix.old.x + (tix.new.x - tix.old.x) * (diff / animTime)),
-        y: offset.y + (tix.old.y + (tix.new.y - tix.old.y) * (diff / animTime)),
+        x: offset.x + (spacing * (tix.old.x + ((tix.new.x - tix.old.x) * (diff / animTime)))),
+        y: offset.y + (spacing * (tix.old.y + ((tix.new.y - tix.old.y) * (diff / animTime)))),
       });
     } else {
       setAnim({
-        x: offset.x + tix.new.x,
-        y: offset.y + tix.new.y,
+        x: offset.x + (tix.new.x * spacing),
+        y: offset.y + (tix.new.y * spacing),
       });
     }
   });
@@ -68,22 +68,22 @@ export const Robot = ({
     switch (e.key) {
       case "w":
       case "ArrowUp":
-        setNewTix({ x: tix.new.x, y: tix.new.y - spacing });
+        setNewTix({ x: tix.new.x, y: tix.new.y - 1 });
         lastKeyPressTs.current = e.timeStamp;
         break;
       case "a":
       case "ArrowLeft":
-        setNewTix({ x: tix.new.x - spacing, y: tix.new.y });
+        setNewTix({ x: tix.new.x - 1, y: tix.new.y });
         lastKeyPressTs.current = e.timeStamp;
         break;
       case "s":
       case "ArrowDown":
-        setNewTix({ x: tix.new.x, y: tix.new.y + spacing });
+        setNewTix({ x: tix.new.x, y: tix.new.y + 1 });
         lastKeyPressTs.current = e.timeStamp;
         break;
       case "d":
       case "ArrowRight":
-        setNewTix({ x: tix.new.x + spacing, y: tix.new.y });
+        setNewTix({ x: tix.new.x + 1, y: tix.new.y });
         lastKeyPressTs.current = e.timeStamp;
         break;
     }
