@@ -73,37 +73,38 @@ export const Robot = ({
       return;
     }
 
-    const moveEvent = {
-      action: false,
-      location: tix.new,
-      ts: performance.now(),
-    };
-
-    if (!moveIsAllowed(moveEvent)) {
-      return;
-    }
+    var newTix;
 
     switch (e.key) {
       case "w":
       case "ArrowUp":
-        setNewTix({ x: tix.new.x, y: tix.new.y - 1 });
-        lastKeyPressTs.current = e.timeStamp;
+        newTix = { x: tix.new.x, y: tix.new.y - 1 };
         break;
       case "a":
       case "ArrowLeft":
-        setNewTix({ x: tix.new.x - 1, y: tix.new.y });
-        lastKeyPressTs.current = e.timeStamp;
+        newTix = { x: tix.new.x - 1, y: tix.new.y };
         break;
       case "s":
       case "ArrowDown":
-        setNewTix({ x: tix.new.x, y: tix.new.y + 1 });
-        lastKeyPressTs.current = e.timeStamp;
+        newTix = { x: tix.new.x, y: tix.new.y + 1 };
         break;
       case "d":
       case "ArrowRight":
-        setNewTix({ x: tix.new.x + 1, y: tix.new.y });
-        lastKeyPressTs.current = e.timeStamp;
+        newTix = { x: tix.new.x + 1, y: tix.new.y };
         break;
+    }
+
+    if (newTix) {
+      const moveEvent: TixEvent = {
+        action: false,
+        location: newTix,
+        ts: e.timeStamp,
+      };
+
+      if (moveIsAllowed(moveEvent)) {
+        setNewTix(newTix);
+        lastKeyPressTs.current = moveEvent.ts;
+      }
     }
   };
 

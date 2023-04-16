@@ -40,7 +40,7 @@ export const Game = ({
     { tock: true, time: 400 },
   ];
 
-  const moveIsAllowed = (e: TixEvent) => {
+  const moveIsOnTempo = (e: TixEvent) => {
     const dividend = (e.ts - startTime.current) % sumRhythmTimes(rhythm);
     const times = rhythm.map((b, i) => {
       return { tock: b.tock, time: sumRhythmTimes(rhythm.slice(0, i)) };
@@ -59,6 +59,14 @@ export const Game = ({
       nextBeat.time - dividend
     );
     return distanceFromBeat < tolerance;
+  };
+
+  const moveIsOnGrid = (e: TixEvent) => {
+    try {
+      return !!level.grid[e.location.y][e.location.x];
+    } catch (e: any) {
+      return false;
+    }
   };
 
   const [{ width, height }, setScreenDimensions] = useState({
@@ -131,7 +139,7 @@ export const Game = ({
         <Ticker rhythm={rhythm} startTime={startTime} />
         <Robot
           {...{
-            moveIsAllowed,
+            moveIsAllowed: (e) => moveIsOnTempo(e) && moveIsOnGrid(e),
             spacing,
             offset,
             setOffset,
