@@ -3,6 +3,7 @@ import { Level } from "./levels/Level";
 import { Graphics as GraphicsElement } from "@pixi/react";
 import { Graphics } from "@pixi/graphics";
 import colors from "../Palette";
+import palette from "../Palette";
 
 export const Grid = ({
   level,
@@ -13,8 +14,34 @@ export const Grid = ({
   spacing: number;
   offset: { x: number; y: number };
 }) => {
+
+  const floorMarks = (g: Graphics, x: number, y: number) => {
+
+    const pixelWidth = 3
+
+    var varX = x
+    var varY = y
+    g.beginFill(palette.darkBlue)
+
+    for (let i = 0; i < 15; i ++) {
+      g.drawRect(varX, varY, pixelWidth, pixelWidth)
+
+      varX += pixelWidth
+      varY -= pixelWidth
+
+    }
+    g.endFill()
+  }
+
   const dot = (x: number, y: number) => (g: Graphics) => {
     g.clear();
+
+    [{x: 10, y:10}, {x: 55, y: -15}, {x: -100, y: -50}].map(c => floorMarks(
+      g,
+      offset.x + (x * spacing) + c.x,
+      offset.y + (y * spacing) + c.y
+    ))
+
     if (level.grid[y + 1] && level.grid[y + 1][x]) {
       g.lineStyle(2, 0x000000, 1);
       g.moveTo(offset.x + x * spacing, offset.y + y * spacing);
@@ -41,6 +68,7 @@ export const Grid = ({
     g.beginFill(0x000000);
     g.drawCircle(offset.x + x * spacing, offset.y + y * spacing, 5);
     g.endFill();
+
   };
 
   return (
