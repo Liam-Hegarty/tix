@@ -32,7 +32,7 @@ export const Robot = ({
     y: offset.y + start.y * spacing,
   });
 
-  const lastKeyPressTs = useRef(0);
+  const lastMoveTs = useRef(0);
 
   useTick((delta) => {
     const panSpeed = 3 * delta;
@@ -51,7 +51,7 @@ export const Robot = ({
     }
 
     const animTime = 100;
-    const diff = performance.now() - lastKeyPressTs.current;
+    const diff = performance.now() - lastMoveTs.current;
     if (diff < animTime) {
       const animProgress = diff / animTime;
       const deltaX = tix.new.x - tix.old.x;
@@ -103,7 +103,7 @@ export const Robot = ({
 
       if (moveIsAllowed(moveEvent)) {
         setNewTix(newTix);
-        lastKeyPressTs.current = moveEvent.ts;
+        lastMoveTs.current = moveEvent.ts;
       }
     }
   };
@@ -115,7 +115,7 @@ export const Robot = ({
 
   return (
     <Sprite
-      image={`${process.env.PUBLIC_URL}/sprite/robot.jpeg`}
+      image={`${process.env.PUBLIC_URL}/sprite/robot.png`}
       x={anim.x}
       y={anim.y}
       anchor={{ x: 0.5, y: 1 }}
