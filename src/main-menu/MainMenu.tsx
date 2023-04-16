@@ -1,10 +1,4 @@
-import React, {
-  Dispatch,
-  SetStateAction,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import React, { Dispatch, SetStateAction } from "react";
 import { Box } from "@mui/material";
 import colors from "../Palette";
 import { Menu } from "./Menu";

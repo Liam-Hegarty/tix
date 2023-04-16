@@ -14,7 +14,7 @@ export const Credits = ({ exit }: { exit: () => void }) => {
       document.removeEventListener("keydown", handleKeyDown);
       document.removeEventListener("mousedown", handleKeyDown);
     };
-  }, []);
+  }, [exit]);
 
   return (
     <Box

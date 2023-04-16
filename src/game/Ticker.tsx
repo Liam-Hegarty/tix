@@ -38,7 +38,7 @@ export const Ticker = ({
       intervals.forEach((i) => clearInterval(i));
       timeouts.forEach((t) => clearTimeout(t));
     };
-  }, [rhythm]);
+  }, [rhythm, startTime]);
 
   return (
     <Text

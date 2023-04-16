@@ -1,10 +1,4 @@
-import React, {
-  Dispatch,
-  SetStateAction,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import React, { useEffect, useRef, useState } from "react";
 import colors from "../Palette";
 import { Box } from "@mui/material";
 
@@ -76,7 +70,7 @@ export const Menu = ({
 
     document.addEventListener("keydown", handleKeyDown);
     return () => document.removeEventListener("keydown", handleKeyDown);
-  }, [buttonRef, setHighlighted]);
+  }, [buttonRef, setHighlighted, buttons]);
 
   return (
     <>
