@@ -9,34 +9,26 @@ export const Ticker = ({
   startTime: MutableRefObject<number>;
 }) => {
   useEffect(() => {
-    const timeouts: NodeJS.Timeout[] = [];
-    const intervals: NodeJS.Timer[] = [];
-    const loopLength = rhythm.map((b) => b.time).reduce((a, b) => a + b, 0);
+    const audio = new Audio(`${process.env.PUBLIC_URL}/audio/4-4.mp3`);
 
-    var loopTime = 0;
+    try {
+      audio.loop = true;
 
-    rhythm.forEach((beat) => {
-      timeouts.push(
-        setTimeout(() => {
-          intervals.push(
-            setInterval(() => {
-              if (beat.tock) {
-                new Audio(`${process.env.PUBLIC_URL}/audio/tock.mp3`).play();
-              } else {
-                new Audio(`${process.env.PUBLIC_URL}/audio/tick.mp3`).play();
-              }
-            }, loopLength)
-          );
-        }, loopTime)
-      );
-      loopTime += beat.time;
-    });
+      var isPlaying = audio.currentTime > 0 && !audio.paused && !audio.ended 
+        && audio.readyState > audio.HAVE_CURRENT_DATA;
+
+      if (!isPlaying) {
+        audio.play();
+      }
+      audio.play();
+    }catch (e: any) {}
 
     startTime.current = performance.now();
 
     return () => {
-      intervals.forEach((i) => clearInterval(i));
-      timeouts.forEach((t) => clearTimeout(t));
+      try{
+        audio.pause();
+      } catch (e: any) {}
     };
   }, [rhythm, startTime]);
 
