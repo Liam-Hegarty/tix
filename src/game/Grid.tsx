@@ -16,21 +16,26 @@ export const Grid = ({
   const dot = (x: number, y: number) => (g: Graphics) => {
     g.clear();
 
+    const centrePoint = {
+      x: offset.x + x * spacing,
+      y: offset.y + y * spacing,
+    };
+
     if (level.grid[y + 1] && level.grid[y + 1][x]) {
       g.lineStyle(3, colors.black, 1);
-      g.moveTo(offset.x + x * spacing, offset.y + y * spacing);
-      g.lineTo(offset.x + x * spacing, offset.y + (y + 1) * spacing);
+      g.moveTo(centrePoint.x, centrePoint.y);
+      g.lineTo(centrePoint.x, centrePoint.y + spacing);
     }
 
     if (level.grid[y][x + 1]) {
       g.lineStyle(3, colors.black, 1);
-      g.moveTo(offset.x + x * spacing, offset.y + y * spacing);
-      g.lineTo(offset.x + (x + 1) * spacing, offset.y + y * spacing);
+      g.moveTo(centrePoint.x, centrePoint.y);
+      g.lineTo(centrePoint.x + spacing, centrePoint.y);
     }
 
     g.lineStyle(1, colors.black, 1);
     g.beginFill(colors.black);
-    g.drawCircle(offset.x + x * spacing, offset.y + y * spacing, 5);
+    g.drawCircle(centrePoint.x, centrePoint.y, 5);
     g.endFill();
   };
 
@@ -51,6 +56,28 @@ export const Grid = ({
     g.endFill();
   };
 
+  const wall = (x: number, y: number) => (g: Graphics) => {
+    const centrePoint = {
+      x: offset.x + x * spacing,
+      y: offset.y + y * spacing,
+    };
+
+    g.clear();
+    console.log({ x, y });
+    if (y === 0 || !level.grid[y - 1][x]) {
+      console.log({ x, y });
+      g.beginFill(colors.darkBlue);
+      g.lineStyle(colors.black);
+      g.drawRect(
+        centrePoint.x - spacing / 2,
+        centrePoint.y - spacing,
+        spacing,
+        spacing / 2
+      );
+      g.endFill();
+    }
+  };
+
   return (
     <>
       {level.grid.map((row, y) =>
@@ -60,6 +87,14 @@ export const Grid = ({
             draw={tile(x, y, point)}
           />
         ))
+      )}
+      {level.grid.map((row, y) =>
+        row.map(
+          (point, x) =>
+            point && (
+              <GraphicsElement key={`wall-${x}-${y}`} draw={wall(x, y)} />
+            )
+        )
       )}
       {level.grid.map((row, y) =>
         row.map(
