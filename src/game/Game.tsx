@@ -133,7 +133,7 @@ export const Game = ({
       <Stage
         width={width}
         height={height}
-        options={{ backgroundAlpha: 1, backgroundColor: palette.lightBlue }}
+        options={{ backgroundAlpha: 1, backgroundColor: 0x000000 }}
       >
         <Grid level={level} spacing={spacing} offset={offset} />
         <Ticker rhythm={rhythm} startTime={startTime} />
