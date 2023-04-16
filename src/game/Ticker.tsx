@@ -14,19 +14,22 @@ export const Ticker = ({
     try {
       audio.loop = true;
 
-      var isPlaying = audio.currentTime > 0 && !audio.paused && !audio.ended 
-        && audio.readyState > audio.HAVE_CURRENT_DATA;
+      var isPlaying =
+        audio.currentTime > 0 &&
+        !audio.paused &&
+        !audio.ended &&
+        audio.readyState > audio.HAVE_CURRENT_DATA;
 
       if (!isPlaying) {
         audio.play();
       }
       audio.play();
-    }catch (e: any) {}
+    } catch (e: any) {}
 
     startTime.current = performance.now();
 
     return () => {
-      try{
+      try {
         audio.pause();
       } catch (e: any) {}
     };
