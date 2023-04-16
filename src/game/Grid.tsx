@@ -18,27 +18,15 @@ export const Grid = ({
     g.clear();
 
     if (level.grid[y + 1] && level.grid[y + 1][x]) {
-      g.lineStyle(2, 0x000000, 1);
+      g.lineStyle(3, 0x000000, 1);
       g.moveTo(offset.x + x * spacing, offset.y + y * spacing);
       g.lineTo(offset.x + x * spacing, offset.y + (y + 1) * spacing);
-      if (offset.x + x * spacing < window.innerWidth / 2) {
-        g.lineStyle(2, colors.darkBlue, 1);
-        g.moveTo(offset.x + x * spacing - 2, offset.y + y * spacing);
-        g.lineTo(offset.x + x * spacing - 2, offset.y + (y + 1) * spacing);
-      } else {
-        g.lineStyle(2, colors.darkBlue, 1);
-        g.moveTo(offset.x + x * spacing + 2, offset.y + y * spacing);
-        g.lineTo(offset.x + x * spacing + 2, offset.y + (y + 1) * spacing);
-      }
     }
 
     if (level.grid[y][x + 1]) {
-      g.lineStyle(2, 0x000000, 1);
+      g.lineStyle(3, 0x000000, 1);
       g.moveTo(offset.x + x * spacing, offset.y + y * spacing);
       g.lineTo(offset.x + (x + 1) * spacing, offset.y + y * spacing);
-      g.lineStyle(2, colors.darkBlue, 1);
-      g.moveTo(offset.x + x * spacing, offset.y + y * spacing - 2);
-      g.lineTo(offset.x + (x + 1) * spacing, offset.y + y * spacing - 2);
     }
 
     g.lineStyle(1, 0x000, 1);
