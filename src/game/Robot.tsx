@@ -34,17 +34,36 @@ export const Robot = ({
 
   const lastKeyPressTs = useRef(0);
 
-  useTick(() => {
+  useTick((delta) => {
+
+    const panSpeed = 3 * delta
+
+    if (anim.x > (window.innerWidth * 0.75)) {
+      setOffset({x: offset.x - panSpeed, y: offset.y})
+    }
+    if (anim.x < (window.innerWidth * 0.25))  {
+      setOffset({x: offset.x + panSpeed, y: offset.y})
+    }
+    if (anim.y > (window.innerHeight * 0.75)) {
+      setOffset({y: offset.y - panSpeed, x: offset.x})
+    }
+    if (anim.y < (window.innerHeight * 0.25)) {
+      setOffset({y: offset.y + panSpeed, x: offset.x})
+    }
+
     const animTime = 100;
     const diff = performance.now() - lastKeyPressTs.current;
     if (diff < animTime) {
+      const animProgress = (diff / animTime)
+      const deltaX = (tix.new.x - tix.old.x)
+      const deltaY = (tix.new.y - tix.old.y)
       setAnim({
         x:
           offset.x +
-          spacing * (tix.old.x + (tix.new.x - tix.old.x) * (diff / animTime)),
+          spacing * (tix.old.x + deltaX * animProgress),
         y:
           offset.y +
-          spacing * (tix.old.y + (tix.new.y - tix.old.y) * (diff / animTime)),
+          spacing * (tix.old.y + deltaY * animProgress),
       });
     } else {
       setAnim({
