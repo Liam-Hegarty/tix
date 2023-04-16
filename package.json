@@ -1,6 +1,6 @@
 {
   "name": "tix",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "homepage": "/tix",
   "license": "GPL-3.0",
   "dependencies": {
