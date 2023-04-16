@@ -1,6 +1,6 @@
 import React, { Dispatch, SetStateAction } from "react";
 import { Box } from "@mui/material";
-import colors from "../Palette";
+import colors from "../palette";
 import { Menu } from "./Menu";
 
 export const MainMenu = ({

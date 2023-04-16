@@ -6,7 +6,7 @@ import React, {
   useRef,
   useState,
 } from "react";
-import palette from "../Palette";
+import palette from "../palette";
 import { Stage } from "@pixi/react";
 import { Robot } from "./Robot";
 import { Ticker } from "./Ticker";

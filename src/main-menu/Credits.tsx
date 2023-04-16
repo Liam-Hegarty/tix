@@ -1,6 +1,6 @@
 import { Box } from "@mui/material";
 import React, { useEffect } from "react";
-import colors from "../Palette";
+import colors from "../palette";
 
 export const Credits = ({ exit }: { exit: () => void }) => {
   useEffect(() => {

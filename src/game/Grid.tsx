@@ -2,8 +2,7 @@ import React from "react";
 import { Level } from "./levels/Level";
 import { Graphics as GraphicsElement } from "@pixi/react";
 import { Graphics } from "@pixi/graphics";
-import colors from "../Palette";
-import palette from "../Palette";
+import colors from "../palette";
 
 export const Grid = ({
   level,
@@ -18,19 +17,19 @@ export const Grid = ({
     g.clear();
 
     if (level.grid[y + 1] && level.grid[y + 1][x]) {
-      g.lineStyle(3, 0x000000, 1);
+      g.lineStyle(3, colors.black, 1);
       g.moveTo(offset.x + x * spacing, offset.y + y * spacing);
       g.lineTo(offset.x + x * spacing, offset.y + (y + 1) * spacing);
     }
 
     if (level.grid[y][x + 1]) {
-      g.lineStyle(3, 0x000000, 1);
+      g.lineStyle(3, colors.black, 1);
       g.moveTo(offset.x + x * spacing, offset.y + y * spacing);
       g.lineTo(offset.x + (x + 1) * spacing, offset.y + y * spacing);
     }
 
-    g.lineStyle(1, 0x000, 1);
-    g.beginFill(0x000000);
+    g.lineStyle(1, colors.black, 1);
+    g.beginFill(colors.black);
     g.drawCircle(offset.x + x * spacing, offset.y + y * spacing, 5);
     g.endFill();
   };
@@ -38,8 +37,8 @@ export const Grid = ({
   const tile = (x: number, y: number, isTile: boolean) => (g: Graphics) => {
     g.clear();
 
-    const borderColor = isTile ? 0xaaaaaa : 0x000000;
-    const fillColor = isTile ? palette.lightBlue : 0x000000;
+    const borderColor = isTile ? 0xaaaaaa : colors.black;
+    const fillColor = isTile ? colors.lightBlue : colors.white;
 
     g.lineStyle(1, borderColor, 1);
     g.beginFill(fillColor);
