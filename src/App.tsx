@@ -17,7 +17,7 @@ function App() {
     case "game":
       return <Game {...{ setStage }} />;
     default:
-      return <></>;
+      return <h1>SOMETHING HAS GONE HORRIBLY WRONG</h1>;
   }
 }
 
