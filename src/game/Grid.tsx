@@ -34,9 +34,9 @@ export const Grid = ({
     g.clear();
 
     [
-      { x: 10, y: 10 },
-      { x: 55, y: -15 },
-      { x: -100, y: -50 },
+      { x: 20, y: 20 },
+      { x: 15, y: -35 },
+      { x: -20, y: -30 },
     ].map((c) =>
       floorMarks(g, offset.x + x * spacing + c.x, offset.y + y * spacing + c.y)
     );
