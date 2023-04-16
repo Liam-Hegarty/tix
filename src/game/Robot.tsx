@@ -39,13 +39,17 @@ export const Robot = ({
     const diff = performance.now() - lastKeyPressTs.current;
     if (diff < animTime) {
       setAnim({
-        x: offset.x + (spacing * (tix.old.x + ((tix.new.x - tix.old.x) * (diff / animTime)))),
-        y: offset.y + (spacing * (tix.old.y + ((tix.new.y - tix.old.y) * (diff / animTime)))),
+        x:
+          offset.x +
+          spacing * (tix.old.x + (tix.new.x - tix.old.x) * (diff / animTime)),
+        y:
+          offset.y +
+          spacing * (tix.old.y + (tix.new.y - tix.old.y) * (diff / animTime)),
       });
     } else {
       setAnim({
-        x: offset.x + (tix.new.x * spacing),
-        y: offset.y + (tix.new.y * spacing),
+        x: offset.x + tix.new.x * spacing,
+        y: offset.y + tix.new.y * spacing,
       });
     }
   });
