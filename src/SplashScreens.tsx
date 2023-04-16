@@ -42,7 +42,7 @@ export const SplashScreens = ({
         >
           <img
             className={className}
-            src={`${process.env.PUBLIC_URL}/cool.png`}
+            src={`${process.env.PUBLIC_URL}/screens/cool.png`}
             alt={`/cool.png`}
             width={1496 / 4}
             height={1584 / 4}
