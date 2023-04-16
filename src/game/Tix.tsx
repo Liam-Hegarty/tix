@@ -14,7 +14,7 @@ export const Tix = ({
   offset,
   setOffset,
   start,
-  paused
+  paused,
 }: {
   moveIsAllowed: (e: TixEvent) => boolean;
   spacing: number;
@@ -51,7 +51,6 @@ export const Tix = ({
   });
 
   const handleMovement = (e: any) => {
-
     if (e.repeat || paused) {
       return;
     }

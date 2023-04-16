@@ -15,7 +15,7 @@ function App() {
     case "credits":
       return <Credits exit={() => setStage("menu")} />;
     case "game":
-      return <Game {...{setStage}} />;
+      return <Game {...{ setStage }} />;
     default:
       return <></>;
   }
