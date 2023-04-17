@@ -67,15 +67,16 @@ pages:
 
   stage: pages
 
-  needs: build
+  needs:
+    - build
 
   script:
     cp build/index.html build/404.html
 
   artifacts:
-  name: "tix"
-  paths:
-  - build
+    name: "tix"
+    paths:
+      - build
 
   only:
     - main
