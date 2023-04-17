@@ -1,6 +1,6 @@
 {
   "name": "tix",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "license": "GPL-3.0",
   "dependencies": {
     "@emotion/react": "^11.10.6",
