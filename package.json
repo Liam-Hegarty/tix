@@ -33,7 +33,7 @@
     "react-dom": "^18.0.2"
   },
   "scripts": {
-    "start": "electron-forge start",
+    "start": "PUBLIC_URL=tix react-scripts start",
     "start:itch": "npx serve itch.io",
     "start:electron": "npx electron .",
     "build": "CI=false PUBLIC_URL=tix react-scripts build",

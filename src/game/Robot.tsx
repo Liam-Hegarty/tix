@@ -126,13 +126,11 @@ export const Robot = ({
 
   return (
     <Sprite
-      image={`${process.env.PUBLIC_URL}/sprite/${
-        isCrashed ? "bad-robot.png" : "robot.png"
-      }`}
+      image={`${process.env.PUBLIC_URL}/sprite/robot.png`}
       x={anim.x}
       y={anim.y}
       anchor={{ x: 0.5, y: 1 }}
-      scale={{ x: 0.1, y: 0.1 }}
+      scale={{ x: 1.2, y: 1.2 }}
     />
   );
 };
