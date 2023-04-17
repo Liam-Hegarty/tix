@@ -70,13 +70,17 @@ pages:
   needs:
     - build
 
+  variables:
+    PUBLIC_URL: "/tix"
+
   script:
-    cp build/index.html build/404.html
+    - cp build/index.html build/404.html
+    - mv build public
 
   artifacts:
-    name: "tix"
+    name: "tix-gitlab-pages"
     paths:
-      - build
+      - public
 
   only:
     - main
