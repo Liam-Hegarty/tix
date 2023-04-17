@@ -86,7 +86,7 @@ hegserver:
   - main
 
   needs:
-    - build
+    - build-web
 
   variables:
     PUBLIC_URL: "/tix"
