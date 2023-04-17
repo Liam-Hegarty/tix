@@ -21,6 +21,15 @@ export const Grid = ({
       y: offset.y + y * spacing,
     };
 
+    if (
+      centrePoint.x < (0 - spacing) ||
+      centrePoint.y < (0 - spacing) ||
+      centrePoint.x > (window.innerWidth + spacing) ||
+      centrePoint.y > (window.innerHeight + spacing)
+    ) {
+      return
+    }
+
     if (level.grid[y + 1] && level.grid[y + 1][x]) {
       g.lineStyle(3, colors.black, 1);
       g.moveTo(centrePoint.x, centrePoint.y);

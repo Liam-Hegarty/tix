@@ -1,11 +1,15 @@
 import { parseGrid } from "./gridParser";
 
 const levelOneRaw = `
-                    .
-   +++++     +++++  .
-   ++O++++++++++++  .
-   +++++     +++++  .
-                    .
+     +++  +++  +++       .
+     +++  +++  +++       .
+     +++  +++  +++       .
+ +++               +++++  .
+ +O+++++++++++++++++++++  .
+ +++               +++++  .
+     +++  +++  +++       .
+     +++  +++  +++       .
+     +++  +++  +++       .
 `;
 
 export const levelOne = parseGrid(levelOneRaw);
