@@ -2,6 +2,7 @@
 stages:
   - build
   - deploy
+  - pages
   
 build:
 
@@ -60,6 +61,25 @@ build:
 
   only:
   - main
+
+
+pages:
+
+  stage: pages
+
+  needs: build
+
+  script:
+    cp build/index.html build/404.html
+
+  artifacts:
+  name: "tix"
+  paths:
+  - build
+
+  only:
+    - main
+
 
 deploy:
 
