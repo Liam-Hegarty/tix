@@ -1,7 +1,6 @@
 
 stages:
   - test
-  - build-web
   - hegserver
   - itch-io-web
   - pages
@@ -53,29 +52,6 @@ test:
     - node_modules
 
 
-build-web:
-
-  image: node:19-alpine
-
-  stage: build-web
-
-  only:
-  - main
-
-  needs:
-    - test
-
-  before_script:
-  - apk add bash git yarn curl zip
-
-  script: 
-    - NODE_ENV=production yarn run build --prod  
-
-  artifacts:
-    name: "tix-web"
-    paths:
-    - build
-
 hegserver:
 
   image: node:19-alpine
@@ -86,9 +62,10 @@ hegserver:
   - main
 
   needs:
-    - build-web
+    - build-test
 
   variables:
+    PUBLIC_URL: tix
     UPLOAD_DIR: tix
     USERNAME: tix
     HEGSERVER_URL: http://projects.heg.cool
@@ -97,6 +74,7 @@ hegserver:
   - apk add bash git yarn curl zip
 
   script: 
+    - NODE_ENV=production yarn run build --prod  
     # upload to hegserver
     - cd build
     - zip -r web.zip *
@@ -111,10 +89,10 @@ pages:
     - main
 
   needs:
-    - build-web
+    - test
 
   script:
-    - find .
+    - NODE_ENV=production yarn run build --prod  
     - cp build/index.html build/404.html
     - mv public _public
     - mv build public
