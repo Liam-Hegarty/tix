@@ -71,7 +71,7 @@ hegserver:
     HEGSERVER_URL: http://projects.heg.cool
 
   before_script:
-  - apk add bash git yarn curl zip
+  - apk add bash yarn curl zip
 
   script: 
     - NODE_ENV=production yarn run build --prod  
@@ -83,6 +83,8 @@ hegserver:
 
 pages:
 
+  image: node:19-alpine
+
   stage: pages
 
   only:
@@ -90,6 +92,9 @@ pages:
 
   needs:
     - test
+
+  before_script:
+    - apk add bash yarn
 
   script:
     - NODE_ENV=production yarn run build --prod  
