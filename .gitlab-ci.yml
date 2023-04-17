@@ -73,3 +73,6 @@ deploy:
   script:
     - butler login
     - butler push build viado-escroto/tix
+
+  only:
+    -main
