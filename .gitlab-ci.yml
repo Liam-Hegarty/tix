@@ -10,7 +10,7 @@ test:
 
   image: node:19-alpine
 
-  stage: build
+  stage: test
 
   only:
   - main
