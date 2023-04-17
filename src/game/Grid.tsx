@@ -63,11 +63,9 @@ export const Grid = ({
     };
 
     g.clear();
-    console.log({ x, y });
     if (y === 0 || !level.grid[y - 1][x]) {
-      console.log({ x, y });
       g.beginFill(colors.darkBlue);
-      g.lineStyle(colors.black);
+      g.lineStyle(1, colors.black, 1);
       g.drawRect(
         centrePoint.x - spacing / 2,
         centrePoint.y - spacing,
