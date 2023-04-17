@@ -1,16 +1,23 @@
-import { Text } from "@pixi/react";
+import { Text, useTick } from "@pixi/react";
 import React, { MutableRefObject, useEffect } from "react";
+
+const audio = new Audio(`${process.env.PUBLIC_URL}/audio/4-4.mp3`);
 
 export const Ticker = ({
   rhythm,
-  startTime,
+  rhythmTime,
 }: {
   rhythm: Array<{ tock: boolean; time: number }>;
-  startTime: MutableRefObject<number>;
+  rhythmTime: MutableRefObject<{ audioTime: number; jsTime: number }>;
 }) => {
-  useEffect(() => {
-    const audio = new Audio(`${process.env.PUBLIC_URL}/audio/4-4.mp3`);
+  useTick(() => {
+    rhythmTime.current = {
+      audioTime: audio.currentTime * 1000,
+      jsTime: performance.now(),
+    };
+  });
 
+  useEffect(() => {
     try {
       audio.loop = true;
 
@@ -26,14 +33,12 @@ export const Ticker = ({
       audio.play();
     } catch (e: any) {}
 
-    startTime.current = performance.now();
-
     return () => {
       try {
         audio.pause();
       } catch (e: any) {}
     };
-  }, [rhythm, startTime]);
+  }, [rhythm]);
 
   return (
     <Text

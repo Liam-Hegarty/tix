@@ -21,27 +21,30 @@ type Rhythm = Beat[];
 const sumRhythmTimes = (rhythm: Rhythm) =>
   rhythm.map((b) => b.time).reduce((x, y) => x + y, 0);
 
+const rhythm = [
+  { tock: false, time: 400 },
+  { tock: false, time: 400 },
+  { tock: false, time: 400 },
+  { tock: true, time: 400 },
+];
+
 export const Game = ({
   setStage,
 }: {
   setStage: Dispatch<SetStateAction<string>>;
 }) => {
-  const startTime = useRef<number>(-10000);
+  const rhythmTime = useRef({ audioTime: -10000, jsTime: -1000 });
 
   const level = levelOne;
 
   const tolerance = 100;
   const spacing = 100;
 
-  const rhythm = [
-    { tock: false, time: 400 },
-    { tock: false, time: 400 },
-    { tock: false, time: 400 },
-    { tock: true, time: 400 },
-  ];
-
   const moveIsOnTempo = (e: TixEvent) => {
-    const dividend = (e.ts - startTime.current) % sumRhythmTimes(rhythm);
+    const { audioTime, jsTime } = rhythmTime.current;
+    console.log({ audioTime, jsTime });
+    const dividend = (audioTime + (e.ts - jsTime)) % sumRhythmTimes(rhythm);
+    console.log(dividend);
     const times = rhythm.map((b, i) => {
       return { tock: b.tock, time: sumRhythmTimes(rhythm.slice(0, i)) };
     });
@@ -136,7 +139,7 @@ export const Game = ({
         options={{ backgroundAlpha: 1, backgroundColor: 0x000000 }}
       >
         <Grid level={level} spacing={spacing} offset={offset} />
-        <Ticker rhythm={rhythm} startTime={startTime} />
+        <Ticker rhythm={rhythm} rhythmTime={rhythmTime} />
         <Robot
           {...{
             moveIsAllowed: (e) => moveIsOnTempo(e) && moveIsOnGrid(e),
