@@ -70,9 +70,6 @@ pages:
   needs:
     - build
 
-  variables:
-    PUBLIC_URL: "/tix"
-
   script:
     - cp build/index.html build/404.html
     - mv build public
@@ -97,7 +94,7 @@ deploy:
 
   script:
     - butler login
-    - butler push build viado-escroto/tix:web
+    - butler push build viado-escroto/tix:web --userversion $(git describe --tags --abbrev=0)
 
   only:
     - main
