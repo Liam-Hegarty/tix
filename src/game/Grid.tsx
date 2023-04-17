@@ -22,12 +22,12 @@ export const Grid = ({
     };
 
     if (
-      centrePoint.x < (0 - spacing) ||
-      centrePoint.y < (0 - spacing) ||
-      centrePoint.x > (window.innerWidth + spacing) ||
-      centrePoint.y > (window.innerHeight + spacing)
+      centrePoint.x < 0 - spacing ||
+      centrePoint.y < 0 - spacing ||
+      centrePoint.x > window.innerWidth + spacing ||
+      centrePoint.y > window.innerHeight + spacing
     ) {
-      return
+      return;
     }
 
     if (level.grid[y + 1] && level.grid[y + 1][x]) {
