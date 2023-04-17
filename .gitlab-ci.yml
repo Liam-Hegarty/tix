@@ -65,6 +65,8 @@ deploy:
 
   image: amllindsay/vsts-agent-itch-butler
 
+  stage: deploy
+
   needs:
     - build
 
