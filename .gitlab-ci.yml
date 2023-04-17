@@ -71,6 +71,7 @@ pages:
     - build
 
   script:
+    - find .
     - cp build/index.html build/404.html
     - mv build public
 
