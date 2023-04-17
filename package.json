@@ -31,6 +31,7 @@
   },
   "scripts": {
     "start": "PUBLIC_URL=tix react-scripts start",
+    "start:itch": "npx serve itch.io",
     "build": "CI=false react-scripts build",
     "test": "CI=true react-scripts test",
     "lint": "eslint src --ext .tsx --fix --fix",

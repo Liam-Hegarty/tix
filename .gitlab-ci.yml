@@ -96,7 +96,7 @@ deploy:
 
   script:
     - butler login
-    - butler push build viado-escroto/tix:web --userversion $(git describe --tags --abbrev=0)
+    - butler push itch.io viado-escroto/tix:web --userversion $(git describe --tags --abbrev=0)
 
   only:
     - main
