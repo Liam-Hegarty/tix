@@ -75,4 +75,4 @@ deploy:
     - butler push build viado-escroto/tix
 
   only:
-    -main
+    - main
