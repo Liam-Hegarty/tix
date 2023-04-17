@@ -59,6 +59,9 @@ build-web:
 
   stage: build-web
 
+  variables:
+    PUBLIC_URL: "/tix"
+
   only:
   - main
 
@@ -89,7 +92,6 @@ hegserver:
     - build-web
 
   variables:
-    PUBLIC_URL: "/tix"
     UPLOAD_DIR: tix
     USERNAME: tix
     HEGSERVER_URL: http://projects.heg.cool
