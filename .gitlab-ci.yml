@@ -1,21 +1,92 @@
 
 stages:
-  - build
-  - deploy
+  - test
+  - build-web
+  - hegserver
+  - itch-io-web
   - pages
   
-build:
+test:
 
   image: node:19-alpine
 
   stage: build
+
+  only:
+  - main
 
   cache:
     paths:
     - node_modules
 
   before_script:
-  - apk add bash git jq yarn curl zip
+  - apk add bash git jq yarn
+
+  script:
+    # build project
+    - yarn install
+    - npx eslint src --ext .tsx
+    - npx prettier --check src
+    - yarn test
+    # infer new version from package.json and git history
+    - OLD_VERSION=$(cat package.json | jq -r  '."version"')
+    - VERSION_CHANGE="patch" && [[ $(git log -n 1 | grep "Merge branch" | grep into | grep main | wc -l) -gt 0 ]]&& VERSION_CHANGE="minor"
+    - NEW_VERSION=$(xargs npx semver -i ${VERSION_CHANGE} ${OLD_VERSION})
+    - NEW_VERSION="$NEW_VERSION" && [[ $(git tag -l $OLD_VERSION | wc -l) -eq 0 ]] && NEW_VERSION=$OLD_VERSION
+    # update package.json with new version
+    - jq -r --arg NEW_VERSION "$NEW_VERSION" '."version" = $NEW_VERSION' package.json > new-package.json
+    - mv new-package.json package.json
+    # prepare to git
+    - git config --global user.name "soundboard-ci"
+    - git config --global user.email "gitlab-ci@heg.cool"
+    # if there are any changes to package.json, then commit them
+    - if [ $OLD_VERSION != $NEW_VERSION ]; then git add package.json; fi
+    - if [ $OLD_VERSION != $NEW_VERSION ]; then git commit -m "$CI_RUNNER_ID - Bumping version to ${NEW_VERSION}"; fi
+    - if [ $OLD_VERSION != $NEW_VERSION ]; then git push -o ci.skip https://whatever:${GITLAB_CI_ACCESS_TOKEN}@${CI_SERVER_HOST}/${CI_PROJECT_PATH}.git HEAD:main; fi
+    # tag release
+    - git tag -a ${NEW_VERSION} -m "Tix V-${NEW_VERSION}"
+    - git push --tags https://whatever:${GITLAB_CI_ACCESS_TOKEN}@${CI_SERVER_HOST}/${CI_PROJECT_PATH}.git HEAD:main
+
+  artifacts:
+    name: "node_modules"
+    paths:
+    - node_modules
+
+
+build-web:
+
+  image: node:19-alpine
+
+  stage: build-web
+
+  only:
+  - main
+
+  needs:
+    - test
+
+  before_script:
+  - apk add bash git yarn curl zip
+
+  script: 
+    - NODE_ENV=production yarn run build --prod  
+
+  artifacts:
+    name: "tix-web"
+    paths:
+    - build
+
+hegserver:
+
+  image: node:19-alpine
+
+  stage: hegserver
+
+  only:
+  - main
+
+  needs:
+    - build
 
   variables:
     PUBLIC_URL: "/tix"
@@ -23,52 +94,25 @@ build:
     USERNAME: tix
     HEGSERVER_URL: http://projects.heg.cool
 
-  script:
-  # build project
-  - yarn install
-  - npx eslint src --ext .tsx
-  - npx prettier --check src
-  - yarn test --passWithNoTests
-  - NODE_ENV=production yarn run build --prod
-  # infer new version from package.json and git history
-  - OLD_VERSION=$(cat package.json | jq -r  '."version"')
-  - VERSION_CHANGE="patch" && [[ $(git log -n 1 | grep "Merge branch" | grep into | grep main | wc -l) -gt 0 ]]&& VERSION_CHANGE="minor"
-  - NEW_VERSION=$(xargs npx semver -i ${VERSION_CHANGE} ${OLD_VERSION})
-  - NEW_VERSION="$NEW_VERSION" && [[ $(git tag -l $OLD_VERSION | wc -l) -eq 0 ]] && NEW_VERSION=$OLD_VERSION
-  # update package.json with new version
-  - jq -r --arg NEW_VERSION "$NEW_VERSION" '."version" = $NEW_VERSION' package.json > new-package.json
-  - mv new-package.json package.json
-  # prepare to git
-  - git config --global user.name "soundboard-ci"
-  - git config --global user.email "gitlab-ci@heg.cool"
-  # if there are any changes to package.json, then commit them
-  - if [ $OLD_VERSION != $NEW_VERSION ]; then git add package.json; fi
-  - if [ $OLD_VERSION != $NEW_VERSION ]; then git commit -m "$CI_RUNNER_ID - Bumping version to ${NEW_VERSION}"; fi
-  - if [ $OLD_VERSION != $NEW_VERSION ]; then git push -o ci.skip https://whatever:${GITLAB_CI_ACCESS_TOKEN}@${CI_SERVER_HOST}/${CI_PROJECT_PATH}.git HEAD:main; fi
-  # tag release
-  - git tag -a ${NEW_VERSION} -m "Tix V-${NEW_VERSION}"
-  - git push --tags https://whatever:${GITLAB_CI_ACCESS_TOKEN}@${CI_SERVER_HOST}/${CI_PROJECT_PATH}.git HEAD:main
-  # upload to hegserver
-  - cd build
-  - zip -r web.zip *
-  - curl -v -F "username=$USERNAME" -F "password=$PASSWORD" -F "zip=@web.zip" ${HEGSERVER_URL}/${UPLOAD_DIR}
-  - rm web.zip
+  before_script:
+  - apk add bash git yarn curl zip
 
-  artifacts:
-    name: "tix"
-    paths:
-    - build
-
-  only:
-  - main
+  script: 
+    # upload to hegserver
+    - cd build
+    - zip -r web.zip *
+    - curl -v -F "username=$USERNAME" -F "password=$PASSWORD" -F "zip=@web.zip" ${HEGSERVER_URL}/${UPLOAD_DIR}
 
 
 pages:
 
   stage: pages
 
+  only:
+    - main
+
   needs:
-    - build
+    - build-web
 
   script:
     - find .
@@ -81,22 +125,19 @@ pages:
     paths:
       - public
 
-  only:
-    - main
 
-
-deploy:
+itch-io-web:
 
   image: amllindsay/vsts-agent-itch-butler
 
-  stage: deploy
+  stage: itch-io-web
+
+  only:
+    - main
 
   needs:
-    - build
+    - test
 
   script:
     - butler login
     - butler push itch.io viado-escroto/tix:web --userversion $(git describe --tags --abbrev=0)
-
-  only:
-    - main
