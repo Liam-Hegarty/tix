@@ -73,6 +73,7 @@ pages:
   script:
     - find .
     - cp build/index.html build/404.html
+    - mv public _public
     - mv build public
 
   artifacts:
