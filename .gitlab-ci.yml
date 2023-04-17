@@ -59,9 +59,6 @@ build-web:
 
   stage: build-web
 
-  variables:
-    PUBLIC_URL: "/tix"
-
   only:
   - main
 
