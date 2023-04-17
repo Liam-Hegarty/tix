@@ -36,7 +36,7 @@
     "start": "PUBLIC_URL=tix react-scripts start",
     "start:itch": "npx serve itch.io",
     "start:electron": "npx electron .",
-    "build": "CI=false PUBLIC_URL=tix react-scripts build",
+    "build": "CI=false react-scripts build",
     "build:electron": "craco build",
     "test": "CI=true react-scripts test",
     "lint": "eslint src --ext .tsx --fix --fix",
