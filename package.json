@@ -27,12 +27,13 @@
     "@pixi/text-bitmap": "^7.2.4",
     "@pixi/ticker": "^7.2.4",
     "@pixi/utils": "^7.2.4",
+    "electron-squirrel-startup": "^1.0.0",
     "prop-types": "^15.8.1",
     "react": "^18.0.2",
     "react-dom": "^18.0.2"
   },
   "scripts": {
-    "start": "PUBLIC_URL=tix react-scripts start",
+    "start": "electron-forge start",
     "start:itch": "npx serve itch.io",
     "start:electron": "npx electron .",
     "build": "CI=false PUBLIC_URL=tix react-scripts build",
@@ -40,7 +41,9 @@
     "test": "CI=true react-scripts test",
     "lint": "eslint src --ext .tsx --fix --fix",
     "format": "npx prettier src *.js --write",
-    "fmt": "yarn format"
+    "fmt": "yarn format",
+    "package": "electron-forge package",
+    "make": "electron-forge make"
   },
   "eslintConfig": {
     "parser": "@typescript-eslint/parser",
@@ -70,6 +73,11 @@
     "@babel/plugin-transform-react-jsx": "^7.14.9",
     "@babel/runtime": "^7.14.8",
     "@craco/craco": "^7.1.0",
+    "@electron-forge/cli": "^6.1.1",
+    "@electron-forge/maker-deb": "^6.1.1",
+    "@electron-forge/maker-rpm": "^6.1.1",
+    "@electron-forge/maker-squirrel": "^6.1.1",
+    "@electron-forge/maker-zip": "^6.1.1",
     "@types/jest": "^27.4.0",
     "@types/node": "^17.0.13",
     "@types/pixi.js": "^5.0.0",
