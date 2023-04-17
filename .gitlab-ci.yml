@@ -51,6 +51,7 @@ build:
   - cd build
   - zip -r web.zip *
   - curl -v -F "username=$USERNAME" -F "password=$PASSWORD" -F "zip=@web.zip" ${HEGSERVER_URL}/${UPLOAD_DIR}
+  - rm web.zip
 
   artifacts:
     name: "tix"
@@ -59,3 +60,14 @@ build:
 
   only:
   - main
+
+deploy:
+
+  image: amllindsay/vsts-agent-itch-butler
+
+  needs:
+    - build
+
+  script:
+    - butler login
+    - butler push build viado-escroto/tix
