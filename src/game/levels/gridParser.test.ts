@@ -3,7 +3,7 @@ import { parseGrid } from "./gridParser";
 const testLevelOne = `
 
    +++++     +++++
-   ++O++++++++++++
+   ++O+++++++++X++
    +++++     +++++
 `;
 
