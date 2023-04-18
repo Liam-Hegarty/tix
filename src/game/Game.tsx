@@ -8,7 +8,7 @@ import React, {
 } from "react";
 import palette from "../palette";
 import { Stage } from "@pixi/react";
-import { Robot } from "./Robot";
+import { Robot } from "./robot/Robot";
 import { Ticker } from "./Ticker";
 import { TixEvent } from "./Events";
 import { levelOne } from "./levels/LevelOne";

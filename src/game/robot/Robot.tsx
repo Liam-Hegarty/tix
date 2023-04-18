@@ -1,4 +1,4 @@
-import { Sprite, useTick } from "@pixi/react";
+import { Container, useTick } from "@pixi/react";
 import React, {
   Dispatch,
   SetStateAction,
@@ -6,7 +6,11 @@ import React, {
   useRef,
   useState,
 } from "react";
-import { TixEvent } from "./Events";
+import { TixEvent } from "../Events";
+import { CrashedRobot } from "./CrashedRobot";
+import { HappyRobot } from "./HappyRobot";
+
+const crashSound = new Audio(`${process.env.PUBLIC_URL}/audio/crash.mp3`);
 
 export const Robot = ({
   moveIsAllowed,
@@ -114,6 +118,7 @@ export const Robot = ({
         lastMoveTs.current = moveEvent.ts;
       } else {
         lastCrashTs.current = moveEvent.ts;
+        crashSound.play();
         setIsCrashed(true);
       }
     }
@@ -125,12 +130,8 @@ export const Robot = ({
   });
 
   return (
-    <Sprite
-      image={`${process.env.PUBLIC_URL}/sprite/robot.png`}
-      x={anim.x}
-      y={anim.y}
-      anchor={{ x: 0.5, y: 1 }}
-      scale={{ x: 1.2, y: 1.2 }}
-    />
+    <Container x={anim.x} y={anim.y}>
+      {isCrashed ? <CrashedRobot {...{ spacing }} /> : <HappyRobot />}
+    </Container>
   );
 };
