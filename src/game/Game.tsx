@@ -14,6 +14,7 @@ import { TixEvent } from "./Events";
 import { levelOne } from "./levels/LevelOne";
 import { Grid } from "./Grid";
 import { PauseMenu } from "./PauseMenu";
+import { ScannerDrones } from "./obstacles/ScannerDrones";
 
 type Beat = { tock: boolean; time: number };
 type Rhythm = Beat[];
@@ -42,9 +43,7 @@ export const Game = ({
 
   const moveIsOnTempo = (e: TixEvent) => {
     const { audioTime, jsTime } = rhythmTime.current;
-    console.log({ audioTime, jsTime });
     const dividend = (audioTime + (e.ts - jsTime)) % sumRhythmTimes(rhythm);
-    console.log(dividend);
     const times = rhythm.map((b, i) => {
       return { tock: b.tock, time: sumRhythmTimes(rhythm.slice(0, i)) };
     });
@@ -150,6 +149,13 @@ export const Game = ({
             paused,
           }}
         />
+        {level.scannerDrones.length && (
+          <ScannerDrones
+            drones={level.scannerDrones}
+            spacing={spacing}
+            offset={offset}
+          />
+        )}
       </Stage>
     </Box>
   );

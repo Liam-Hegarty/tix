@@ -2337,10 +2337,22 @@
   resolved "https://registry.yarnpkg.com/@pixi/filter-displacement/-/filter-displacement-7.1.2.tgz#ae67a53db7c70618228f4dc54d1409c555d6f043"
   integrity sha512-PdWUtdC9MYD+ZhPBAqIwFKn2XSFoDbIL8gFz/oiECoTtWn7sujRQuvqVjbp6Nvu4QKvhlBDq/WDTe3Js+EPVbA==
 
+"@pixi/filter-drop-shadow@^5.2.0":
+  version "5.2.0"
+  resolved "https://registry.yarnpkg.com/@pixi/filter-drop-shadow/-/filter-drop-shadow-5.2.0.tgz#243db9a726d9eb58d39ec3e0305c059d8e3c08d9"
+  integrity sha512-cYS2KDER7cwCu0V4VNSxTHGvzmNcEXdC9j3031YBOkUAE3+p17LMS/TAt6XeMfJV7KaPuusvXy2NFgGkv3RDbw==
+  dependencies:
+    "@pixi/filter-kawase-blur" "5.1.1"
+
 "@pixi/filter-fxaa@7.1.2":
   version "7.1.2"
   resolved "https://registry.yarnpkg.com/@pixi/filter-fxaa/-/filter-fxaa-7.1.2.tgz#250d3c2cd4eb6ca2d1124307ca1608471d131f16"
   integrity sha512-vW47OpemETweJW6OaAy+jI/RUWtOdEhrXH7bPTDIJyTEij62xgec95f9AWU/OfWzK5lOsoWXtlV//mvGUdi86Q==
+
+"@pixi/filter-kawase-blur@5.1.1":
+  version "5.1.1"
+  resolved "https://registry.yarnpkg.com/@pixi/filter-kawase-blur/-/filter-kawase-blur-5.1.1.tgz#ddf31b06f65dc6a5579a4fe48229da184aa8cbed"
+  integrity sha512-nPnJ1ChBFP+4pgFCwC0RJgHAJCetiHcQU3INH7zCdq88cFABmVmhN+wCKRNg4H7lF1EJjaXgFDkTrTreOD/bnw==
 
 "@pixi/filter-noise@7.1.2":
   version "7.1.2"

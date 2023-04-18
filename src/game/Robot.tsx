@@ -45,16 +45,16 @@ export const Robot = ({
       setIsCrashed(false);
     }
 
-    if (anim.x > window.innerWidth * 0.75) {
+    if (anim.x > window.innerWidth * 0.7) {
       setOffset({ x: offset.x - panSpeed, y: offset.y });
     }
-    if (anim.x < window.innerWidth * 0.25) {
+    if (anim.x < window.innerWidth * 0.3) {
       setOffset({ x: offset.x + panSpeed, y: offset.y });
     }
-    if (anim.y > window.innerHeight * 0.75) {
+    if (anim.y > window.innerHeight * 0.7) {
       setOffset({ y: offset.y - panSpeed, x: offset.x });
     }
-    if (anim.y < window.innerHeight * 0.25) {
+    if (anim.y < window.innerHeight * 0.3) {
       setOffset({ y: offset.y + panSpeed, x: offset.x });
     }
 

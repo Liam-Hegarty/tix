@@ -1,8 +1,6 @@
-import { Level } from "./Level";
-
 const traversableSymbols = ["+", "O", "X"];
 
-export const parseGrid = (raw: string): Level => {
+export const parseGrid = (raw: string) => {
   const lines = raw.split("\n").filter((l) => l && !l.includes("//"));
   return {
     grid: lines.map((line) =>
