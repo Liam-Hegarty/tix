@@ -30,11 +30,36 @@ export const MainMenu = ({
     >
       <Box
         sx={{
-          padding: "50px",
+          paddingY: "25px",
           fontSize: "50px",
+          flexDirection: "row",
+          display: "flex",
+          justifyContent: "space-evenly",
+          alignItems: "baseline",
         }}
       >
-        Tix
+        <Box
+          sx={{
+            minWidth: 200
+          }}
+        />
+        <Box
+          sx={{
+            width: 50,
+            alignContent: 'center',
+            justifyContent: "center",
+            display: "flex"
+          }}
+        >
+          Tix
+        </Box>
+          <img
+            src={`${process.env.PUBLIC_URL}/sprite/tix.png`}
+            alt={`/tix.png`}
+            width={200}
+            height={200}
+          />
+        <Box/>
       </Box>
       <Menu {...{ buttons }} />
     </Box>
