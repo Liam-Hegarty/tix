@@ -1,6 +1,6 @@
-import { Graphics as GraphicsElement } from "@pixi/react";
+import { Graphics as GraphicsElement, useTick } from "@pixi/react";
 import { Graphics } from "@pixi/graphics";
-import React, { useCallback } from "react";
+import React, { useCallback, useState } from "react";
 
 const Face = ({
   size,
@@ -12,7 +12,10 @@ const Face = ({
   face: string;
 }) => {
   const width = Math.max(...face.split("\n").map((l) => l.length)) * size;
-  const height = face.length * size;
+  const height = face.split("\n").length * size;
+
+  console.log(width);
+  console.log(height);
 
   const draw = useCallback(
     (g: Graphics) => {
@@ -21,8 +24,7 @@ const Face = ({
         .filter((l) => l && !l.includes("//"))
         .map((l) => [...l.split("").map((c) => c === "#")]);
 
-      console.log(pixels);
-
+      g.clear();
       g.beginFill(color);
       pixels.forEach((line, y) => {
         line.forEach((pixel, x) => {
@@ -57,7 +59,19 @@ export const HappyFace = ({
   size?: number;
   color: number;
 }) => {
-  return <Face face={happyFace} size={size} color={color} />;
+  const [face, setFace] = useState(happyFace);
+
+  useTick(() => {
+    const animCycle = 5000;
+    const now = performance.now() % animCycle;
+    if (now < animCycle / 20) {
+      setFace("");
+    } else {
+      setFace(happyFace);
+    }
+  });
+
+  return <Face face={face} size={size} color={color} />;
 };
 
 const sadFace = `
