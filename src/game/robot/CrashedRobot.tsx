@@ -13,7 +13,7 @@ export const CrashedRobot = ({ spacing }: { spacing: number }) => {
       <Sprite
         image={`${process.env.PUBLIC_URL}/sprite/robot.png`}
         anchor={{ x: 0.5, y: 1 }}
-        scale={{ x: 1.2, y: 1.2 }}
+        scale={{ x: 0.05, y: 0.05 }}
       />
       <Sprite
         image={`${process.env.PUBLIC_URL}/sprite/mini/exclamation.png`}
