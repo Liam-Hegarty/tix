@@ -42,7 +42,7 @@ export const MainMenu = ({
           sx={{
             minWidth: 200,
             display: "flex",
-            justifyContent: "center"
+            justifyContent: "center",
           }}
         >
           <img
