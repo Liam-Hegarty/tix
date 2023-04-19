@@ -131,7 +131,11 @@ export const Robot = ({
 
   return (
     <Container x={anim.x} y={anim.y}>
-      {isCrashed ? <CrashedRobot {...{ spacing }} /> : <HappyRobot />}
+      {isCrashed ? (
+        <CrashedRobot {...{ spacing }} />
+      ) : (
+        <HappyRobot spacing={spacing} />
+      )}
     </Container>
   );
 };

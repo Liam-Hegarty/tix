@@ -3,7 +3,7 @@ import React from "react";
 import { HappyFace } from "./faces";
 import colors from "../../palette";
 
-export const HappyRobot = () => {
+export const HappyRobot = ({ spacing }: { spacing: number }) => {
   return (
     <>
       <Sprite
@@ -11,7 +11,7 @@ export const HappyRobot = () => {
         anchor={{ x: 0.5, y: 1 }}
         scale={{ x: 0.05, y: 0.05 }}
       />
-      <Container x={-6} y={-55} height={9} width={11}>
+      <Container x={-0.06 * spacing} y={-0.55 * spacing} height={9} width={11}>
         <HappyFace color={colors.darkBlue} />
       </Container>
     </>
