@@ -42,7 +42,7 @@ export const Robot = ({
   const lastCrashTs = useRef(-100000);
 
   useTick((delta) => {
-    const panSpeed = 3 * delta;
+    const panSpeed = 5 * delta;
     const now = performance.now();
 
     if (isCrashed && now > lastCrashTs.current + crashPenalty) {

@@ -13,10 +13,7 @@ const Face = ({
 }) => {
   const width = Math.max(...face.split("\n").map((l) => l.length)) * size;
   const height = face.split("\n").length * size;
-
-  console.log(width);
-  console.log(height);
-
+  
   const draw = useCallback(
     (g: Graphics) => {
       const pixels = face
