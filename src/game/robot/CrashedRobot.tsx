@@ -18,7 +18,7 @@ export const CrashedRobot = ({ spacing }: { spacing: number }) => {
       <Sprite
         image={`${process.env.PUBLIC_URL}/sprite/mini/exclamation.png`}
         x={spacing / 16}
-        y={-spacing}
+        y={-0.8 * spacing}
         anchor={{ x: 0, y: 0 }}
         scale={{ x: 0.01, y: 0.01 }}
         rotation={0.25}
@@ -26,7 +26,7 @@ export const CrashedRobot = ({ spacing }: { spacing: number }) => {
       <Sprite
         image={`${process.env.PUBLIC_URL}/sprite/mini/swirl.png`}
         x={-(spacing / 16)}
-        y={-0.85 * spacing}
+        y={-0.65 * spacing}
         anchor={{ x: 1, y: 1 }}
         scale={{ x: 0.008, y: 0.008 }}
       />
