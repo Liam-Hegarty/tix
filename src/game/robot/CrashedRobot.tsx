@@ -17,10 +17,7 @@ export const CrashedRobot = ({ spacing }: { spacing: number }) => {
         anchor={{ x: 0.5, y: 1 }}
         scale={{ x: 0.05 * (spacing / 100), y: 0.05 * (spacing / 100) }}
       />
-      <Container
-        x={-0.06 * spacing}
-        y={-0.55 * spacing}
-      >
+      <Container x={-0.06 * spacing} y={-0.55 * spacing}>
         <SadFace color={colors.darkBlue} size={spacing / 100} />
       </Container>
       <Sprite
