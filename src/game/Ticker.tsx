@@ -3,7 +3,6 @@ import {
   Sprite,
   useTick,
   Graphics as GraphicsElement,
-  Container,
 } from "@pixi/react";
 import React, {
   MutableRefObject,
