@@ -71,7 +71,7 @@ const Walls = ({
           centrePoint.x - spacing / 2,
           centrePoint.y - spacing,
           spacing,
-          spacing / 2
+          spacing * 0.75
         );
         g.endFill();
       }
