@@ -8,7 +8,7 @@ export const Ticker = ({
   rhythmTime,
   tolerance,
   offset,
-  audioTrack
+  audioTrack,
 }: {
   rhythm: Array<{ tock: boolean; time: number }>;
   rhythmTime: MutableRefObject<{ audioTime: number; jsTime: number }>;
@@ -16,13 +16,18 @@ export const Ticker = ({
   offset: number;
   audioTrack: string;
 }) => {
-
-  const audio = useMemo(() => new Audio(`${process.env.PUBLIC_URL}/${audioTrack}`), [audioTrack])
+  const audio = useMemo(
+    () => new Audio(`${process.env.PUBLIC_URL}/${audioTrack}`),
+    [audioTrack]
+  );
 
   const [rotation, setRotation] = useState(0);
 
   useTick(() => {
-    const audioTime = (audio.currentTime * 1000) - offset;
+    if (audio.paused) {
+      audio.play();
+    }
+    const audioTime = audio.currentTime * 1000 - offset;
 
     rhythmTime.current = {
       audioTime,
@@ -43,7 +48,7 @@ export const Ticker = ({
 
     if (beatRemainder < tolerance) {
       setRotation(0);
-    } else if (beatRemainder > (currentBeatLength - tolerance)) {
+    } else if (beatRemainder > currentBeatLength - tolerance) {
       setRotation(sixthRotation);
     } else {
       const crashLength = currentBeatLength - 2 * tolerance;

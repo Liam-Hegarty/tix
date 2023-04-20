@@ -31,7 +31,7 @@ export const Game = ({
 }) => {
   const rhythmTime = useRef({ audioTime: -10000, jsTime: -1000 });
 
-  const rhythm = level.music.rhythm
+  const rhythm = level.music.rhythm;
 
   const moveIsOnTempo = (e: TixEvent) => {
     const { audioTime, jsTime } = rhythmTime.current;
@@ -130,13 +130,15 @@ export const Game = ({
         options={{ backgroundAlpha: 1, backgroundColor: 0x000000 }}
       >
         <Grid level={level} spacing={spacing} offset={offset} />
-        <Ticker {...{ 
-          rhythm,
-          rhythmTime,
-          tolerance,
-          offset: level.music.rhythmOffset,
-          audioTrack: level.music.audioPath
-        }} />
+        <Ticker
+          {...{
+            rhythm,
+            rhythmTime,
+            tolerance,
+            offset: level.music.rhythmOffset,
+            audioTrack: level.music.audioPath,
+          }}
+        />
         <Robot
           {...{
             moveIsAllowed: (e) => moveIsOnTempo(e) && moveIsOnGrid(e),
