@@ -108,6 +108,7 @@ export const Ticker = ({
 
   const drawTickMark = useCallback((g: Graphics) => {
     g.clear();
+    g.lineStyle(2, palette.black, 1)
     g.beginFill(palette.darkBlue);
     g.drawCircle(5, 5, 10);
     g.endFill();
@@ -115,6 +116,7 @@ export const Ticker = ({
 
   const drawTockMark = useCallback((g: Graphics) => {
     g.clear();
+    g.lineStyle(2, palette.black, 1)
     g.beginFill(palette.orange);
     g.drawCircle(5, 5, 10);
     g.endFill();
@@ -136,27 +138,27 @@ export const Ticker = ({
         draw={beatTypes[0] ? drawTockMark : drawTickMark}
         x={
           window.innerWidth -
-          Math.cos(rotation + sixthRotation + rotationConnection) * 125
+          Math.cos(rotation + sixthRotation + rotationConnection) * 120
         }
         y={
           window.innerHeight -
-          Math.sin(rotation + sixthRotation + rotationConnection) * 125
+          Math.sin(rotation + sixthRotation + rotationConnection) * 120
         }
       />
       <GraphicsElement
         draw={beatTypes[1] ? drawTockMark : drawTickMark}
-        x={window.innerWidth - Math.cos(rotation + rotationConnection) * 125}
-        y={window.innerHeight - Math.sin(rotation + rotationConnection) * 125}
+        x={window.innerWidth - Math.cos(rotation + rotationConnection) * 120}
+        y={window.innerHeight - Math.sin(rotation + rotationConnection) * 120}
       />
       <GraphicsElement
         draw={beatTypes[2] ? drawTockMark : drawTickMark}
         x={
           window.innerWidth -
-          Math.cos(rotation - sixthRotation + rotationConnection) * 125
+          Math.cos(rotation - sixthRotation + rotationConnection) * 120
         }
         y={
           window.innerHeight -
-          Math.sin(rotation - sixthRotation + rotationConnection) * 125
+          Math.sin(rotation - sixthRotation + rotationConnection) * 120
         }
       />
     </>
