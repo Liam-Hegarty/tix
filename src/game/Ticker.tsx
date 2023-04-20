@@ -1,5 +1,7 @@
-import { Sprite, useTick } from "@pixi/react";
-import React, { MutableRefObject, useEffect, useMemo, useState } from "react";
+import { Graphics } from "@pixi/graphics";
+import { Sprite, useTick, Graphics as GraphicsElement, Container  } from "@pixi/react";
+import React, { MutableRefObject, useCallback, useEffect, useMemo, useState } from "react";
+import palette from "../palette";
 
 const sixthRotation = Math.PI / 3;
 
@@ -22,6 +24,7 @@ export const Ticker = ({
   );
 
   const [rotation, setRotation] = useState(0);
+  const [beatTypes, setBeatTypes] = useState([rhythm[0].tock, rhythm[1].tock, rhythm[2].tock]);
 
   useTick(() => {
     if (audio.paused) {
@@ -37,14 +40,24 @@ export const Ticker = ({
     var beatRemainder = audioTime;
     var currentBeatLength = rhythm[0].time;
 
-    for (var beat of rhythm) {
+    var currentBeatIndex = 3
+
+    for (var beatNum in rhythm) {
+      const beat = rhythm[beatNum]
       if (beatRemainder - beat.time <= 0) {
         break;
       } else {
         beatRemainder -= beat.time;
         currentBeatLength = beat.time;
+        currentBeatIndex = Number.parseInt(beatNum);
       }
     }
+
+    setBeatTypes([
+      rhythm[(currentBeatIndex + 1) % rhythm.length].tock,
+      rhythm[(currentBeatIndex + 2) % rhythm.length].tock,
+      rhythm[(currentBeatIndex + 3) % rhythm.length].tock,
+    ])
 
     if (beatRemainder < tolerance) {
       setRotation(0);
@@ -79,6 +92,22 @@ export const Ticker = ({
     };
   }, [rhythm, audio]);
 
+  const drawTickMark = useCallback((g: Graphics) => {
+    g.clear()
+    g.beginFill(palette.darkBlue);
+    g.drawCircle(5, 5, 10)
+    g.endFill()
+  }, [])
+
+  const drawTockMark = useCallback((g: Graphics) => {
+    g.clear()
+    g.beginFill(palette.orange);
+    g.drawCircle(5, 5, 10)
+    g.endFill()
+  }, [])
+
+  const rotationConnection = sixthRotation / 4
+
   return (
     <>
       <Sprite
@@ -88,6 +117,21 @@ export const Ticker = ({
         x={window.innerWidth}
         y={window.innerHeight}
         rotation={rotation}
+      />
+      <GraphicsElement
+        draw={beatTypes[0] ? drawTockMark : drawTickMark} 
+        x={window.innerWidth - (Math.cos(rotation + sixthRotation + rotationConnection) * 125)}
+        y={window.innerHeight - (Math.sin(rotation + sixthRotation + rotationConnection) * 125)}
+      />
+      <GraphicsElement 
+        draw={beatTypes[1] ? drawTockMark : drawTickMark} 
+        x={window.innerWidth - (Math.cos(rotation + rotationConnection) * 125)}
+        y={window.innerHeight - (Math.sin(rotation + rotationConnection) * 125)}
+      />
+      <GraphicsElement 
+        draw={beatTypes[2] ? drawTockMark : drawTickMark} 
+        x={window.innerWidth - (Math.cos(rotation - sixthRotation + rotationConnection) * 125)}
+        y={window.innerHeight - (Math.sin(rotation - sixthRotation + rotationConnection) * 125)}
       />
     </>
   );
