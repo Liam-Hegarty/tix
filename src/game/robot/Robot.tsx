@@ -6,21 +6,22 @@ import React, {
   useRef,
   useState,
 } from "react";
-import { TixEvent } from "../Events";
+import { TixEvent } from "../events/Events";
 import { CrashedRobot } from "./CrashedRobot";
 import { HappyRobot } from "./HappyRobot";
+import { RobotListenerRegistry } from "../events/robotListenerRegistry";
 
 const crashSound = new Audio(`${process.env.PUBLIC_URL}/audio/crash.mp3`);
 
 export const Robot = ({
-  moveIsAllowed,
+  listeners,
   spacing,
   offset,
   setOffset,
   start,
   paused,
 }: {
-  moveIsAllowed: (e: TixEvent) => boolean;
+  listeners: RobotListenerRegistry;
   spacing: number;
   offset: { x: number; y: number };
   setOffset: Dispatch<SetStateAction<{ x: number; y: number }>>;
@@ -113,13 +114,18 @@ export const Robot = ({
         ts: e.timeStamp,
       };
 
-      if (moveIsAllowed(moveEvent)) {
-        setNewTix(newTix);
-        lastMoveTs.current = moveEvent.ts;
-      } else {
-        lastCrashTs.current = moveEvent.ts;
-        crashSound.play();
-        setIsCrashed(true);
+      const moveResponse = listeners.tryMove(moveEvent).response;
+
+      switch (moveResponse) {
+        case "OK":
+          setNewTix(newTix);
+          lastMoveTs.current = moveEvent.ts;
+          break;
+        case "CRASH":
+          lastCrashTs.current = moveEvent.ts;
+          crashSound.play();
+          setIsCrashed(true);
+          break;
       }
     }
   };

@@ -1,9 +1,5 @@
 import { Graphics } from "@pixi/graphics";
-import {
-  Sprite,
-  useTick,
-  Graphics as GraphicsElement,
-} from "@pixi/react";
+import { Sprite, useTick, Graphics as GraphicsElement } from "@pixi/react";
 import React, {
   MutableRefObject,
   useCallback,
@@ -108,7 +104,7 @@ export const Ticker = ({
 
   const drawTickMark = useCallback((g: Graphics) => {
     g.clear();
-    g.lineStyle(2, palette.black, 1)
+    g.lineStyle(2, palette.black, 1);
     g.beginFill(palette.darkBlue);
     g.drawCircle(5, 5, 10);
     g.endFill();
@@ -116,7 +112,7 @@ export const Ticker = ({
 
   const drawTockMark = useCallback((g: Graphics) => {
     g.clear();
-    g.lineStyle(2, palette.black, 1)
+    g.lineStyle(2, palette.black, 1);
     g.beginFill(palette.orange);
     g.drawCircle(5, 5, 10);
     g.endFill();

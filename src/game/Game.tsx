@@ -10,17 +10,13 @@ import palette from "../palette";
 import { Stage } from "@pixi/react";
 import { Robot } from "./robot/Robot";
 import { Ticker } from "./Ticker";
-import { TixEvent } from "./Events";
 import { levelOne } from "./levels/LevelOne";
 import { Grid } from "./Grid";
 import { PauseMenu } from "./PauseMenu";
 import { ScannerDrones } from "./obstacles/ScannerDrones";
-import { Rhythm } from "./levels/Level";
+import { RobotListenerRegistry } from "./events/robotListenerRegistry";
+import addEventListeners from "./events/addEventListeners";
 
-const sumRhythmTimes = (rhythm: Rhythm) =>
-  rhythm.map((b) => b.time).reduce((x, y) => x + y, 0);
-
-const tolerance = 100;
 const spacing = 100;
 const level = levelOne;
 
@@ -31,37 +27,11 @@ export const Game = ({
 }) => {
   const rhythmTime = useRef({ audioTime: -10000, jsTime: -1000 });
 
+  const listenerRegistry = new RobotListenerRegistry();
+
+  addEventListeners(listenerRegistry, rhythmTime, level);
+
   const rhythm = level.music.rhythm;
-
-  const moveIsOnTempo = (e: TixEvent) => {
-    const { audioTime, jsTime } = rhythmTime.current;
-    const dividend = (audioTime + (e.ts - jsTime)) % sumRhythmTimes(rhythm);
-    const times = rhythm.map((b, i) => {
-      return { tock: b.tock, time: sumRhythmTimes(rhythm.slice(0, i)) };
-    });
-
-    const nextBeatIndex = Math.max(
-      times.findIndex((b) => b.time > dividend),
-      0
-    );
-    const nextBeat = times[nextBeatIndex];
-    const previousBeat =
-      nextBeatIndex === 0 ? times[times.length - 1] : times[nextBeatIndex - 1];
-
-    const distanceFromBeat = Math.min(
-      dividend - previousBeat.time,
-      nextBeat.time - dividend
-    );
-    return distanceFromBeat < tolerance;
-  };
-
-  const moveIsOnGrid = (e: TixEvent) => {
-    try {
-      return !!level.grid[e.location.y][e.location.x];
-    } catch (e: any) {
-      return false;
-    }
-  };
 
   const [{ width, height }, setScreenDimensions] = useState({
     width: window.innerWidth,
@@ -134,14 +104,14 @@ export const Game = ({
           {...{
             rhythm,
             rhythmTime,
-            tolerance,
+            tolerance: level.music.tolerance,
             offset: level.music.rhythmOffset,
             audioTrack: level.music.audioPath,
           }}
         />
         <Robot
           {...{
-            moveIsAllowed: (e) => moveIsOnTempo(e) && moveIsOnGrid(e),
+            listeners: listenerRegistry,
             spacing,
             offset,
             setOffset,

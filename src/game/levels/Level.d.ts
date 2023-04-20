@@ -24,5 +24,6 @@ export type Level = {
     rhythm: Rhythm;
     audioPath: string;
     rhythmOffset: number;
+    tolerance: number;
   };
 };
