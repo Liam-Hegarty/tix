@@ -7,6 +7,12 @@ const testLevelOne = `
    +++++     +++++
 `;
 
+const levelTwoRaw = `
+  +++
+  +O+   X
+  +++
+`;
+
 describe("Grid Parser", () => {
   test("parses a grid", () => {
     const level = parseGrid(testLevelOne);
@@ -14,5 +20,10 @@ describe("Grid Parser", () => {
     expect(level.grid[0].filter((x) => x).length).toBe(10);
     expect(level.grid[1].filter((x) => x).length).toBe(15);
     expect(level.grid[2].filter((x) => x).length).toBe(10);
+  });
+  test("why is level two not working???", () => {
+    const level = parseGrid(levelTwoRaw);
+    expect(level.start).toMatchObject({ x: 3, y: 1 });
+    expect(level.end).toMatchObject({ x: 8, y: 1 });
   });
 });

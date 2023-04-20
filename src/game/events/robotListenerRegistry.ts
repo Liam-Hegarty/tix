@@ -16,7 +16,7 @@ export class RobotListenerRegistry {
   tryMove(move: TixEvent): EventResponse {
     for (let listener of this.registry) {
       const reponse = listener(move);
-      if (reponse != undefined) {
+      if (reponse !== undefined) {
         return reponse;
       }
     }

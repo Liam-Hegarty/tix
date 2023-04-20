@@ -19,7 +19,7 @@ export type Level = {
   grid: boolean[][];
   start: Point;
   end: Point;
-  scannerDrones: ScannerDrone[];
+  scannerDrones?: ScannerDrone[] = [];
   music: {
     rhythm: Rhythm;
     audioPath: string;

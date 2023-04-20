@@ -3,6 +3,7 @@ import React, {
   Dispatch,
   SetStateAction,
   useEffect,
+  useMemo,
   useRef,
   useState,
 } from "react";
@@ -10,33 +11,38 @@ import palette from "../palette";
 import { Stage } from "@pixi/react";
 import { Robot } from "./robot/Robot";
 import { Ticker } from "./Ticker";
-import { levelOne } from "./levels/LevelOne";
 import { Grid } from "./Grid";
 import { PauseMenu } from "./PauseMenu";
 import { ScannerDrones } from "./obstacles/ScannerDrones";
 import { RobotListenerRegistry } from "./events/robotListenerRegistry";
 import addEventListeners from "./events/addEventListeners";
+import { levels } from "./levels/levels";
 
 const spacing = 100;
-const level = levelOne;
 
 export const Game = ({
   setStage,
 }: {
   setStage: Dispatch<SetStateAction<string>>;
 }) => {
+  const [levelNumber, setLevelNumber] = useState(1);
+  const level = levels[levelNumber];
   const rhythmTime = useRef({ audioTime: -10000, jsTime: -1000 });
 
-  const listenerRegistry = new RobotListenerRegistry();
-
-  addEventListeners(listenerRegistry, rhythmTime, level);
-
-  const rhythm = level.music.rhythm;
+  const listenerRegistry = useMemo(() => {
+    console.log("REGISTERING");
+    const reg = new RobotListenerRegistry();
+    addEventListeners(reg, rhythmTime, level, () =>
+      setLevelNumber(levelNumber + 1)
+    );
+    return reg;
+  }, [rhythmTime, level, levelNumber, setLevelNumber]);
 
   const [{ width, height }, setScreenDimensions] = useState({
     width: window.innerWidth,
     height: window.innerHeight,
   });
+
   const [offset, setOffset] = useState({
     x: width / 2 - level.start.x * spacing,
     y: height / 2 - level.start.y * spacing,
@@ -102,7 +108,7 @@ export const Game = ({
         <Grid level={level} spacing={spacing} offset={offset} />
         <Ticker
           {...{
-            rhythm,
+            rhythm: level.music.rhythm,
             rhythmTime,
             tolerance: level.music.tolerance,
             offset: level.music.rhythmOffset,
