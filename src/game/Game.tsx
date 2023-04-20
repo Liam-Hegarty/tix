@@ -15,19 +15,10 @@ import { levelOne } from "./levels/LevelOne";
 import { Grid } from "./Grid";
 import { PauseMenu } from "./PauseMenu";
 import { ScannerDrones } from "./obstacles/ScannerDrones";
-
-type Beat = { tock: boolean; time: number };
-type Rhythm = Beat[];
+import { Rhythm } from "./levels/Level";
 
 const sumRhythmTimes = (rhythm: Rhythm) =>
   rhythm.map((b) => b.time).reduce((x, y) => x + y, 0);
-
-const rhythm = [
-  { tock: false, time: 400 },
-  { tock: false, time: 400 },
-  { tock: false, time: 400 },
-  { tock: true, time: 400 },
-];
 
 const tolerance = 100;
 const spacing = 100;
@@ -39,6 +30,8 @@ export const Game = ({
   setStage: Dispatch<SetStateAction<string>>;
 }) => {
   const rhythmTime = useRef({ audioTime: -10000, jsTime: -1000 });
+
+  const rhythm = level.music.rhythm
 
   const moveIsOnTempo = (e: TixEvent) => {
     const { audioTime, jsTime } = rhythmTime.current;
@@ -137,7 +130,13 @@ export const Game = ({
         options={{ backgroundAlpha: 1, backgroundColor: 0x000000 }}
       >
         <Grid level={level} spacing={spacing} offset={offset} />
-        <Ticker {...{ rhythm, rhythmTime, tolerance }} />
+        <Ticker {...{ 
+          rhythm,
+          rhythmTime,
+          tolerance,
+          offset: level.music.rhythmOffset,
+          audioTrack: level.music.audioPath
+        }} />
         <Robot
           {...{
             moveIsAllowed: (e) => moveIsOnTempo(e) && moveIsOnGrid(e),

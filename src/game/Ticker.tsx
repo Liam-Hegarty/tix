@@ -1,7 +1,5 @@
-import { Sprite, Text, useTick } from "@pixi/react";
-import React, { MutableRefObject, useEffect, useState } from "react";
-
-const audio = new Audio(`${process.env.PUBLIC_URL}/audio/4-4.mp3`);
+import { Sprite, useTick } from "@pixi/react";
+import React, { MutableRefObject, useEffect, useMemo, useState } from "react";
 
 const sixthRotation = Math.PI / 3;
 
@@ -9,15 +7,22 @@ export const Ticker = ({
   rhythm,
   rhythmTime,
   tolerance,
+  offset,
+  audioTrack
 }: {
   rhythm: Array<{ tock: boolean; time: number }>;
   rhythmTime: MutableRefObject<{ audioTime: number; jsTime: number }>;
   tolerance: number;
+  offset: number;
+  audioTrack: string;
 }) => {
+
+  const audio = useMemo(() => new Audio(`${process.env.PUBLIC_URL}/${audioTrack}`), [audioTrack])
+
   const [rotation, setRotation] = useState(0);
 
   useTick(() => {
-    const audioTime = (audio.currentTime - 0.2) * 1000;
+    const audioTime = (audio.currentTime * 1000) - offset;
 
     rhythmTime.current = {
       audioTime,
@@ -26,13 +31,11 @@ export const Ticker = ({
 
     var beatRemainder = audioTime;
     var currentBeatLength = rhythm[0].time;
-    var b = 0
 
     for (var beat of rhythm) {
       if (beatRemainder - beat.time <= 0) {
         break;
       } else {
-        b++
         beatRemainder -= beat.time;
         currentBeatLength = beat.time;
       }
@@ -69,7 +72,7 @@ export const Ticker = ({
         audio.pause();
       } catch (e: any) {}
     };
-  }, [rhythm]);
+  }, [rhythm, audio]);
 
   return (
     <>

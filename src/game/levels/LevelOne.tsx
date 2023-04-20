@@ -23,6 +23,16 @@ export const levelOne: Level = {
         width: 3,
         height: 3,
       },
-    },
+    }
   ],
+  music: {
+    rhythm: [
+      { tock: false, time: 400 },
+      { tock: false, time: 400 },
+      { tock: false, time: 400 },
+      { tock: true, time: 400 },
+    ],
+    rhythmOffset: 180,
+    audioPath: "audio/4-4.mp3"
+  }
 };
