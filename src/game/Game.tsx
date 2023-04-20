@@ -18,7 +18,7 @@ import { RobotListenerRegistry } from "./events/robotListenerRegistry";
 import addEventListeners from "./events/addEventListeners";
 import { levels } from "./levels/levels";
 
-const spacing = 100;
+const spacing = 200;
 
 export const Game = ({
   setStage,
