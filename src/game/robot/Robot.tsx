@@ -10,6 +10,9 @@ import { TixEvent } from "../events/Events";
 import { CrashedRobot } from "./CrashedRobot";
 import { HappyRobot } from "./HappyRobot";
 import { RobotListenerRegistry } from "../events/robotListenerRegistry";
+import { DropShadowFilter } from "@pixi/filter-drop-shadow";
+import { Graphics as GraphicsElement } from "@pixi/react";
+import { Graphics } from "@pixi/graphics";
 
 const crashSound = new Audio(`${process.env.PUBLIC_URL}/audio/crash.mp3`);
 
@@ -142,6 +145,29 @@ export const Robot = ({
       ) : (
         <HappyRobot spacing={spacing} />
       )}
+      <Container
+        filters={[
+          new DropShadowFilter({
+            pixelSize: 2,
+            blur: 2,
+            offset: {
+              x: 0,
+              y: spacing / 10,
+            },
+            shadowOnly: true,
+          }),
+        ]}
+        anchor={{ x: 0.5, y: 0.5 }}
+      >
+        <GraphicsElement
+          draw={(g: Graphics) => {
+            g.clear();
+            g.beginFill(0);
+            g.drawCircle(0, -5, spacing / 10);
+            g.endFill();
+          }}
+        />
+      </Container>
     </Container>
   );
 };
