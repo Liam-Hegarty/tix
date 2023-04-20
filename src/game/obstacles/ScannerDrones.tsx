@@ -63,7 +63,7 @@ const Drone = ({
           x={drone.location.x * spacing + offset.x + wobble.x}
           y={drone.location.y * spacing + offset.y + wobble.y}
           anchor={{ x: 0.5, y: 0.5 }}
-          scale={{ x: 0.1, y: 0.1 }}
+          scale={{ x: 0.1 * (spacing / 100), y: 0.1 * (spacing / 100) }}
         />
       </Container>
     </>
