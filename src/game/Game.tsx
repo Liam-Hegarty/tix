@@ -29,17 +29,16 @@ const rhythm = [
   { tock: true, time: 400 },
 ];
 
+const tolerance = 100;
+const spacing = 100;
+const level = levelOne;
+
 export const Game = ({
   setStage,
 }: {
   setStage: Dispatch<SetStateAction<string>>;
 }) => {
   const rhythmTime = useRef({ audioTime: -10000, jsTime: -1000 });
-
-  const level = levelOne;
-
-  const tolerance = 100;
-  const spacing = 100;
 
   const moveIsOnTempo = (e: TixEvent) => {
     const { audioTime, jsTime } = rhythmTime.current;
@@ -138,7 +137,7 @@ export const Game = ({
         options={{ backgroundAlpha: 1, backgroundColor: 0x000000 }}
       >
         <Grid level={level} spacing={spacing} offset={offset} />
-        <Ticker rhythm={rhythm} rhythmTime={rhythmTime} />
+        <Ticker {...{ rhythm, rhythmTime, tolerance }} />
         <Robot
           {...{
             moveIsAllowed: (e) => moveIsOnTempo(e) && moveIsOnGrid(e),
