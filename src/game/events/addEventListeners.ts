@@ -36,7 +36,8 @@ const moveIsOnTempo =
       dividend - previousBeat.time,
       nextBeat.time - dividend
     );
-    if (distanceFromBeat < level.music.tolerance) {
+
+    if (distanceFromBeat < level.music.tolerance && (nextBeat.tock === e.action)) {
       return undefined;
     } else {
       return {
