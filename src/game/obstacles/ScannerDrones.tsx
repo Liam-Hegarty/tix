@@ -1,10 +1,19 @@
-import React, { Dispatch, SetStateAction, useCallback, useEffect, useState } from "react";
+import React, {
+  Dispatch,
+  SetStateAction,
+  useCallback,
+  useEffect,
+  useState,
+} from "react";
 import { Point, ScannerDrone } from "../levels/Level";
 import { Container, Sprite, useTick } from "@pixi/react";
 import { Graphics as GraphicsElement } from "@pixi/react";
 import { Graphics } from "@pixi/graphics";
 import { DropShadowFilter } from "@pixi/filter-drop-shadow";
-import { RobotListener, RobotListenerRegistry } from "../events/robotListenerRegistry";
+import {
+  RobotListener,
+  RobotListenerRegistry,
+} from "../events/robotListenerRegistry";
 import { TixEvent } from "../events/Events";
 
 type RobotFound = {
@@ -12,19 +21,21 @@ type RobotFound = {
   when: number;
 };
 
-const droneListener = ({
-  topLeft,
-  width,
-  height,
-  setRobotFound,
-}: {
-  topLeft: Point;
-  width: number;
-  height: number;
-  setRobotFound: Dispatch<SetStateAction<RobotFound | undefined>>;
-}): RobotListener => (e: TixEvent) => {
-    return undefined
-  }
+const droneListener =
+  ({
+    topLeft,
+    width,
+    height,
+    setRobotFound,
+  }: {
+    topLeft: Point;
+    width: number;
+    height: number;
+    setRobotFound: Dispatch<SetStateAction<RobotFound | undefined>>;
+  }): RobotListener =>
+  (e: TixEvent) => {
+    return undefined;
+  };
 
 const Drone = ({
   drone,
@@ -41,10 +52,13 @@ const Drone = ({
   const [robotFound, setRobotFound] = useState<RobotFound>();
 
   useEffect(() => {
-    const droneId = `drone-${JSON.stringify(drone.area)}`
-    listenerRegistry.register(droneId, droneListener({...drone.area, setRobotFound}))
-    return () => listenerRegistry.deregister(droneId)
-  })
+    const droneId = `drone-${JSON.stringify(drone.area)}`;
+    listenerRegistry.register(
+      droneId,
+      droneListener({ ...drone.area, setRobotFound })
+    );
+    return () => listenerRegistry.deregister(droneId);
+  });
 
   useTick(() => {
     if (robotFound) {

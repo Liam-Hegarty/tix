@@ -2,6 +2,12 @@ import { EventResponse, TixEvent } from "./Events";
 
 export type RobotListener = (e: TixEvent) => Partial<EventResponse> | undefined;
 
+const defaultResponse: EventResponse = {
+  canMove: true,
+  crashed: false,
+  frozen: false,
+};
+
 export class RobotListenerRegistry {
   registry: Map<String, RobotListener>;
 
@@ -10,7 +16,7 @@ export class RobotListenerRegistry {
   }
 
   register(id: string, listener: RobotListener) {
-    this.registry.set(id,listener);
+    this.registry.set(id, listener);
   }
 
   deregister(id: string) {
@@ -25,7 +31,7 @@ export class RobotListenerRegistry {
           ...listener(move),
         };
       },
-      { canMove: true, crashed: false }
+      defaultResponse
     );
   }
 }
