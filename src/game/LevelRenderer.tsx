@@ -23,7 +23,6 @@ export const LevelRenderer = ({
   const rhythmTime = useRef({ audioTime: -10000, jsTime: -1000 });
 
   const listenerRegistry = useMemo(() => {
-    console.log("REGISTERING");
     const reg = new RobotListenerRegistry();
     addEventListeners(reg, rhythmTime, level, nextLevel);
     return reg;
