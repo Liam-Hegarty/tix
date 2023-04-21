@@ -13,10 +13,14 @@ export const LevelRenderer = ({
   levelNumber,
   nextLevel,
   paused,
+  _retryCount,
+  restart,
 }: {
   levelNumber: number;
   nextLevel: () => void;
   paused: boolean;
+  _retryCount: number;
+  restart: () => void;
 }) => {
   const level = levels[levelNumber];
   const rhythmTime = useRef({ audioTime: -10000, jsTime: -1000 });
@@ -51,6 +55,7 @@ export const LevelRenderer = ({
           setOffset,
           start: level.start,
           paused,
+          restart,
         }}
       />
       {!!level.scannerDrones.length && (

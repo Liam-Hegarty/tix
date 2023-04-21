@@ -1,5 +1,11 @@
 import { Box } from "@mui/material";
-import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
+import React, {
+  Dispatch,
+  SetStateAction,
+  useCallback,
+  useEffect,
+  useState,
+} from "react";
 import palette from "../palette";
 import { PauseMenu } from "./PauseMenu";
 import { LevelRenderer } from "./LevelRenderer";
@@ -18,6 +24,11 @@ export const Game = ({
   });
 
   const [paused, setPaused] = useState(false);
+  const [retryCount, setRetryCount] = useState(0);
+
+  const restart = useCallback(() => {
+    setRetryCount(retryCount + 1);
+  }, [retryCount, setRetryCount]);
 
   useEffect(() => {
     const resize = (ev: UIEvent) => {
@@ -78,6 +89,9 @@ export const Game = ({
           levelNumber={levelNumber}
           nextLevel={() => setLevelNumber(levelNumber + 1)}
           paused={paused}
+          _retryCount={retryCount}
+          restart={restart}
+          key={`game-${retryCount}`}
         />
       </Stage>
     </Box>

@@ -34,7 +34,6 @@ const droneListener =
     setRobotFound: Dispatch<SetStateAction<RobotFound | undefined>>;
   }): RobotListener =>
   (e: TixEvent, r: EventResponse) => {
-    console.log({ e, r, area: { topLeft, width, height } });
     if (
       e.oldLocation.x >= topLeft.x &&
       e.oldLocation.y >= topLeft.y &&
@@ -44,6 +43,7 @@ const droneListener =
       if (r.crashed) {
         setRobotFound({ where: e.oldLocation, when: e.ts });
         return {
+          detected: true,
           frozen: true,
         };
       } else {
@@ -76,7 +76,7 @@ const Drone = ({
       -10
     );
     return () => listenerRegistry.deregister(droneId);
-  });
+  }, [drone, listenerRegistry]);
 
   useTick(() => {
     if (robotFound) {

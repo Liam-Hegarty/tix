@@ -13,6 +13,7 @@ type PrioritisedListener = {
 const defaultResponse: EventResponse = {
   canMove: true,
   crashed: false,
+  detected: false,
   frozen: false,
 };
 

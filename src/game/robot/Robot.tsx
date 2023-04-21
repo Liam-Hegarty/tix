@@ -13,6 +13,7 @@ import { RobotListenerRegistry } from "../events/robotListenerRegistry";
 import { DropShadowFilter } from "@pixi/filter-drop-shadow";
 import { Graphics as GraphicsElement } from "@pixi/react";
 import { Graphics } from "@pixi/graphics";
+import { DetectedRobot } from "./DetectedRobot";
 
 const crashSound = new Audio(`${process.env.PUBLIC_URL}/audio/crash.mp3`);
 
@@ -23,6 +24,7 @@ export const Robot = ({
   setOffset,
   start,
   paused,
+  restart,
 }: {
   listeners: RobotListenerRegistry;
   spacing: number;
@@ -30,6 +32,7 @@ export const Robot = ({
   setOffset: Dispatch<SetStateAction<{ x: number; y: number }>>;
   start: { x: number; y: number };
   paused: boolean;
+  restart: () => void;
 }) => {
   const [tix, setTix] = useState({ new: start, old: start });
   const setNewTix = (newTix: { x: number; y: number }) => {
@@ -39,19 +42,17 @@ export const Robot = ({
     x: offset.x + start.x * spacing,
     y: offset.y + start.y * spacing,
   });
-  const crashPenalty = 1000;
-  const [isCrashed, setIsCrashed] = useState(false);
+  const [crashedUntil, setCrashedUntil] = useState(-1000);
+  const [detectedAt, setDetectedAt] = useState();
+  const isFrozen = useRef(false);
+
+  const isCrashed = performance.now() < crashedUntil;
 
   const lastMoveTs = useRef(-100000);
-  const lastCrashTs = useRef(-100000);
 
   useTick((delta) => {
     const panSpeed = 5 * delta;
     const now = performance.now();
-
-    if (isCrashed && now > lastCrashTs.current + crashPenalty) {
-      setIsCrashed(false);
-    }
 
     if (anim.x > window.innerWidth * 0.7) {
       setOffset({ x: offset.x - panSpeed, y: offset.y });
@@ -85,7 +86,7 @@ export const Robot = ({
   });
 
   const handleMovement = (e: any) => {
-    if (e.repeat || paused || isCrashed) {
+    if (e.repeat || paused || isCrashed || isFrozen.current) {
       return;
     }
 
@@ -123,10 +124,16 @@ export const Robot = ({
       if (moveResponse.canMove) {
         setNewTix(newerTix);
         lastMoveTs.current = moveEvent.ts;
-      } else {
-        lastCrashTs.current = moveEvent.ts;
+      }
+      if (moveResponse.crashed) {
         crashSound.play();
-        setIsCrashed(true);
+        setCrashedUntil(e.timeStamp + 1000);
+      }
+      if (moveResponse.detected) {
+        setDetectedAt(e.timeStamp);
+      }
+      if (moveResponse.frozen) {
+        isFrozen.current = true;
       }
     }
   };
@@ -136,13 +143,21 @@ export const Robot = ({
     return () => document.removeEventListener("keydown", handleMovement);
   });
 
+  var robotElement;
+
+  if (!!detectedAt) {
+    robotElement = <DetectedRobot {...{ spacing, detectedAt, restart }} />;
+  } else {
+    robotElement = isCrashed ? (
+      <CrashedRobot {...{ spacing }} />
+    ) : (
+      <HappyRobot spacing={spacing} />
+    );
+  }
+
   return (
     <Container x={anim.x} y={anim.y}>
-      {isCrashed ? (
-        <CrashedRobot {...{ spacing }} />
-      ) : (
-        <HappyRobot spacing={spacing} />
-      )}
+      {robotElement}
       <Container
         filters={[
           new DropShadowFilter({
