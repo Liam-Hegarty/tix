@@ -69,7 +69,7 @@ const Walls = ({
         g.lineStyle(1, colors.black, 1);
         g.drawRect(
           centrePoint.x - spacing / 2,
-          centrePoint.y - spacing,
+          centrePoint.y - (spacing * 1.25),
           spacing,
           spacing * 0.75
         );
