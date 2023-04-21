@@ -14,14 +14,14 @@ export class RobotListenerRegistry {
   }
 
   tryMove(move: TixEvent): EventResponse {
-    for (let listener of this.registry) {
-      const reponse = listener(move);
-      if (reponse !== undefined) {
-        return reponse;
-      }
-    }
-    return {
-      response: "OK",
-    };
+    return this.registry.reduce<EventResponse>(
+      (result, listener) => {
+        return {
+          ...result,
+          ...listener(move),
+        };
+      },
+      { canMove: true }
+    );
   }
 }

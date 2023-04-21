@@ -7,5 +7,5 @@ export interface TixEvent {
 }
 
 export type EventResponse = {
-  response: string;
+  canMove: boolean;
 };

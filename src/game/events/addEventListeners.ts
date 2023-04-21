@@ -11,12 +11,12 @@ const moveIsOnGrid =
         return undefined;
       } else {
         return {
-          response: "CRASH",
+          canMove: false,
         };
       }
     } catch (e: any) {
       return {
-        response: "CRASH",
+        canMove: false,
       };
     }
   };

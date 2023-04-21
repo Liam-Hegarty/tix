@@ -56,7 +56,7 @@ export const moveIsOnTempo = (
       return undefined;
     } else {
       return {
-        response: "CRASH",
+        canMove: false,
       };
     }
   };

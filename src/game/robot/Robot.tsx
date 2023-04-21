@@ -117,18 +117,15 @@ export const Robot = ({
         ts: e.timeStamp,
       };
 
-      const moveResponse = listeners.tryMove(moveEvent).response;
+      const moveResponse = listeners.tryMove(moveEvent);
 
-      switch (moveResponse) {
-        case "OK":
-          setNewTix(newTix);
-          lastMoveTs.current = moveEvent.ts;
-          break;
-        case "CRASH":
-          lastCrashTs.current = moveEvent.ts;
-          crashSound.play();
-          setIsCrashed(true);
-          break;
+      if (moveResponse.canMove) {
+        setNewTix(newTix);
+        lastMoveTs.current = moveEvent.ts;
+      } else {
+        lastCrashTs.current = moveEvent.ts;
+        crashSound.play();
+        setIsCrashed(true);
       }
     }
   };

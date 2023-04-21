@@ -32,8 +32,8 @@ describe("moveIsOnTempo", () => {
       tolerance: 1,
     });
     expect(
-      listener({ action: false, ts: 250, location: { x: 0, y: 0 } })?.response
-    ).toBe("CRASH");
+      listener({ action: false, ts: 250, location: { x: 0, y: 0 } })?.canMove
+    ).toBeFalsy();
   });
   test("returns false for an action on a tick", () => {
     const listener = moveIsOnTempo(fakeRef({ jsTime: 500, audioTime: 500 }), {
@@ -43,8 +43,8 @@ describe("moveIsOnTempo", () => {
       tolerance: 1,
     });
     expect(
-      listener({ action: true, ts: 250, location: { x: 0, y: 0 } })?.response
-    ).toBe("CRASH");
+      listener({ action: true, ts: 250, location: { x: 0, y: 0 } })?.canMove
+    ).toBeFalsy();
   });
   test("returns false for a perfect move on a tock", () => {
     const listener = moveIsOnTempo(fakeRef({ jsTime: 500, audioTime: 500 }), {
@@ -54,8 +54,8 @@ describe("moveIsOnTempo", () => {
       tolerance: 1,
     });
     expect(
-      listener({ action: false, ts: 500, location: { x: 0, y: 0 } })?.response
-    ).toBe("CRASH");
+      listener({ action: false, ts: 500, location: { x: 0, y: 0 } })?.canMove
+    ).toBeFalsy();
   });
   test("returns true for a perfect action on a tock", () => {
     const listener = moveIsOnTempo(fakeRef({ jsTime: 500, audioTime: 500 }), {
@@ -79,7 +79,7 @@ describe("moveIsOnTempo", () => {
       listener({ action: true, ts: 401, location: { x: 0, y: 0 } })
     ).toBeUndefined();
   });
-  test("returns true for an action outside of tolerance", () => {
+  test("returns false for an action outside of tolerance", () => {
     const listener = moveIsOnTempo(fakeRef({ jsTime: 500, audioTime: 500 }), {
       rhythm: [{ time: 500, tock: true }],
       audioPath: "",
@@ -87,8 +87,8 @@ describe("moveIsOnTempo", () => {
       tolerance: 100,
     });
     expect(
-      listener({ action: true, ts: 399, location: { x: 0, y: 0 } })
-    ).toBeUndefined();
+      listener({ action: true, ts: 399, location: { x: 0, y: 0 } })?.canMove
+    ).toBeFalsy();
   });
   test("listens to value of nearest beat", () => {
     const listener = moveIsOnTempo(fakeRef({ jsTime: 0, audioTime: 0 }), {
