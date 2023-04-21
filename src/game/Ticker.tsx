@@ -1,5 +1,5 @@
 import { Graphics } from "@pixi/graphics";
-import { Sprite, useTick, Graphics as GraphicsElement } from "@pixi/react";
+import { Sprite, useTick, Graphics as GraphicsElement, Container } from "@pixi/react";
 import React, {
   MutableRefObject,
   useCallback,
@@ -8,6 +8,7 @@ import React, {
   useState,
 } from "react";
 import palette from "../palette";
+import { OutlineFilter } from "@pixi/filter-outline"
 
 const sixthRotation = Math.PI / 3;
 
@@ -121,7 +122,11 @@ export const Ticker = ({
   const rotationConnection = sixthRotation / 4;
 
   return (
-    <>
+    <Container
+      filters={[
+        new OutlineFilter(4, palette.black)
+      ]}
+    >
       <Sprite
         image={`${process.env.PUBLIC_URL}/sprite/big-gear.png`}
         anchor={{ x: 0.5, y: 0.5 }}
@@ -157,6 +162,6 @@ export const Ticker = ({
           Math.sin(rotation - sixthRotation + rotationConnection) * 120
         }
       />
-    </>
+    </Container>
   );
 };
