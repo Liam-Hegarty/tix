@@ -1,23 +1,25 @@
-import React, { useMemo, useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { Grid } from "./Grid";
 import { Ticker } from "./Ticker";
 import { Robot } from "./robot/Robot";
-import { Level } from "./levels/Level";
 import { RobotListenerRegistry } from "./events/robotListenerRegistry";
 import addEventListeners from "./events/addEventListeners";
 import { ScannerDrones } from "./obstacles/ScannerDrones";
+import { levels } from "./levels/levels";
 
 const spacing = 100;
 
 export const LevelRenderer = ({
-  level,
+  levelNumber,
   nextLevel,
   paused,
 }: {
-  level: Level;
+  levelNumber: number;
   nextLevel: () => void;
   paused: boolean;
 }) => {
+  console.log(levelNumber);
+  const level = levels[levelNumber];
   const rhythmTime = useRef({ audioTime: -10000, jsTime: -1000 });
 
   const listenerRegistry = useMemo(() => {
@@ -32,6 +34,13 @@ export const LevelRenderer = ({
     y: window.innerHeight / 2 - level.start.y * spacing,
   });
 
+  useEffect(() => {
+    setOffset({
+      x: window.innerWidth / 2 - level.start.x * spacing,
+      y: window.innerHeight / 2 - level.start.y * spacing,
+    });
+  }, [level]);
+
   return (
     <>
       <Grid level={level} spacing={spacing} offset={offset} />
@@ -45,6 +54,7 @@ export const LevelRenderer = ({
         }}
       />
       <Robot
+        key={`robot-${levelNumber}`}
         {...{
           listeners: listenerRegistry,
           spacing,
@@ -54,7 +64,7 @@ export const LevelRenderer = ({
           paused,
         }}
       />
-      {level.scannerDrones.length && (
+      {!!level.scannerDrones.length && (
         <ScannerDrones
           drones={level.scannerDrones}
           spacing={spacing}

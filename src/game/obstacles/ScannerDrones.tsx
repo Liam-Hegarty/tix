@@ -79,6 +79,7 @@ export const ScannerDrones = ({
   spacing: number;
   offset: Point;
 }) => {
+  console.log("ROCK ME BABY");
   return (
     <>
       {drones.map((drone, i) => (

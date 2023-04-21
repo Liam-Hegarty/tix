@@ -2,7 +2,6 @@ import { Box } from "@mui/material";
 import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import palette from "../palette";
 import { PauseMenu } from "./PauseMenu";
-import { levels } from "./levels/levels";
 import { LevelRenderer } from "./LevelRenderer";
 import { Stage } from "@pixi/react";
 
@@ -12,7 +11,6 @@ export const Game = ({
   setStage: Dispatch<SetStateAction<string>>;
 }) => {
   const [levelNumber, setLevelNumber] = useState(1);
-  const level = levels[levelNumber];
 
   const [{ width, height }, setScreenDimensions] = useState({
     width: window.innerWidth,
@@ -77,7 +75,7 @@ export const Game = ({
         options={{ backgroundAlpha: 1, backgroundColor: 0x000000 }}
       >
         <LevelRenderer
-          level={level}
+          levelNumber={levelNumber}
           nextLevel={() => setLevelNumber(levelNumber + 1)}
           paused={paused}
         />
