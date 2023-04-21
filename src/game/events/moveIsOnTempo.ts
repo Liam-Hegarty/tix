@@ -20,8 +20,9 @@ export const moveIsOnTempo = (
 
   return (e: TixEvent): EventResponse | undefined => {
     const { audioTime, jsTime } = rhythmTime.current;
-    const msProgressOfCurrentLoop =
-      Math.abs((audioTime + (e.ts - jsTime)) % sumRhythmTimes(music.rhythm));
+    const msProgressOfCurrentLoop = Math.abs(
+      (audioTime + (e.ts - jsTime)) % sumRhythmTimes(music.rhythm)
+    );
 
     const nextBeatIndex = Math.max(
       cumulativeBeatTimes.findIndex((b) => b.time > msProgressOfCurrentLoop),
@@ -58,8 +59,8 @@ export const moveIsOnTempo = (
         msProgressOfCurrentLoop,
         previousBeat,
         nextBeat,
-        distanceFromBeat
-      })
+        distanceFromBeat,
+      });
       return {
         response: "CRASH",
       };
