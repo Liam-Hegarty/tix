@@ -27,7 +27,7 @@ describe("moveIsOnTempo", () => {
         newLocation: { x: 0, y: 0 },
         oldLocation: { x: 0, y: 0 },
       })
-    ).toBeUndefined();
+    ).toMatchObject({});
   });
   test("returns false for a terrible key press", () => {
     const listener = moveIsOnTempo(fakeRef({ jsTime: 500, audioTime: 500 }), {
@@ -91,7 +91,7 @@ describe("moveIsOnTempo", () => {
         newLocation: { x: 0, y: 0 },
         oldLocation: { x: 0, y: 0 },
       })
-    ).toBeUndefined();
+    ).toMatchObject({});
   });
   test("returns true for an action within tolerance", () => {
     const listener = moveIsOnTempo(fakeRef({ jsTime: 500, audioTime: 500 }), {
@@ -107,7 +107,7 @@ describe("moveIsOnTempo", () => {
         newLocation: { x: 0, y: 0 },
         oldLocation: { x: 0, y: 0 },
       })
-    ).toBeUndefined();
+    ).toMatchObject({});
   });
   test("returns false for an action outside of tolerance", () => {
     const listener = moveIsOnTempo(fakeRef({ jsTime: 500, audioTime: 500 }), {
@@ -142,7 +142,7 @@ describe("moveIsOnTempo", () => {
         newLocation: { x: 0, y: 0 },
         oldLocation: { x: 0, y: 0 },
       })
-    ).toBeUndefined();
+    ).toMatchObject({});
   });
   test("listens to value of nearest beat wraps around", () => {
     const listener = moveIsOnTempo(fakeRef({ jsTime: 0, audioTime: 0 }), {
@@ -161,6 +161,6 @@ describe("moveIsOnTempo", () => {
         newLocation: { x: 0, y: 0 },
         oldLocation: { x: 0, y: 0 },
       })
-    ).toBeUndefined();
+    ).toMatchObject({});
   });
 });
