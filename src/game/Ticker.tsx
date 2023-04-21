@@ -1,5 +1,10 @@
 import { Graphics } from "@pixi/graphics";
-import { Sprite, useTick, Graphics as GraphicsElement, Container } from "@pixi/react";
+import {
+  Sprite,
+  useTick,
+  Graphics as GraphicsElement,
+  Container,
+} from "@pixi/react";
 import React, {
   MutableRefObject,
   useCallback,
@@ -8,9 +13,21 @@ import React, {
   useState,
 } from "react";
 import palette from "../palette";
-import { OutlineFilter } from "@pixi/filter-outline"
+import { OutlineFilter } from "@pixi/filter-outline";
+import { ColorMatrixFilter } from "pixi.js";
 
 const sixthRotation = Math.PI / 3;
+
+let darken = new ColorMatrixFilter();
+let lighten = new ColorMatrixFilter();
+
+darken.matrix = [
+  1, 0, 0, 0, -0.25, 0, 1, 0, 0, -0.25, 0, 0, 1, 0, -0.25, 0, 0, 0, 1, 0,
+];
+
+lighten.matrix = [
+  1, 0, 0, 0, 0.1, 0, 1, 0, 0, 0.1, 0, 0, 1, 0, 0.1, 0, 0, 0, 1, 0,
+];
 
 export const Ticker = ({
   rhythm,
@@ -36,6 +53,7 @@ export const Ticker = ({
     rhythm[1].tock,
     rhythm[2].tock,
   ]);
+  const [isPerfect, setIsPerfect] = useState(false);
 
   useTick(() => {
     if (audio.paused) {
@@ -48,7 +66,7 @@ export const Ticker = ({
       jsTime: performance.now(),
     };
 
-    var beatRemainder = audioTime;
+    var beatRemainder = rhythmTime.current.audioTime;
     var currentBeatLength = rhythm[0].time;
 
     var currentBeatIndex = 3;
@@ -69,6 +87,17 @@ export const Ticker = ({
       rhythm[(currentBeatIndex + 2) % rhythm.length].tock,
       rhythm[(currentBeatIndex + 3) % rhythm.length].tock,
     ]);
+
+    const distanceFromBeat = Math.min(
+      beatRemainder,
+      currentBeatLength - tolerance
+    );
+
+    if (distanceFromBeat < tolerance) {
+      setIsPerfect(true);
+    } else {
+      setIsPerfect(false);
+    }
 
     if (beatRemainder < tolerance) {
       setRotation(0);
@@ -122,11 +151,7 @@ export const Ticker = ({
   const rotationConnection = sixthRotation / 4;
 
   return (
-    <Container
-      filters={[
-        new OutlineFilter(4, palette.black)
-      ]}
-    >
+    <Container filters={[new OutlineFilter(4, palette.black)]}>
       <Sprite
         image={`${process.env.PUBLIC_URL}/sprite/big-gear.png`}
         anchor={{ x: 0.5, y: 0.5 }}
@@ -135,33 +160,37 @@ export const Ticker = ({
         y={window.innerHeight}
         rotation={rotation}
       />
-      <GraphicsElement
-        draw={beatTypes[0] ? drawTockMark : drawTickMark}
-        x={
-          window.innerWidth -
-          Math.cos(rotation + sixthRotation + rotationConnection) * 120
-        }
-        y={
-          window.innerHeight -
-          Math.sin(rotation + sixthRotation + rotationConnection) * 120
-        }
-      />
-      <GraphicsElement
-        draw={beatTypes[1] ? drawTockMark : drawTickMark}
-        x={window.innerWidth - Math.cos(rotation + rotationConnection) * 120}
-        y={window.innerHeight - Math.sin(rotation + rotationConnection) * 120}
-      />
-      <GraphicsElement
-        draw={beatTypes[2] ? drawTockMark : drawTickMark}
-        x={
-          window.innerWidth -
-          Math.cos(rotation - sixthRotation + rotationConnection) * 120
-        }
-        y={
-          window.innerHeight -
-          Math.sin(rotation - sixthRotation + rotationConnection) * 120
-        }
-      />
+      <Container filters={isPerfect ? [lighten] : [darken]}>
+        <GraphicsElement
+          draw={beatTypes[0] ? drawTockMark : drawTickMark}
+          x={
+            window.innerWidth -
+            Math.cos(rotation + sixthRotation + rotationConnection) * 120
+          }
+          y={
+            window.innerHeight -
+            Math.sin(rotation + sixthRotation + rotationConnection) * 120
+          }
+        />
+      </Container>
+      <Container filters={[darken]}>
+        <GraphicsElement
+          draw={beatTypes[1] ? drawTockMark : drawTickMark}
+          x={window.innerWidth - Math.cos(rotation + rotationConnection) * 120}
+          y={window.innerHeight - Math.sin(rotation + rotationConnection) * 120}
+        />
+        <GraphicsElement
+          draw={beatTypes[2] ? drawTockMark : drawTickMark}
+          x={
+            window.innerWidth -
+            Math.cos(rotation - sixthRotation + rotationConnection) * 120
+          }
+          y={
+            window.innerHeight -
+            Math.sin(rotation - sixthRotation + rotationConnection) * 120
+          }
+        />
+      </Container>
     </Container>
   );
 };

@@ -32,7 +32,7 @@ export const levelOne: Level = {
       { tock: false, time: 400 },
       { tock: true, time: 400 },
     ],
-    rhythmOffset: 180,
+    rhythmOffset: 220,
     audioPath: "audio/4-4.mp3",
     tolerance: 150,
   },
