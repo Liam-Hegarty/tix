@@ -1,10 +1,5 @@
 import { Box } from "@mui/material";
-import React, {
-  Dispatch,
-  SetStateAction,
-  useEffect,
-  useState,
-} from "react";
+import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import palette from "../palette";
 import { PauseMenu } from "./PauseMenu";
 import { levels } from "./levels/levels";
