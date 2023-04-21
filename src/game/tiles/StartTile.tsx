@@ -48,6 +48,7 @@ export const StartTile = ({
         scale={0.1}
         tileScale={tileScale}
         tilePosition={{ x: 0, y: 0 }}
+        anchor={{ x: 1, y: 0 }}
       />
       <TilingSprite
         x={offset.x + (x - 0.5) * spacing}

@@ -24,7 +24,7 @@ const Tiles = ({
                 key={`grid-tile-${x}-${y}`}
                 x={(x - 0.5) * spacing + offset.x}
                 y={(y - 0.5) * spacing + offset.y}
-                scale={spacing / 1300}
+                scale={spacing / 1280}
                 image={`${process.env.PUBLIC_URL}/texture/floor.png`}
               />
             )
