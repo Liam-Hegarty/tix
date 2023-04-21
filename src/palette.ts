@@ -11,7 +11,7 @@ export const mui = {
   black: "#000000",
   darkBlue: "#004564",
   lightBlue: "#A7DBE7",
-  orange: "C87E1A",
+  orange: "#C87E1A",
 };
 
 export default palette;
