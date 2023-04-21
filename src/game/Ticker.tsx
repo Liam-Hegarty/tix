@@ -14,7 +14,6 @@ import React, {
 } from "react";
 import palette from "../palette";
 import { OutlineFilter } from "@pixi/filter-outline";
-import { ColorMatrixFilter } from "pixi.js";
 
 const sixthRotation = Math.PI / 3;
 
@@ -42,7 +41,6 @@ export const Ticker = ({
     rhythm[1].tock,
     rhythm[2].tock,
   ]);
-  const [isPerfect, setIsPerfect] = useState(false);
 
   useTick(() => {
     if (audio.paused) {
@@ -76,17 +74,6 @@ export const Ticker = ({
       rhythm[(currentBeatIndex + 2) % rhythm.length].tock,
       rhythm[(currentBeatIndex + 3) % rhythm.length].tock,
     ]);
-
-    const distanceFromBeat = Math.min(
-      beatRemainder,
-      currentBeatLength - tolerance
-    );
-
-    if (distanceFromBeat < tolerance) {
-      setIsPerfect(true);
-    } else {
-      setIsPerfect(false);
-    }
 
     if (beatRemainder < tolerance) {
       setRotation(0);
