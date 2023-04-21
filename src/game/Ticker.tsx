@@ -18,17 +18,6 @@ import { ColorMatrixFilter } from "pixi.js";
 
 const sixthRotation = Math.PI / 3;
 
-let darken = new ColorMatrixFilter();
-let lighten = new ColorMatrixFilter();
-
-darken.matrix = [
-  1, 0, 0, 0, -0.25, 0, 1, 0, 0, -0.25, 0, 0, 1, 0, -0.25, 0, 0, 0, 1, 0,
-];
-
-lighten.matrix = [
-  1, 0, 0, 0, 0.1, 0, 1, 0, 0, 0.1, 0, 0, 1, 0, 0.1, 0, 0, 0, 1, 0,
-];
-
 export const Ticker = ({
   rhythm,
   rhythmTime,
@@ -160,37 +149,33 @@ export const Ticker = ({
         y={window.innerHeight}
         rotation={rotation}
       />
-      <Container filters={isPerfect ? [lighten] : [darken]}>
-        <GraphicsElement
-          draw={beatTypes[0] ? drawTockMark : drawTickMark}
-          x={
-            window.innerWidth -
-            Math.cos(rotation + sixthRotation + rotationConnection) * 120
-          }
-          y={
-            window.innerHeight -
-            Math.sin(rotation + sixthRotation + rotationConnection) * 120
-          }
-        />
-      </Container>
-      <Container filters={[darken]}>
-        <GraphicsElement
-          draw={beatTypes[1] ? drawTockMark : drawTickMark}
-          x={window.innerWidth - Math.cos(rotation + rotationConnection) * 120}
-          y={window.innerHeight - Math.sin(rotation + rotationConnection) * 120}
-        />
-        <GraphicsElement
-          draw={beatTypes[2] ? drawTockMark : drawTickMark}
-          x={
-            window.innerWidth -
-            Math.cos(rotation - sixthRotation + rotationConnection) * 120
-          }
-          y={
-            window.innerHeight -
-            Math.sin(rotation - sixthRotation + rotationConnection) * 120
-          }
-        />
-      </Container>
+      <GraphicsElement
+        draw={beatTypes[0] ? drawTockMark : drawTickMark}
+        x={
+          window.innerWidth -
+          Math.cos(rotation + sixthRotation + rotationConnection) * 120
+        }
+        y={
+          window.innerHeight -
+          Math.sin(rotation + sixthRotation + rotationConnection) * 120
+        }
+      />
+      <GraphicsElement
+        draw={beatTypes[1] ? drawTockMark : drawTickMark}
+        x={window.innerWidth - Math.cos(rotation + rotationConnection) * 120}
+        y={window.innerHeight - Math.sin(rotation + rotationConnection) * 120}
+      />
+      <GraphicsElement
+        draw={beatTypes[2] ? drawTockMark : drawTickMark}
+        x={
+          window.innerWidth -
+          Math.cos(rotation - sixthRotation + rotationConnection) * 120
+        }
+        y={
+          window.innerHeight -
+          Math.sin(rotation - sixthRotation + rotationConnection) * 120
+        }
+      />
     </Container>
   );
 };
