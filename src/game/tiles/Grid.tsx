@@ -1,8 +1,9 @@
 import React, { useCallback } from "react";
-import { Level } from "./levels/Level";
+import { Level } from "../levels/Level";
 import { Graphics as GraphicsElement } from "@pixi/react";
 import { Graphics } from "@pixi/graphics";
-import colors from "../palette";
+import colors from "../../palette";
+import { StartTile } from "./StartTile";
 
 const Tiles = ({
   grid,
@@ -166,6 +167,12 @@ export const Grid = ({
   return (
     <>
       <Tiles grid={level.grid} offset={offset} spacing={spacing} />
+      <StartTile
+        x={level.start.x}
+        y={level.start.y}
+        spacing={spacing}
+        offset={offset}
+      />
       <Walls grid={level.grid} offset={offset} spacing={spacing} />
       <Rails grid={level.grid} offset={offset} spacing={spacing} />
     </>
