@@ -16,6 +16,7 @@ import { Graphics } from "@pixi/graphics";
 import { DetectedRobot } from "./DetectedRobot";
 
 const crashSound = new Audio(`${process.env.PUBLIC_URL}/audio/crash.mp3`);
+const detectedSound = new Audio(`${process.env.PUBLIC_URL}/audio/alarm.mp3`);
 
 export const Robot = ({
   listeners,
@@ -130,6 +131,7 @@ export const Robot = ({
         setCrashedUntil(e.timeStamp + 1000);
       }
       if (moveResponse.detected) {
+        detectedSound.play();
         setDetectedAt(e.timeStamp);
       }
       if (moveResponse.frozen) {
