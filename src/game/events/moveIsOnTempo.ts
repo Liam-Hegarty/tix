@@ -21,7 +21,7 @@ export const moveIsOnTempo = (
   return (e: TixEvent): EventResponse | undefined => {
     const { audioTime, jsTime } = rhythmTime.current;
     const msProgressOfCurrentLoop =
-      (audioTime + (e.ts - jsTime)) % sumRhythmTimes(music.rhythm);
+      Math.abs((audioTime + (e.ts - jsTime)) % sumRhythmTimes(music.rhythm));
 
     const nextBeatIndex = Math.max(
       cumulativeBeatTimes.findIndex((b) => b.time > msProgressOfCurrentLoop),
@@ -54,6 +54,12 @@ export const moveIsOnTempo = (
     if (distanceFromBeat < music.tolerance && nearestBeat.tock === e.action) {
       return undefined;
     } else {
+      console.log({
+        msProgressOfCurrentLoop,
+        previousBeat,
+        nextBeat,
+        distanceFromBeat
+      })
       return {
         response: "CRASH",
       };
