@@ -21,4 +21,5 @@ export const levelTwo: Level = {
     audioPath: "audio/4-4.mp3",
     tolerance: 100,
   },
+  scannerDrones: [],
 };

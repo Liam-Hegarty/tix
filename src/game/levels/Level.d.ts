@@ -15,15 +15,17 @@ export type ScannerDrone = {
 export type Beat = { tock: boolean; time: number };
 export type Rhythm = Beat[];
 
+export type MusicInfo = {
+  rhythm: Rhythm;
+  audioPath: string;
+  rhythmOffset: number;
+  tolerance: number;
+};
+
 export type Level = {
   grid: boolean[][];
   start: Point;
   end: Point;
-  scannerDrones?: ScannerDrone[] = [];
-  music: {
-    rhythm: Rhythm;
-    audioPath: string;
-    rhythmOffset: number;
-    tolerance: number;
-  };
+  scannerDrones: ScannerDrone[] = [];
+  music: MusicInfo;
 };

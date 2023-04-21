@@ -34,6 +34,6 @@ export const levelOne: Level = {
     ],
     rhythmOffset: 220,
     audioPath: "audio/4-4.mp3",
-    tolerance: 150,
+    tolerance: 200,
   },
 };
