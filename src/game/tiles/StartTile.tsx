@@ -13,7 +13,7 @@ export const StartTile = ({
   spacing: number;
   offset: Point;
 }) => {
-  const tileScale = 0.54;
+  const tileScale = 0.0054 * spacing;
 
   return (
     <>
