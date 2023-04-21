@@ -1,6 +1,14 @@
 import { EventResponse, TixEvent } from "./Events";
 
-export type RobotListener = (e: TixEvent) => Partial<EventResponse> | undefined;
+export type RobotListener = (
+  e: TixEvent,
+  r: EventResponse
+) => Partial<EventResponse>;
+
+type PrioritisedListener = {
+  priority: number;
+  func: RobotListener;
+};
 
 const defaultResponse: EventResponse = {
   canMove: true,
@@ -9,14 +17,14 @@ const defaultResponse: EventResponse = {
 };
 
 export class RobotListenerRegistry {
-  registry: Map<String, RobotListener>;
+  registry: Map<String, PrioritisedListener>;
 
-  constructor(initialRegistry: Map<String, RobotListener> = new Map()) {
+  constructor(initialRegistry: Map<String, PrioritisedListener> = new Map()) {
     this.registry = initialRegistry ?? {};
   }
 
-  register(id: string, listener: RobotListener) {
-    this.registry.set(id, listener);
+  register(id: string, listener: RobotListener, priority: number = 0) {
+    this.registry.set(id, { priority, func: listener });
   }
 
   deregister(id: string) {
@@ -24,14 +32,13 @@ export class RobotListenerRegistry {
   }
 
   tryMove(move: TixEvent): EventResponse {
-    return [...this.registry.values()].reduce<EventResponse>(
-      (result, listener) => {
+    return [...this.registry.values()]
+      .sort((l1, l2) => l2.priority - l1.priority)
+      .reduce<EventResponse>((result, listener) => {
         return {
           ...result,
-          ...listener(move),
+          ...listener.func(move, result),
         };
-      },
-      defaultResponse
-    );
+      }, defaultResponse);
   }
 }

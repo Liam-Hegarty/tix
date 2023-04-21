@@ -21,7 +21,12 @@ describe("moveIsOnTempo", () => {
       tolerance: 1,
     });
     expect(
-      listener({ action: false, ts: 500, location: { x: 0, y: 0 } })
+      listener({
+        action: false,
+        ts: 500,
+        newLocation: { x: 0, y: 0 },
+        oldLocation: { x: 0, y: 0 },
+      })
     ).toBeUndefined();
   });
   test("returns false for a terrible key press", () => {
@@ -32,7 +37,12 @@ describe("moveIsOnTempo", () => {
       tolerance: 1,
     });
     expect(
-      listener({ action: false, ts: 250, location: { x: 0, y: 0 } })?.canMove
+      listener({
+        action: false,
+        ts: 250,
+        newLocation: { x: 0, y: 0 },
+        oldLocation: { x: 0, y: 0 },
+      })?.canMove
     ).toBeFalsy();
   });
   test("returns false for an action on a tick", () => {
@@ -43,7 +53,12 @@ describe("moveIsOnTempo", () => {
       tolerance: 1,
     });
     expect(
-      listener({ action: true, ts: 250, location: { x: 0, y: 0 } })?.canMove
+      listener({
+        action: true,
+        ts: 250,
+        newLocation: { x: 0, y: 0 },
+        oldLocation: { x: 0, y: 0 },
+      })?.canMove
     ).toBeFalsy();
   });
   test("returns false for a perfect move on a tock", () => {
@@ -54,7 +69,12 @@ describe("moveIsOnTempo", () => {
       tolerance: 1,
     });
     expect(
-      listener({ action: false, ts: 500, location: { x: 0, y: 0 } })?.canMove
+      listener({
+        action: false,
+        ts: 500,
+        newLocation: { x: 0, y: 0 },
+        oldLocation: { x: 0, y: 0 },
+      })?.canMove
     ).toBeFalsy();
   });
   test("returns true for a perfect action on a tock", () => {
@@ -65,7 +85,12 @@ describe("moveIsOnTempo", () => {
       tolerance: 1,
     });
     expect(
-      listener({ action: true, ts: 500, location: { x: 0, y: 0 } })
+      listener({
+        action: true,
+        ts: 500,
+        newLocation: { x: 0, y: 0 },
+        oldLocation: { x: 0, y: 0 },
+      })
     ).toBeUndefined();
   });
   test("returns true for an action within tolerance", () => {
@@ -76,7 +101,12 @@ describe("moveIsOnTempo", () => {
       tolerance: 100,
     });
     expect(
-      listener({ action: true, ts: 401, location: { x: 0, y: 0 } })
+      listener({
+        action: true,
+        ts: 401,
+        newLocation: { x: 0, y: 0 },
+        oldLocation: { x: 0, y: 0 },
+      })
     ).toBeUndefined();
   });
   test("returns false for an action outside of tolerance", () => {
@@ -87,7 +117,12 @@ describe("moveIsOnTempo", () => {
       tolerance: 100,
     });
     expect(
-      listener({ action: true, ts: 399, location: { x: 0, y: 0 } })?.canMove
+      listener({
+        action: true,
+        ts: 399,
+        newLocation: { x: 0, y: 0 },
+        oldLocation: { x: 0, y: 0 },
+      })?.canMove
     ).toBeFalsy();
   });
   test("listens to value of nearest beat", () => {
@@ -101,7 +136,12 @@ describe("moveIsOnTempo", () => {
       tolerance: 100,
     });
     expect(
-      listener({ action: false, ts: 50, location: { x: 0, y: 0 } })
+      listener({
+        action: false,
+        ts: 50,
+        newLocation: { x: 0, y: 0 },
+        oldLocation: { x: 0, y: 0 },
+      })
     ).toBeUndefined();
   });
   test("listens to value of nearest beat wraps around", () => {
@@ -115,7 +155,12 @@ describe("moveIsOnTempo", () => {
       tolerance: 100,
     });
     expect(
-      listener({ action: true, ts: 550, location: { x: 0, y: 0 } })
+      listener({
+        action: true,
+        ts: 550,
+        newLocation: { x: 0, y: 0 },
+        oldLocation: { x: 0, y: 0 },
+      })
     ).toBeUndefined();
   });
 });

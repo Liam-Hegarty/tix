@@ -14,7 +14,7 @@ import {
   RobotListener,
   RobotListenerRegistry,
 } from "../events/robotListenerRegistry";
-import { TixEvent } from "../events/Events";
+import { EventResponse, TixEvent } from "../events/Events";
 
 type RobotFound = {
   where: Point;
@@ -33,8 +33,25 @@ const droneListener =
     height: number;
     setRobotFound: Dispatch<SetStateAction<RobotFound | undefined>>;
   }): RobotListener =>
-  (e: TixEvent) => {
-    return undefined;
+  (e: TixEvent, r: EventResponse) => {
+    console.log({ e, r, area: { topLeft, width, height } });
+    if (
+      e.oldLocation.x >= topLeft.x &&
+      e.oldLocation.y >= topLeft.y &&
+      e.oldLocation.x < topLeft.x + width &&
+      e.oldLocation.y < topLeft.y + height
+    ) {
+      if (r.crashed) {
+        setRobotFound({ where: e.oldLocation, when: e.ts });
+        return {
+          frozen: true,
+        };
+      } else {
+        return {};
+      }
+    } else {
+      return {};
+    }
   };
 
 const Drone = ({
@@ -55,7 +72,8 @@ const Drone = ({
     const droneId = `drone-${JSON.stringify(drone.area)}`;
     listenerRegistry.register(
       droneId,
-      droneListener({ ...drone.area, setRobotFound })
+      droneListener({ ...drone.area, setRobotFound }),
+      -10
     );
     return () => listenerRegistry.deregister(droneId);
   });
@@ -95,7 +113,7 @@ const Drone = ({
         g.drawCircle(
           x * spacing + offset.x,
           y * spacing + offset.y,
-          spacing / 5
+          spacing / 3
         );
         g.endFill();
       },

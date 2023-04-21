@@ -2,7 +2,8 @@ import { Point } from "../levels/Level";
 
 export interface TixEvent {
   action: boolean;
-  location: Point;
+  newLocation: Point;
+  oldLocation: Point;
   ts: number;
 }
 

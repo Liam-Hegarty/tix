@@ -5,30 +5,32 @@ import { RobotListenerRegistry } from "./robotListenerRegistry";
 
 const moveIsOnGrid =
   (level: Level) =>
-  (e: TixEvent): Partial<EventResponse> | undefined => {
+  (e: TixEvent): Partial<EventResponse> => {
     try {
-      if (!!level.grid[e.location.y][e.location.x]) {
-        return undefined;
+      if (!!level.grid[e.newLocation.y][e.newLocation.x]) {
+        return {};
       } else {
         return {
           canMove: false,
+          crashed: true,
         };
       }
     } catch (e: any) {
       return {
         canMove: false,
+        crashed: true,
       };
     }
   };
 
 const hasReachedTheEnd =
   (level: Level, nextLevel: () => void) =>
-  (e: TixEvent): EventResponse | undefined => {
-    if (e.location.x === level.end.x && e.location.y === level.end.y) {
+  (e: TixEvent): Partial<EventResponse> => {
+    if (e.newLocation.x === level.end.x && e.newLocation.y === level.end.y) {
       setTimeout(nextLevel, 500);
-      return undefined;
+      return { frozen: true };
     } else {
-      return undefined;
+      return {};
     }
   };
 

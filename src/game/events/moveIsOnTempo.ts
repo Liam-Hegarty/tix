@@ -18,7 +18,7 @@ export const moveIsOnTempo = (
     };
   });
 
-  return (e: TixEvent): Partial<EventResponse> | undefined => {
+  return (e: TixEvent): Partial<EventResponse> => {
     const { audioTime, jsTime } = rhythmTime.current;
     const msProgressOfCurrentLoop = Math.abs(
       (audioTime + (e.ts - jsTime)) % sumRhythmTimes(music.rhythm)
@@ -53,10 +53,11 @@ export const moveIsOnTempo = (
         : previousBeat;
 
     if (distanceFromBeat < music.tolerance && nearestBeat.tock === e.action) {
-      return undefined;
+      return {};
     } else {
       return {
         canMove: false,
+        crashed: true,
       };
     }
   };

@@ -89,38 +89,39 @@ export const Robot = ({
       return;
     }
 
-    var newTix;
+    var newerTix;
 
     switch (e.key) {
       case "w":
       case "ArrowUp":
-        newTix = { x: tix.new.x, y: tix.new.y - 1 };
+        newerTix = { x: tix.new.x, y: tix.new.y - 1 };
         break;
       case "a":
       case "ArrowLeft":
-        newTix = { x: tix.new.x - 1, y: tix.new.y };
+        newerTix = { x: tix.new.x - 1, y: tix.new.y };
         break;
       case "s":
       case "ArrowDown":
-        newTix = { x: tix.new.x, y: tix.new.y + 1 };
+        newerTix = { x: tix.new.x, y: tix.new.y + 1 };
         break;
       case "d":
       case "ArrowRight":
-        newTix = { x: tix.new.x + 1, y: tix.new.y };
+        newerTix = { x: tix.new.x + 1, y: tix.new.y };
         break;
     }
 
-    if (newTix) {
+    if (newerTix) {
       const moveEvent: TixEvent = {
         action: false,
-        location: newTix,
+        newLocation: newerTix,
+        oldLocation: tix.new,
         ts: e.timeStamp,
       };
 
       const moveResponse = listeners.tryMove(moveEvent);
 
       if (moveResponse.canMove) {
-        setNewTix(newTix);
+        setNewTix(newerTix);
         lastMoveTs.current = moveEvent.ts;
       } else {
         lastCrashTs.current = moveEvent.ts;
