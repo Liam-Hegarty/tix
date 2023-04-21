@@ -117,7 +117,7 @@ const Drone = ({
         );
         g.endFill();
       },
-    []
+    [offset, spacing]
   );
 
   const shadowY =
