@@ -1,6 +1,6 @@
 import React, { useCallback } from "react";
 import { Level } from "../levels/Level";
-import { Graphics as GraphicsElement } from "@pixi/react";
+import { Sprite, Graphics as GraphicsElement } from "@pixi/react";
 import { Graphics } from "@pixi/graphics";
 import colors from "../../palette";
 import { StartTile } from "./StartTile";
@@ -14,35 +14,21 @@ const Tiles = ({
   offset: { x: number; y: number };
   spacing: number;
 }) => {
-  const tile = useCallback(
-    (x: number, y: number, isTile: boolean) => (g: Graphics) => {
-      g.clear();
-
-      const borderColor = isTile ? 0xaaaaaa : colors.black;
-      const fillColor = isTile ? colors.lightBlue : colors.black;
-
-      g.lineStyle(1, borderColor, 1);
-      g.beginFill(fillColor);
-      g.drawRect(
-        offset.x + (x - 0.5) * spacing,
-        offset.y + (y - 0.5) * spacing,
-        spacing,
-        spacing
-      );
-      g.endFill();
-    },
-    [spacing, offset]
-  );
-
   return (
     <>
       {grid.map((row, y) =>
-        row.map((point, x) => (
-          <GraphicsElement
-            key={`grid-tile-${x}-${y}`}
-            draw={tile(x, y, point)}
-          />
-        ))
+        row.map(
+          (point, x) =>
+            !!point && (
+              <Sprite
+                key={`grid-tile-${x}-${y}`}
+                x={(x - 0.5) * spacing + offset.x}
+                y={(y - 0.5) * spacing + offset.y}
+                scale={spacing / 1300}
+                image={`${process.env.PUBLIC_URL}/texture/floor.png`}
+              />
+            )
+        )
       )}
     </>
   );

@@ -7,7 +7,7 @@ import addEventListeners from "./events/addEventListeners";
 import { ScannerDrones } from "./obstacles/ScannerDrones";
 import { levels } from "./levels/levels";
 
-const spacing = 200;
+const spacing = 100;
 
 export const LevelRenderer = ({
   levelNumber,

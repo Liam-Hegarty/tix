@@ -46,7 +46,7 @@ export const MainMenu = ({
           }}
         >
           <img
-            src={`${process.env.PUBLIC_URL}/sprite/robot.png`}
+            src={`${process.env.PUBLIC_URL}/sprite/robot-smile.png`}
             alt={`/robot.png`}
             width={150}
             height={150}
