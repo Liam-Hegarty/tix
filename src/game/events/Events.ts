@@ -8,4 +8,5 @@ export interface TixEvent {
 
 export type EventResponse = {
   canMove: boolean;
+  crashed: boolean;
 };

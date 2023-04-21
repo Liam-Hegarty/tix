@@ -18,7 +18,7 @@ export const moveIsOnTempo = (
     };
   });
 
-  return (e: TixEvent): EventResponse | undefined => {
+  return (e: TixEvent): Partial<EventResponse> | undefined => {
     const { audioTime, jsTime } = rhythmTime.current;
     const msProgressOfCurrentLoop = Math.abs(
       (audioTime + (e.ts - jsTime)) % sumRhythmTimes(music.rhythm)

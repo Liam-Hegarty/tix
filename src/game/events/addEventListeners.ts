@@ -5,7 +5,7 @@ import { RobotListenerRegistry } from "./robotListenerRegistry";
 
 const moveIsOnGrid =
   (level: Level) =>
-  (e: TixEvent): EventResponse | undefined => {
+  (e: TixEvent): Partial<EventResponse> | undefined => {
     try {
       if (!!level.grid[e.location.y][e.location.x]) {
         return undefined;
@@ -41,7 +41,7 @@ export default function addEventListeners(
   level: Level,
   nextLevel: () => void
 ) {
-  registry.register(moveIsOnTempo(timeRef, level.music));
-  registry.register(moveIsOnGrid(level));
-  registry.register(hasReachedTheEnd(level, nextLevel));
+  registry.register("tempo", moveIsOnTempo(timeRef, level.music));
+  registry.register("grid", moveIsOnGrid(level));
+  registry.register("end", hasReachedTheEnd(level, nextLevel));
 }

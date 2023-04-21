@@ -58,6 +58,7 @@ export const LevelRenderer = ({
           drones={level.scannerDrones}
           spacing={spacing}
           offset={offset}
+          listenerRegistry={listenerRegistry}
         />
       )}
       <Ticker

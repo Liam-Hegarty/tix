@@ -1,27 +1,31 @@
 import { EventResponse, TixEvent } from "./Events";
 
-export type RobotListener = (e: TixEvent) => EventResponse | undefined;
+export type RobotListener = (e: TixEvent) => Partial<EventResponse> | undefined;
 
 export class RobotListenerRegistry {
-  registry: RobotListener[];
+  registry: Map<String, RobotListener>;
 
-  constructor(initialRegistry: RobotListener[] = []) {
-    this.registry = initialRegistry ?? [];
+  constructor(initialRegistry: Map<String, RobotListener> = new Map()) {
+    this.registry = initialRegistry ?? {};
   }
 
-  register(listener: RobotListener) {
-    this.registry.push(listener);
+  register(id: string, listener: RobotListener) {
+    this.registry.set(id,listener);
+  }
+
+  deregister(id: string) {
+    this.registry.delete(id);
   }
 
   tryMove(move: TixEvent): EventResponse {
-    return this.registry.reduce<EventResponse>(
+    return [...this.registry.values()].reduce<EventResponse>(
       (result, listener) => {
         return {
           ...result,
           ...listener(move),
         };
       },
-      { canMove: true }
+      { canMove: true, crashed: false }
     );
   }
 }
