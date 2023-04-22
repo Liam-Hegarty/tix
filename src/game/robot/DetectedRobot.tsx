@@ -26,7 +26,6 @@ export const DetectedRobot = ({
     if (animProgress > 1) {
       restart();
     } else {
-      console.log((performance.now() - detectedAt) / animLength);
       setAnimProgress((performance.now() - detectedAt) / animLength);
     }
   });
