@@ -20,7 +20,6 @@ export const DetectedRobot = ({
 }) => {
   const [animProgress, setAnimProgress] = useState(0);
   const maskRef = React.useRef<Graphics>();
-  console.log(animProgress);
 
   useTick(() => {
     if (animProgress > 1) {
@@ -45,7 +44,6 @@ export const DetectedRobot = ({
       const openProgress = Math.max(Math.min(animProgress / openTime, 1), 0);
 
       const halfStep = spacing / 2;
-      console.log(openProgress);
 
       g.clear();
       g.beginFill(palette.black);

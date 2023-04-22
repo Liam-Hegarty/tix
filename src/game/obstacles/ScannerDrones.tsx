@@ -67,6 +67,10 @@ const Drone = ({
 }) => {
   const [wobble, setWobble] = useState({ x: 0, y: 0 });
   const [robotFound, setRobotFound] = useState<RobotFound>();
+  const droneStartLocation = {
+    x: drone.location.x * spacing + offset.x,
+    y: drone.location.y * spacing + offset.y,
+  };
 
   useEffect(() => {
     const droneId = `drone-${JSON.stringify(drone.area)}`;
@@ -78,8 +82,21 @@ const Drone = ({
     return () => listenerRegistry.deregister(droneId);
   }, [drone, listenerRegistry]);
 
-  useTick(() => {
+  useTick((delta) => {
     if (robotFound) {
+      const robotLocation = {
+        x: (robotFound.where.x * spacing) + offset.x,
+        y: (robotFound.where.y * (spacing - 0.5)) + offset.y,
+      };
+      const movementVector = {
+        x: robotLocation.x - droneStartLocation.x,
+        y: robotLocation.y - droneStartLocation.y,
+      };
+      const animDelta = delta / 75;
+      setWobble({
+        x: wobble.x + movementVector.x * animDelta,
+        y: wobble.y + movementVector.y * animDelta,
+      });
     } else {
       const now = performance.now() / 250;
       setWobble({
@@ -142,11 +159,20 @@ const Drone = ({
       >
         <Sprite
           image={`${process.env.PUBLIC_URL}/sprite/drone.png`}
-          x={drone.location.x * spacing + offset.x + wobble.x}
-          y={drone.location.y * spacing + offset.y + wobble.y}
+          x={droneStartLocation.x + wobble.x}
+          y={droneStartLocation.y + wobble.y}
           anchor={{ x: 0.5, y: 0.5 }}
           scale={{ x: 0.08 * (spacing / 100), y: 0.08 * (spacing / 100) }}
         />
+        {!!robotFound && (
+          <Sprite
+            image={`${process.env.PUBLIC_URL}/sprite/mini/exclamation.png`}
+            scale={{ x: 0.01 * (spacing / 50), y: 0.01 * (spacing / 50) }}
+            x={drone.location.x * spacing + offset.x + wobble.x}
+            y={(drone.location.y - 0.5) * spacing + offset.y + wobble.y}
+            anchor={{ x: 0.5, y: 1 }}
+          />
+        )}
       </Container>
     </>
   );
