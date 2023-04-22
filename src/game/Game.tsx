@@ -10,6 +10,9 @@ import palette from "../palette";
 import { PauseMenu } from "./PauseMenu";
 import { LevelRenderer } from "./LevelRenderer";
 import { Stage } from "@pixi/react";
+import { SCALE_MODES, settings } from "@pixi/core";
+
+settings.SCALE_MODE = SCALE_MODES.NEAREST;
 
 export const Game = ({
   setStage,
