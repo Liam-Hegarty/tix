@@ -85,8 +85,8 @@ const Drone = ({
   useTick((delta) => {
     if (robotFound) {
       const robotLocation = {
-        x: (robotFound.where.x * spacing) + offset.x,
-        y: (robotFound.where.y * (spacing - 0.5)) + offset.y,
+        x: robotFound.where.x * spacing + offset.x,
+        y: robotFound.where.y * (spacing - 0.5) + offset.y,
       };
       const movementVector = {
         x: robotLocation.x - droneStartLocation.x,
