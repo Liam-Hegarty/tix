@@ -11,8 +11,11 @@ const Face = ({
   color: number;
   face: string;
 }) => {
-  const width = useMemo(() => Math.max(...face.split("\n").map((l) => l.length)) * size, [face, size])
-  const height = useMemo(() => face.split("\n").length * size, [face, size])
+  const width = useMemo(
+    () => Math.max(...face.split("\n").map((l) => l.length)) * size,
+    [face, size]
+  );
+  const height = useMemo(() => face.split("\n").length * size, [face, size]);
 
   const draw = useCallback(
     (g: Graphics) => {
@@ -35,7 +38,12 @@ const Face = ({
     [size, color, face]
   );
 
-  return <GraphicsElement key={`face-${width}-${height}`} {...{ draw, width, height }} />;
+  return (
+    <GraphicsElement
+      key={`face-${width}-${height}`}
+      {...{ draw, width, height }}
+    />
+  );
 };
 
 const happyFace = `

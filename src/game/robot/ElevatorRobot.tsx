@@ -5,16 +5,13 @@ import colors from "../../palette";
 import { StripedTile } from "../tiles/StripedTile";
 
 export const ElevatorRobot = ({ spacing }: { spacing: number }) => {
-
   const [height, setHeight] = useState(0);
 
-  useTick(() => {
-    
-  })
+  useTick(() => {});
 
   return (
     <Container>
-      <StripedTile x={0} y={0} offset={{x:0, y:0}} spacing={spacing} />
+      <StripedTile x={0} y={0} offset={{ x: 0, y: 0 }} spacing={spacing} />
       <Sprite
         image={`${process.env.PUBLIC_URL}/sprite/robot.png`}
         anchor={{ x: 0.5, y: 1 }}

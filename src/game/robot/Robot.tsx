@@ -76,7 +76,7 @@ export const Robot = ({
     const animTime = 100;
     const diff = now - lastMoveTs.current;
     if (diff < animTime) {
-      animDone.current = false
+      animDone.current = false;
       const animProgress = diff / animTime;
       const deltaX = tix.new.x - tix.old.x;
       const deltaY = tix.new.y - tix.old.y;
@@ -85,7 +85,7 @@ export const Robot = ({
         y: offset.y + spacing * (tix.old.y + deltaY * animProgress),
       });
     } else {
-      animDone.current = true
+      animDone.current = true;
       setAnim({
         x: offset.x + tix.new.x * spacing,
         y: offset.y + tix.new.y * spacing,
@@ -145,7 +145,7 @@ export const Robot = ({
         isFrozen.current = true;
       }
       if (moveResponse.win) {
-        setTimeout(nextLevel, 2000)
+        setTimeout(nextLevel, 2000);
         setHasWon(true);
       }
     }

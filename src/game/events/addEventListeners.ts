@@ -43,7 +43,7 @@ export default function addEventListeners(
     audioTime: number;
     jsTime: number;
   }>,
-  level: Level,
+  level: Level
 ) {
   registry.register("tempo", moveIsOnTempo(timeRef, level.music));
   registry.register("grid", moveIsOnGrid(level));
