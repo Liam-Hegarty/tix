@@ -12,4 +12,5 @@ export type EventResponse = {
   crashed: boolean;
   detected: boolean;
   frozen: boolean;
+  win: true;
 };

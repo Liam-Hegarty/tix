@@ -14,6 +14,7 @@ import { DropShadowFilter } from "@pixi/filter-drop-shadow";
 import { Graphics as GraphicsElement } from "@pixi/react";
 import { Graphics } from "@pixi/graphics";
 import { DetectedRobot } from "./DetectedRobot";
+import { ElevatorRobot } from "./ElevatorRobot";
 
 const crashSound = new Audio(`${process.env.PUBLIC_URL}/audio/crash.mp3`);
 const detectedSound = new Audio(`${process.env.PUBLIC_URL}/audio/alarm.mp3`);
@@ -26,6 +27,7 @@ export const Robot = ({
   start,
   paused,
   restart,
+  nextLevel,
 }: {
   listeners: RobotListenerRegistry;
   spacing: number;
@@ -34,6 +36,7 @@ export const Robot = ({
   start: { x: number; y: number };
   paused: boolean;
   restart: () => void;
+  nextLevel: () => void;
 }) => {
   const [tix, setTix] = useState({ new: start, old: start });
   const setNewTix = (newTix: { x: number; y: number }) => {
@@ -45,6 +48,8 @@ export const Robot = ({
   });
   const [crashedUntil, setCrashedUntil] = useState(-1000);
   const [detectedAt, setDetectedAt] = useState();
+  const [hasWon, setHasWon] = useState(false);
+  const animDone = useRef(true);
   const isFrozen = useRef(false);
 
   const isCrashed = performance.now() < crashedUntil;
@@ -71,6 +76,7 @@ export const Robot = ({
     const animTime = 100;
     const diff = now - lastMoveTs.current;
     if (diff < animTime) {
+      animDone.current = false
       const animProgress = diff / animTime;
       const deltaX = tix.new.x - tix.old.x;
       const deltaY = tix.new.y - tix.old.y;
@@ -79,6 +85,7 @@ export const Robot = ({
         y: offset.y + spacing * (tix.old.y + deltaY * animProgress),
       });
     } else {
+      animDone.current = true
       setAnim({
         x: offset.x + tix.new.x * spacing,
         y: offset.y + tix.new.y * spacing,
@@ -137,6 +144,10 @@ export const Robot = ({
       if (moveResponse.frozen) {
         isFrozen.current = true;
       }
+      if (moveResponse.win) {
+        setTimeout(nextLevel, 2000)
+        setHasWon(true);
+      }
     }
   };
 
@@ -149,9 +160,11 @@ export const Robot = ({
 
   if (!!detectedAt) {
     robotElement = <DetectedRobot {...{ spacing, detectedAt, restart }} />;
+  } else if (hasWon && animDone) {
+    robotElement = <ElevatorRobot spacing={spacing} />;
   } else {
     robotElement = isCrashed ? (
-      <CrashedRobot {...{ spacing }} />
+      <CrashedRobot spacing={spacing} />
     ) : (
       <HappyRobot spacing={spacing} />
     );

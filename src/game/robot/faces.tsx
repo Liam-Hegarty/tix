@@ -1,6 +1,6 @@
 import { Graphics as GraphicsElement, useTick } from "@pixi/react";
 import { Graphics } from "@pixi/graphics";
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 
 const Face = ({
   size,
@@ -11,8 +11,8 @@ const Face = ({
   color: number;
   face: string;
 }) => {
-  const width = Math.max(...face.split("\n").map((l) => l.length)) * size;
-  const height = face.split("\n").length * size;
+  const width = useMemo(() => Math.max(...face.split("\n").map((l) => l.length)) * size, [face, size])
+  const height = useMemo(() => face.split("\n").length * size, [face, size])
 
   const draw = useCallback(
     (g: Graphics) => {
@@ -35,7 +35,7 @@ const Face = ({
     [size, color, face]
   );
 
-  return <GraphicsElement {...{ draw, width, height }} />;
+  return <GraphicsElement key={`face-${width}-${height}`} {...{ draw, width, height }} />;
 };
 
 const happyFace = `
@@ -90,4 +90,37 @@ export const SadFace = ({
   color: number;
 }) => {
   return <Face face={sadFace} size={size} color={color} />;
+};
+
+const winFace = `
+
+
+# # ### # #
+# # # # # # 
+### ### ###
+  # # #   #
+### # # ###
+
+`;
+
+export const WinFace = ({
+  color,
+  size = 1,
+}: {
+  size?: number;
+  color: number;
+}) => {
+  const [face, setFace] = useState(happyFace);
+
+  useTick(() => {
+    const animCycle = 1000;
+    const now = performance.now() % animCycle;
+    if (now < animCycle / 2) {
+      setFace(winFace);
+    } else {
+      setFace(happyFace);
+    }
+  });
+
+  return <Face face={face} size={size} color={color} />;
 };

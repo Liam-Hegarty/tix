@@ -24,11 +24,14 @@ const moveIsOnGrid =
   };
 
 const hasReachedTheEnd =
-  (level: Level, nextLevel: () => void) =>
-  (e: TixEvent): Partial<EventResponse> => {
-    if (e.newLocation.x === level.end.x && e.newLocation.y === level.end.y) {
-      setTimeout(nextLevel, 500);
-      return { frozen: true };
+  (level: Level) =>
+  (e: TixEvent, r: EventResponse): Partial<EventResponse> => {
+    if (
+      e.newLocation.x === level.end.x &&
+      e.newLocation.y === level.end.y &&
+      r.canMove
+    ) {
+      return { frozen: true, win: true };
     } else {
       return {};
     }
@@ -41,9 +44,8 @@ export default function addEventListeners(
     jsTime: number;
   }>,
   level: Level,
-  nextLevel: () => void
 ) {
   registry.register("tempo", moveIsOnTempo(timeRef, level.music));
   registry.register("grid", moveIsOnGrid(level));
-  registry.register("end", hasReachedTheEnd(level, nextLevel));
+  registry.register("end", hasReachedTheEnd(level), -20);
 }

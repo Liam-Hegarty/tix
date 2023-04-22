@@ -27,9 +27,9 @@ export const LevelRenderer = ({
 
   const listenerRegistry = useMemo(() => {
     const reg = new RobotListenerRegistry();
-    addEventListeners(reg, rhythmTime, level, nextLevel);
+    addEventListeners(reg, rhythmTime, level);
     return reg;
-  }, [rhythmTime, level, nextLevel]);
+  }, [rhythmTime, level]);
 
   const [offset, setOffset] = useState({
     x: window.innerWidth / 2 - level.start.x * spacing,
@@ -56,6 +56,7 @@ export const LevelRenderer = ({
           start: level.start,
           paused,
           restart,
+          nextLevel,
         }}
       />
       {!!level.scannerDrones.length && (

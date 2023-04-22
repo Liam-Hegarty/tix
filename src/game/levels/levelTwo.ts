@@ -2,10 +2,10 @@ import { Level } from "./Level";
 import { parseGrid } from "./gridParser";
 
 const levelTwoRaw = `
-  +++          .
-  +O+   X      .
-  +++          .
-               .
+  +++        .
+  +O++X      .
+  +++        .
+             .
 `;
 
 export const levelTwo: Level = {

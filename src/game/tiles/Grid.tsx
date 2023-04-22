@@ -3,7 +3,7 @@ import { Level } from "../levels/Level";
 import { Sprite, Graphics as GraphicsElement } from "@pixi/react";
 import { Graphics } from "@pixi/graphics";
 import colors from "../../palette";
-import { StartTile } from "./StartTile";
+import { StripedTile } from "./StripedTile";
 
 const Tiles = ({
   grid,
@@ -153,9 +153,15 @@ export const Grid = ({
   return (
     <>
       <Tiles grid={level.grid} offset={offset} spacing={spacing} />
-      <StartTile
+      <StripedTile
         x={level.start.x}
         y={level.start.y}
+        spacing={spacing}
+        offset={offset}
+      />
+      <StripedTile
+        x={level.end.x}
+        y={level.end.y}
         spacing={spacing}
         offset={offset}
       />
