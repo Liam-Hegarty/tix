@@ -3,6 +3,7 @@ import React, {
   SetStateAction,
   useCallback,
   useEffect,
+  useMemo,
   useState,
 } from "react";
 import { Point, ScannerDrone } from "../levels/Level";
@@ -67,10 +68,12 @@ const Drone = ({
 }) => {
   const [wobble, setWobble] = useState({ x: 0, y: 0 });
   const [robotFound, setRobotFound] = useState<RobotFound>();
-  const droneStartLocation = {
-    x: drone.location.x * spacing + offset.x,
-    y: drone.location.y * spacing + offset.y,
-  };
+  const droneStartLocation = useMemo(() => {
+    return {
+      x: drone.location.x * spacing + offset.x,
+      y: drone.location.y * spacing + offset.y,
+    };
+  }, [drone, offset, spacing]);
 
   useEffect(() => {
     const droneId = `drone-${JSON.stringify(drone.area)}`;
@@ -93,9 +96,17 @@ const Drone = ({
         y: robotLocation.y - droneStartLocation.y,
       };
       const animDelta = delta / 75;
+
+      const now = performance.now() / 250;
+
+      const newWobble = {
+        x: Math.sin(now),
+        y: Math.cos(now) / 2,
+      };
+
       setWobble({
-        x: wobble.x + movementVector.x * animDelta,
-        y: wobble.y + movementVector.y * animDelta,
+        x: wobble.x + movementVector.x * animDelta + newWobble.x,
+        y: wobble.y + movementVector.y * animDelta + newWobble.y,
       });
     } else {
       const now = performance.now() / 250;
@@ -127,14 +138,25 @@ const Drone = ({
       (g: Graphics) => {
         g.clear();
         g.beginFill(0xff0000, 0.5);
-        g.drawCircle(
-          x * spacing + offset.x,
-          y * spacing + offset.y,
-          spacing / 3
-        );
+
+        if (robotFound) {
+          const robotLocation = {
+            x: robotFound.where.x * spacing + offset.x,
+            y: robotFound.where.y * (spacing - 0.5) + offset.y,
+          };
+          g.drawPolygon([
+            {
+              x: droneStartLocation.x + wobble.x,
+              y: droneStartLocation.y + wobble.y,
+            },
+            { x: robotLocation.x - spacing / 3, y: robotLocation.y },
+            { x: robotLocation.x + spacing / 3, y: robotLocation.y },
+          ]);
+          g.arc(robotLocation.x, robotLocation.y, spacing / 3, 0, Math.PI);
+        }
         g.endFill();
       },
-    [offset, spacing]
+    [offset, spacing, robotFound, wobble, droneStartLocation]
   );
 
   const shadowY =
@@ -168,8 +190,8 @@ const Drone = ({
           <Sprite
             image={`${process.env.PUBLIC_URL}/sprite/mini/exclamation.png`}
             scale={{ x: 0.01 * (spacing / 50), y: 0.01 * (spacing / 50) }}
-            x={drone.location.x * spacing + offset.x + wobble.x}
-            y={(drone.location.y - 0.5) * spacing + offset.y + wobble.y}
+            x={droneStartLocation.x + wobble.x}
+            y={droneStartLocation.y + wobble.y - spacing / 2}
             anchor={{ x: 0.5, y: 1 }}
           />
         )}
