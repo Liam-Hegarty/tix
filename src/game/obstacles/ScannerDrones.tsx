@@ -7,7 +7,7 @@ import React, {
   useState,
 } from "react";
 import { Point, ScannerDrone } from "../levels/Level";
-import { Container, Sprite, useTick } from "@pixi/react";
+import { AnimatedSprite, Container, Sprite, useTick } from "@pixi/react";
 import { Graphics as GraphicsElement } from "@pixi/react";
 import { Graphics } from "@pixi/graphics";
 import { DropShadowFilter } from "@pixi/filter-drop-shadow";
@@ -67,6 +67,7 @@ const Drone = ({
   listenerRegistry: RobotListenerRegistry;
 }) => {
   const [wobble, setWobble] = useState({ x: 0, y: 0 });
+  const [rotation, setRotation] = useState(0);
   const [robotFound, setRobotFound] = useState<RobotFound>();
   const droneStartLocation = useMemo(() => {
     return {
@@ -86,6 +87,7 @@ const Drone = ({
   }, [drone, listenerRegistry]);
 
   useTick((delta) => {
+    const now = performance.now() / 250;
     if (robotFound) {
       const robotLocation = {
         x: robotFound.where.x * spacing + offset.x,
@@ -97,8 +99,6 @@ const Drone = ({
       };
       const animDelta = delta / 75;
 
-      const now = performance.now() / 250;
-
       const newWobble = {
         x: Math.sin(now),
         y: Math.cos(now) / 2,
@@ -109,12 +109,12 @@ const Drone = ({
         y: wobble.y + movementVector.y * animDelta + newWobble.y,
       });
     } else {
-      const now = performance.now() / 250;
       setWobble({
         x: Math.sin(now) * 5,
         y: Math.cos(now) * 2.5,
       });
     }
+    setRotation(Math.sin(now) / 20)
   });
 
   const scanArea = useCallback(
@@ -179,12 +179,19 @@ const Drone = ({
           }),
         ]}
       >
-        <Sprite
-          image={`${process.env.PUBLIC_URL}/sprite/drone.png`}
+        <AnimatedSprite
+          images={[
+           `${process.env.PUBLIC_URL}/sprite/drone-1.png`,
+           `${process.env.PUBLIC_URL}/sprite/drone-2.png`,
+          ]}
           x={droneStartLocation.x + wobble.x}
           y={droneStartLocation.y + wobble.y}
           anchor={{ x: 0.5, y: 0.5 }}
           scale={{ x: 0.08 * (spacing / 100), y: 0.08 * (spacing / 100) }}
+          isPlaying={true}
+          initialFrame={0}
+          animationSpeed={0.2}
+          rotation={rotation}
         />
         {!!robotFound && (
           <Sprite
