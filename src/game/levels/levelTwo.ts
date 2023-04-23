@@ -24,7 +24,7 @@ export const levelTwo: Level = {
     ],
     rhythmOffset: 180,
     audioPath: "audio/4-4.mp3",
-    tolerance: 100,
+    tolerance: 150,
   },
   scannerDrones: [
     {
@@ -48,20 +48,30 @@ export const levelTwo: Level = {
     {
       tiles: [
         { x: 17, y: 0 },
+        { x: 17, y: 1 },
         { x: 15, y: 3 },
+        { x: 15, y: 4 },
         { x: 13, y: 0 },
+        { x: 13, y: 1 },
         { x: 11, y: 3 },
+        { x: 11, y: 4 },
         { x: 9, y: 0 },
+        { x: 9, y: 1 },
       ],
       rhythm: [false, true],
     },
     {
       tiles: [
         { x: 17, y: 3 },
+        { x: 17, y: 4 },
         { x: 15, y: 0 },
+        { x: 15, y: 1 },
         { x: 13, y: 3 },
+        { x: 13, y: 4 },
         { x: 11, y: 0 },
+        { x: 11, y: 1 },
         { x: 9, y: 3 },
+        { x: 9, y: 4 },
       ],
       rhythm: [true, false],
     },

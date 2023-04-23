@@ -6,6 +6,7 @@ import { RobotListenerRegistry } from "./events/robotListenerRegistry";
 import addEventListeners from "./events/addEventListeners";
 import { ScannerDrones } from "./obstacles/ScannerDrones";
 import { levels } from "./levels/levels";
+import { ZapTiles } from "./obstacles/ZapTile";
 
 const spacing = 100;
 
@@ -43,6 +44,8 @@ export const LevelRenderer = ({
     });
   }, [level]);
 
+  console.log(level.zapTiles);
+
   return (
     <>
       <Grid level={level} spacing={spacing} offset={offset} />
@@ -59,6 +62,16 @@ export const LevelRenderer = ({
           nextLevel,
         }}
       />
+      {!!level.zapTiles.length && (
+        <ZapTiles
+          tiles={level.zapTiles}
+          spacing={spacing}
+          offset={offset}
+          listenerRegistry={listenerRegistry}
+          musicInfo={level.music}
+          rhythm={rhythmTime}
+        />
+      )}
       {!!level.scannerDrones.length && (
         <ScannerDrones
           drones={level.scannerDrones}

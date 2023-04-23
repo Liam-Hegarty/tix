@@ -1,8 +1,6 @@
-import { MusicInfo, Rhythm } from "../levels/Level";
+import { MusicInfo } from "../levels/Level";
+import { cumulativeRhythmTimes, currentBeatTime } from "../rhythmUtils";
 import { EventResponse, TixEvent } from "./Events";
-
-const sumRhythmTimes = (rhythm: Rhythm) =>
-  rhythm.map((b) => b.time).reduce((x, y) => x + y, 0);
 
 export const moveIsOnTempo = (
   rhythmTime: React.MutableRefObject<{
@@ -11,24 +9,18 @@ export const moveIsOnTempo = (
   }>,
   music: MusicInfo
 ) => {
-  const cumulativeBeatTimes = music.rhythm.map((b, i) => {
-    return {
-      tock: b.tock,
-      time: sumRhythmTimes(music.rhythm.slice(0, i)),
-    };
-  });
+  const cumulativeBeatTimes = cumulativeRhythmTimes(music.rhythm)
 
   return (e: TixEvent): Partial<EventResponse> => {
-    const { audioTime, jsTime } = rhythmTime.current;
-    const msProgressOfCurrentLoop = Math.abs(
-      (audioTime + (e.ts - jsTime)) % sumRhythmTimes(music.rhythm)
-    );
+    const msProgressOfCurrentLoop = currentBeatTime(music, rhythmTime, e.ts);
 
     const nextBeatIndex = Math.max(
       cumulativeBeatTimes.findIndex((b) => b.time > msProgressOfCurrentLoop),
       0
     );
+
     var nextBeat = cumulativeBeatTimes[nextBeatIndex];
+
     const previousBeat =
       nextBeatIndex === 0
         ? cumulativeBeatTimes[cumulativeBeatTimes.length - 1]
