@@ -130,6 +130,7 @@ export const Robot = ({
       const moveResponse = listeners.tryMove(moveEvent);
 
       if (moveResponse.canMove) {
+        animDone.current = false
         setNewTix(newerTix);
         lastMoveTs.current = moveEvent.ts;
       }
@@ -160,7 +161,7 @@ export const Robot = ({
 
   if (!!detectedAt) {
     robotElement = <DetectedRobot {...{ spacing, detectedAt, restart }} />;
-  } else if (hasWon && animDone) {
+  } else if (hasWon && animDone.current) {
     robotElement = <ElevatorRobot spacing={spacing} />;
   } else {
     robotElement = isCrashed ? (
