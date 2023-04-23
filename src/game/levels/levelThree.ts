@@ -1,20 +1,15 @@
 import { Level } from "./Level";
 import { parseGrid } from "./gridParser";
 
-const levelTwoRaw = `
-                            .
-  +++++++++++++++++++++     .
-  ++++++          +++++X    .
-  +++++++++++++++++++++     .
-   +                        .
+const levelThreeRaw = `
   +++        .
-  +O+        .
+  +O++X      .
   +++        .
              .
 `;
 
-export const levelTwo: Level = {
-  ...parseGrid(levelTwoRaw),
+export const levelThree: Level = {
+  ...parseGrid(levelThreeRaw),
   music: {
     rhythm: [
       { tock: false, time: 400 },
