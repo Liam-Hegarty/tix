@@ -15,6 +15,7 @@ const defaultResponse: EventResponse = {
   crashed: false,
   detected: false,
   frozen: false,
+  win: false,
 };
 
 export class RobotListenerRegistry {
