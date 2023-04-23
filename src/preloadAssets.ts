@@ -25,7 +25,7 @@ async function preload(files: string[]) {
         const img = new Image();
         img.onload = () => resolve(img);
         img.onerror = img.onabort = () => reject(f);
-        img.src = f;
+        img.src = `${process.env.PUBLIC_URL}/${f}`;
       });
     }
     if (f.endsWith(".mp3")) {
@@ -33,7 +33,7 @@ async function preload(files: string[]) {
         var audio = new Audio();
         audio.onload = () => resolve(audio);
         audio.onerror = () => resolve(audio);
-        audio.src = f;
+        audio.src = `${process.env.PUBLIC_URL}/${f}`;
       });
     }
   });
