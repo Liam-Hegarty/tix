@@ -1,7 +1,13 @@
 import { MusicInfo, Point, ZapTilesInfo } from "../levels/Level";
 import { Graphics as GraphicsElement, Container, useTick } from "@pixi/react";
 import { Graphics } from "@pixi/graphics";
-import React, { MutableRefObject, useCallback, useEffect, useRef, useState } from "react";
+import React, {
+  MutableRefObject,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import palette from "../../palette";
 import { RobotListenerRegistry } from "../events/robotListenerRegistry";
 import { cumulativeRhythmTimes, currentBeatTime } from "../rhythmUtils";
@@ -58,32 +64,32 @@ const TileGroup = ({
   const isZappingRef = useRef(false);
   isZappingRef.current = isZapping;
 
-  const robotHasBeenZapped = useCallback((e: TixEvent) => {
-    // FUCK
-    return {}
-  }, [isZappingRef])
+  const robotHasBeenZapped = useCallback(
+    (e: TixEvent) => {
+      // FUCK
+      return {};
+    },
+    [isZappingRef]
+  );
 
   useEffect(() => {
     const id = `zap-${JSON.stringify(tiles)}`;
-    listenerRegistry.register(id, robotHasBeenZapped)
-    return () => listenerRegistry.deregister(id)
-  }, [listenerRegistry])
+    listenerRegistry.register(id, robotHasBeenZapped);
+    return () => listenerRegistry.deregister(id);
+  }, [listenerRegistry]);
 
   useTick(() => {
-    const beatTime = currentBeatTime(musicInfo, rhythm, performance.now())
+    const beatTime = currentBeatTime(musicInfo, rhythm, performance.now());
     const beatIndex = cumulativeRhythmTimes(musicInfo.rhythm).findIndex(
-      (b) =>
-        Math.abs(
-          beatTime - b.time
-        ) < musicInfo.tolerance
-    )
-    setIsZapping(tiles.rhythm[beatIndex % tiles.rhythm.length])
+      (b) => Math.abs(beatTime - b.time) < musicInfo.tolerance
+    );
+    setIsZapping(tiles.rhythm[beatIndex % tiles.rhythm.length]);
   });
 
   return (
     <>
       {tiles.tiles.map((t) => (
-        <ZapTile 
+        <ZapTile
           location={t}
           spacing={spacing}
           offset={offset}

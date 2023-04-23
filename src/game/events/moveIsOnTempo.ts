@@ -9,7 +9,7 @@ export const moveIsOnTempo = (
   }>,
   music: MusicInfo
 ) => {
-  const cumulativeBeatTimes = cumulativeRhythmTimes(music.rhythm)
+  const cumulativeBeatTimes = cumulativeRhythmTimes(music.rhythm);
 
   return (e: TixEvent): Partial<EventResponse> => {
     const msProgressOfCurrentLoop = currentBeatTime(music, rhythmTime, e.ts);

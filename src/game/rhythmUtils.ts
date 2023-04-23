@@ -18,7 +18,7 @@ export const currentBeatTime = (
   );
 };
 
-export const cumulativeRhythmTimes = (rhythm: Rhythm) => 
+export const cumulativeRhythmTimes = (rhythm: Rhythm) =>
   rhythm.map((b, i) => {
     return {
       tock: b.tock,
