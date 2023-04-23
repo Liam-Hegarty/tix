@@ -22,4 +22,5 @@ export const levelThree: Level = {
     tolerance: 100,
   },
   scannerDrones: [],
+  zapTiles: [],
 };

@@ -12,6 +12,11 @@ export type ScannerDrone = {
   };
 };
 
+export type ZapTile = {
+  tiles: Point[];
+  rhythm: boolean[];
+};
+
 export type Beat = { tock: boolean; time: number };
 export type Rhythm = Beat[];
 
@@ -28,4 +33,5 @@ export type Level = {
   end: Point;
   scannerDrones: ScannerDrone[] = [];
   music: MusicInfo;
+  zapTiles: ZapTile[];
 };

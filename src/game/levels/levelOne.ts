@@ -36,4 +36,5 @@ export const levelOne: Level = {
     audioPath: "audio/4-4.mp3",
     tolerance: 150,
   },
+  zapTiles: [],
 };
