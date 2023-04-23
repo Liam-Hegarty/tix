@@ -114,7 +114,7 @@ const Drone = ({
         y: Math.cos(now) * 2.5,
       });
     }
-    setRotation(Math.sin(now) / 20)
+    setRotation(Math.sin(now) / 20);
   });
 
   const scanArea = useCallback(
@@ -181,8 +181,8 @@ const Drone = ({
       >
         <AnimatedSprite
           images={[
-           `${process.env.PUBLIC_URL}/sprite/drone-1.png`,
-           `${process.env.PUBLIC_URL}/sprite/drone-2.png`,
+            `${process.env.PUBLIC_URL}/sprite/drone-1.png`,
+            `${process.env.PUBLIC_URL}/sprite/drone-2.png`,
           ]}
           x={droneStartLocation.x + wobble.x}
           y={droneStartLocation.y + wobble.y}

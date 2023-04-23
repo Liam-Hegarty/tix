@@ -130,7 +130,7 @@ export const Robot = ({
       const moveResponse = listeners.tryMove(moveEvent);
 
       if (moveResponse.canMove) {
-        animDone.current = false
+        animDone.current = false;
         setNewTix(newerTix);
         lastMoveTs.current = moveEvent.ts;
       }
