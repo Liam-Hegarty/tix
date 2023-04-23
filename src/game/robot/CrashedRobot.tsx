@@ -21,6 +21,14 @@ export const CrashedRobot = ({ spacing }: { spacing: number }) => {
         <SadFace color={colors.darkBlue} size={spacing / 100} />
       </Container>
       <Sprite
+        image={`${process.env.PUBLIC_URL}/sprite/longarms.png`}
+        x={-spacing / 100}
+        y={-spacing * 0.41}
+        anchor={{ x: 0.5, y: 0.5 }}
+        scale={{ x: 0.05 * (spacing / 100), y: 0.05 * (spacing / 100) }}
+        rotation={Math.PI}
+      />
+      <Sprite
         image={`${process.env.PUBLIC_URL}/sprite/mini/exclamation.png`}
         x={spacing / 16}
         y={-0.8 * spacing}

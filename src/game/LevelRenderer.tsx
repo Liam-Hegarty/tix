@@ -8,7 +8,7 @@ import { ScannerDrones } from "./obstacles/ScannerDrones";
 import { levels } from "./levels/levels";
 import { ZapTiles } from "./obstacles/ZapTile";
 
-const spacing = 100;
+const spacing = 300;
 
 export const LevelRenderer = ({
   levelNumber,
@@ -43,8 +43,6 @@ export const LevelRenderer = ({
       y: window.innerHeight / 2 - level.start.y * spacing,
     });
   }, [level]);
-
-  console.log(level.zapTiles);
 
   return (
     <>
