@@ -7,8 +7,16 @@ import addEventListeners from "./events/addEventListeners";
 import { ScannerDrones } from "./obstacles/ScannerDrones";
 import { levels } from "./levels/levels";
 import { ZapTiles } from "./obstacles/ZapTile";
+import constants from "../constants";
 
-const spacing = 300;
+const spacing = 100;
+
+const saveLevelProgress = (number: number) => {
+  const currentValue = localStorage.getItem(constants.saveKey);
+  if (!currentValue || Number.parseInt(currentValue) < number) {
+    localStorage.setItem(constants.saveKey, number.toString());
+  }
+};
 
 export const LevelRenderer = ({
   levelNumber,
@@ -36,6 +44,8 @@ export const LevelRenderer = ({
     x: window.innerWidth / 2 - level.start.x * spacing,
     y: window.innerHeight / 2 - level.start.y * spacing,
   });
+
+  useEffect(() => saveLevelProgress(levelNumber), [levelNumber]);
 
   useEffect(() => {
     setOffset({

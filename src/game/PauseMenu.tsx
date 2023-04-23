@@ -5,9 +5,11 @@ import { Box } from "@mui/material";
 export const PauseMenu = ({
   unpause,
   mainMenu,
+  selectLevel,
 }: {
   unpause: () => void;
   mainMenu: () => void;
+  selectLevel: () => void;
 }) => {
   return (
     <Box
@@ -42,7 +44,7 @@ export const PauseMenu = ({
         <Menu
           buttons={[
             { text: "Resume", action: unpause },
-            { text: "Load Game", action: () => {} },
+            { text: "Level Select", action: selectLevel },
             { text: "Main Menu", action: mainMenu },
           ]}
         />

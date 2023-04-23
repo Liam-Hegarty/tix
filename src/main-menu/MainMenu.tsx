@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction } from "react";
+import React, { Dispatch, MutableRefObject, SetStateAction } from "react";
 import { Box } from "@mui/material";
 import { mui as palette } from "../palette";
 import { Menu } from "./Menu";
@@ -10,9 +10,8 @@ export const MainMenu = ({
 }) => {
   const buttons = [
     { text: "Start Game", action: () => setStage("game") },
-    { text: "Load Game", action: () => {} },
+    { text: "Level Select", action: () => setStage("select") },
     { text: "Credits", action: () => setStage("credits") },
-    { text: "Options", action: () => {} },
     { text: "Exit", action: () => window.close() },
   ];
 

@@ -1,6 +1,7 @@
 import { Box } from "@mui/material";
 import React, {
   Dispatch,
+  MutableRefObject,
   SetStateAction,
   useCallback,
   useEffect,
@@ -16,10 +17,12 @@ settings.SCALE_MODE = SCALE_MODES.NEAREST;
 
 export const Game = ({
   setStage,
+  initialLevel,
 }: {
   setStage: Dispatch<SetStateAction<string>>;
+  initialLevel: MutableRefObject<number>;
 }) => {
-  const [levelNumber, setLevelNumber] = useState(1);
+  const [levelNumber, setLevelNumber] = useState(initialLevel.current);
 
   const [{ width, height }, setScreenDimensions] = useState({
     width: window.innerWidth,
@@ -81,6 +84,7 @@ export const Game = ({
         <PauseMenu
           unpause={() => setPaused(false)}
           mainMenu={() => setStage("menu")}
+          selectLevel={() => setStage("select")}
         />
       )}
       <Stage

@@ -90,6 +90,7 @@ const TileGroup = ({
     <>
       {tiles.tiles.map((t) => (
         <ZapTile
+          key={`zaptile-${t.x}-${t.y}`}
           location={t}
           spacing={spacing}
           offset={offset}
