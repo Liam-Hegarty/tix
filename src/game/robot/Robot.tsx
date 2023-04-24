@@ -6,7 +6,7 @@ import React, {
   useRef,
   useState,
 } from "react";
-import { TixEvent } from "../events/Events";
+import { EventResponse, TixEvent } from "../events/Events";
 import { CrashedRobot } from "./CrashedRobot";
 import { HappyRobot } from "./HappyRobot";
 import { RobotListenerRegistry } from "../events/robotListenerRegistry";
@@ -15,7 +15,8 @@ import { Graphics as GraphicsElement } from "@pixi/react";
 import { Graphics } from "@pixi/graphics";
 import { DetectedRobot } from "./DetectedRobot";
 import { ElevatorRobot } from "./ElevatorRobot";
-import { MusicInfo } from "../levels/LevelTypes";
+import { MusicInfo, Point } from "../levels/LevelTypes";
+import { cumulativeRhythmTimes, currentBeatTime } from "../rhythmUtils";
 
 const crashSound = new Audio(`${process.env.PUBLIC_URL}/audio/crash.mp3`);
 const detectedSound = new Audio(`${process.env.PUBLIC_URL}/audio/alarm.mp3`);
@@ -55,7 +56,7 @@ export const Robot = ({
     y: offset.y + start.y * spacing,
   });
   const [crashedUntil, setCrashedUntil] = useState(-1000);
-  const [detectedAt, setDetectedAt] = useState();
+  const [detectedAt, setDetectedAt] = useState<number>();
   const [hasWon, setHasWon] = useState(false);
   const animDone = useRef(true);
   const isFrozen = useRef(false);
@@ -64,22 +65,31 @@ export const Robot = ({
 
   const lastMoveTs = useRef(-100000);
 
-  useTick((delta) => {
-    const now = performance.now();
-    updateScreenOffset(delta, anim, setOffset, offset, now);
-
-    handleMovementAnim(
-      now,
-      lastMoveTs,
-      animDone,
-      tix,
-      setAnim,
-      offset,
-      spacing
-    );
-
-    publishEventAtTheStartOfEachBeat(now, delta, rhythmTime, music);
-  });
+  const handleEventResponse = (
+    moveResponse: EventResponse,
+    moveEvent: TixEvent
+  ) => {
+    if (moveResponse.canMove) {
+      animDone.current = false;
+      setNewTix(moveEvent.newLocation);
+      lastMoveTs.current = moveEvent.ts;
+    }
+    if (moveResponse.crashed) {
+      crashSound.play();
+      setCrashedUntil(moveEvent.ts + 1000);
+    }
+    if (moveResponse.detected) {
+      detectedSound.play();
+      setDetectedAt(moveEvent.ts);
+    }
+    if (moveResponse.frozen) {
+      isFrozen.current = true;
+    }
+    if (moveResponse.win) {
+      setTimeout(nextLevel, 2000);
+      setHasWon(true);
+    }
+  };
 
   const handleMovement = (e: any) => {
     if (e.repeat || paused || isCrashed || isFrozen.current) {
@@ -118,28 +128,34 @@ export const Robot = ({
 
       const moveResponse = listeners.tryMove(moveEvent);
 
-      if (moveResponse.canMove) {
-        animDone.current = false;
-        setNewTix(newerTix);
-        lastMoveTs.current = moveEvent.ts;
-      }
-      if (moveResponse.crashed) {
-        crashSound.play();
-        setCrashedUntil(e.timeStamp + 1000);
-      }
-      if (moveResponse.detected) {
-        detectedSound.play();
-        setDetectedAt(e.timeStamp);
-      }
-      if (moveResponse.frozen) {
-        isFrozen.current = true;
-      }
-      if (moveResponse.win) {
-        setTimeout(nextLevel, 2000);
-        setHasWon(true);
-      }
+      handleEventResponse(moveResponse, moveEvent);
     }
   };
+
+  useTick((delta) => {
+    const now = performance.now();
+    updateScreenOffset(delta, anim, setOffset, offset, now);
+
+    handleMovementAnim(
+      now,
+      lastMoveTs,
+      animDone,
+      tix,
+      setAnim,
+      offset,
+      spacing
+    );
+
+    publishEventAtTheStartOfEachBeat(
+      now,
+      delta,
+      rhythmTime,
+      music,
+      listeners,
+      tix,
+      handleEventResponse
+    );
+  });
 
   useEffect(() => {
     document.addEventListener("keydown", handleMovement);
@@ -246,7 +262,33 @@ const publishEventAtTheStartOfEachBeat = (
   now: number,
   delta: number,
   rhythmTime: React.MutableRefObject<{ audioTime: number; jsTime: number }>,
-  music: MusicInfo
+  music: MusicInfo,
+  listeners: RobotListenerRegistry,
+  tix: { new: Point; old: Point },
+  handleEventResponse: (
+    moveResponse: EventResponse,
+    moveEvent: TixEvent
+  ) => void
 ) => {
-  
-}
+  const cumulativeBeatTimes = cumulativeRhythmTimes(music.rhythm);
+  const msProgressOfCurrentLoop = currentBeatTime(music, rhythmTime, now);
+
+  const nextBeatIndex = Math.max(
+    cumulativeBeatTimes.findIndex((b) => b.time > msProgressOfCurrentLoop),
+    0
+  );
+
+  if (nextBeatIndex - msProgressOfCurrentLoop < delta) {
+    const periodicEvent = {
+      action: false,
+      move: false,
+      newLocation: tix.new,
+      oldLocation: tix.old,
+      ts: now,
+    };
+
+    const response = listeners.tryMove(periodicEvent);
+
+    handleEventResponse(response, periodicEvent);
+  }
+};
