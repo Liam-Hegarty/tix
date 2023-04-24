@@ -68,6 +68,8 @@ export const LevelRenderer = ({
           paused,
           restart,
           nextLevel,
+          rhythmTime,
+          music: level.music,
         }}
       />
       {!!level.zapTiles.length && (

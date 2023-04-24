@@ -15,6 +15,7 @@ import { Graphics as GraphicsElement } from "@pixi/react";
 import { Graphics } from "@pixi/graphics";
 import { DetectedRobot } from "./DetectedRobot";
 import { ElevatorRobot } from "./ElevatorRobot";
+import { MusicInfo } from "../levels/LevelTypes";
 
 const crashSound = new Audio(`${process.env.PUBLIC_URL}/audio/crash.mp3`);
 const detectedSound = new Audio(`${process.env.PUBLIC_URL}/audio/alarm.mp3`);
@@ -28,6 +29,8 @@ export const Robot = ({
   paused,
   restart,
   nextLevel,
+  rhythmTime,
+  music,
 }: {
   listeners: RobotListenerRegistry;
   spacing: number;
@@ -37,6 +40,11 @@ export const Robot = ({
   paused: boolean;
   restart: () => void;
   nextLevel: () => void;
+  rhythmTime: React.MutableRefObject<{
+    audioTime: number;
+    jsTime: number;
+  }>;
+  music: MusicInfo;
 }) => {
   const [tix, setTix] = useState({ new: start, old: start });
   const setNewTix = (newTix: { x: number; y: number }) => {
@@ -69,6 +77,8 @@ export const Robot = ({
       offset,
       spacing
     );
+
+    publishEventAtTheStartOfEachBeat(now, delta, rhythmTime, music);
   });
 
   const handleMovement = (e: any) => {
@@ -230,4 +240,13 @@ function updateScreenOffset(
   if (anim.y < window.innerHeight * 0.3) {
     setOffset({ y: offset.y + panSpeed, x: offset.x });
   }
+}
+
+const publishEventAtTheStartOfEachBeat = (
+  now: number,
+  delta: number,
+  rhythmTime: React.MutableRefObject<{ audioTime: number; jsTime: number }>,
+  music: MusicInfo
+) => {
+  
 }
