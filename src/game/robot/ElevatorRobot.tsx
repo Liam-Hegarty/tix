@@ -3,6 +3,7 @@ import {
   Sprite,
   useTick,
   Graphics as GraphicsElement,
+  AnimatedSprite,
 } from "@pixi/react";
 import React, { useState } from "react";
 import { WinFace } from "./faces";
@@ -43,6 +44,19 @@ export const ElevatorRobot = ({ spacing }: { spacing: number }) => {
       <Container x={-0.06 * spacing} y={-0.55 * spacing} height={9} width={11}>
         <WinFace color={colors.darkBlue} size={spacing / 100} />
       </Container>
+      <AnimatedSprite
+        images={[
+          `${process.env.PUBLIC_URL}/sprite/longarms.png`,
+          `${process.env.PUBLIC_URL}/sprite/shortarms.png`,
+        ]}
+        x={0}
+        y={-spacing * 0.32}
+        anchor={{ x: 0.5, y: 0.5 }}
+        scale={{ x: 0.05 * (spacing / 100), y: 0.05 * (spacing / 100) }}
+        isPlaying={true}
+        initialFrame={0}
+        animationSpeed={0.02}
+      />
     </Container>
   );
 };
