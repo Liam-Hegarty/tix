@@ -1,13 +1,12 @@
 import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { Box } from "@mui/material";
 
-export const SplashScreens = ({
+export const SplashScreen1 = ({
   setStage,
 }: {
   setStage: Dispatch<SetStateAction<string>>;
 }) => {
   const [className, setClassName] = useState("fade-in");
-  const [splash, setSplash] = useState("cool");
 
   useEffect(() => {
     const coolSound = setTimeout(
@@ -15,62 +14,66 @@ export const SplashScreens = ({
       500
     );
     const coolFadeOut = setTimeout(() => setClassName("fade-out"), 2500);
-    const tix = setTimeout(() => setSplash("tix"), 3000);
-    const end = setTimeout(() => setStage("menu"), 6000);
+    const end = setTimeout(() => setStage("splash2"), 3000);
     return () => {
-      clearTimeout(tix);
       clearTimeout(end);
       clearTimeout(coolSound);
       clearTimeout(coolFadeOut);
     };
-  }, [setSplash, setStage]);
+  }, [setStage]);
 
-  switch (splash) {
-    case "cool":
-      return (
-        <Box
-          sx={{
-            justifyContent: "center",
-            alignItems: "center",
-            display: "flex",
-            width: "100%",
-            height: "100vh",
-            flexDirection: "column",
-            backgroundColor: "#111111",
-            color: "white",
-          }}
-        >
-          <img
-            className={className}
-            src={`${process.env.PUBLIC_URL}/screens/cool.png`}
-            alt={`/cool.png`}
-            width={1496 / 4}
-            height={1584 / 4}
-          />
-          <p className={className} style={{ color: "white" }}>
-            HEG.COOL
-          </p>
-        </Box>
-      );
-    case "tix":
-      return (
-        <Box
-          sx={{
-            justifyContent: "center",
-            alignItems: "center",
-            display: "flex",
-            width: "100%",
-            height: "100vh",
-            flexDirection: "column",
-            fontSize: "50",
-            backgroundColor: "#111111",
-            color: "white",
-          }}
-        >
-          TIX
-        </Box>
-      );
-    default:
-      return <></>;
-  }
+  return (
+    <Box
+      sx={{
+        justifyContent: "center",
+        alignItems: "center",
+        display: "flex",
+        width: "100%",
+        height: "100vh",
+        flexDirection: "column",
+        backgroundColor: "#111111",
+        color: "white",
+      }}
+    >
+      <img
+        className={className}
+        src={`${process.env.PUBLIC_URL}/screens/cool.png`}
+        alt={`/cool.png`}
+        width={1496 / 4}
+        height={1584 / 4}
+      />
+      <p className={className} style={{ color: "white" }}>
+        HEG.COOL
+      </p>
+    </Box>
+  );
+};
+
+export const SplashScreen2 = ({
+  setStage,
+}: {
+  setStage: Dispatch<SetStateAction<string>>;
+}) => {
+  useEffect(() => {
+    const end = setTimeout(() => setStage("menu"), 3000);
+    return () => clearTimeout(end);
+  }, [setStage]);
+
+  return (
+    <Box
+      sx={{
+        justifyContent: "center",
+        alignItems: "center",
+        display: "flex",
+        width: "100%",
+        height: "100vh",
+        flexDirection: "column",
+        fontSize: "50",
+        backgroundColor: "#111111",
+        color: "white",
+      }}
+    >
+      TIX
+    </Box>
+  );
 };

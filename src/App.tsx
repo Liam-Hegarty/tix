@@ -1,17 +1,34 @@
-import React, { useRef, useState } from "react";
-import { SplashScreens } from "./SplashScreens";
+import React, { useEffect, useRef, useState } from "react";
+import { SplashScreen1, SplashScreen2 } from "./SplashScreens";
 import { MainMenu } from "./main-menu/MainMenu";
 import { Game } from "./game/Game";
 import { Credits } from "./main-menu/Credits";
 import { LevelSelect } from "./main-menu/LevelSelect";
 
+const themeMusic = new Audio(`${process.env.PUBLIC_URL}/audio/main-theme.mp3`)
+themeMusic.loop = true;
+
 function App() {
-  const [stage, setStage] = useState<string>("splash");
+  const [stage, setStage] = useState<string>("splash1");
   const initialLevel = useRef(1);
 
+  useEffect(() => {
+    if (stage !== "splash1" && stage !== "game" && themeMusic.paused) {
+      themeMusic.play()
+    }
+
+    if ((stage === "splash1" || stage === "game") && !themeMusic.paused) {
+      themeMusic.pause()
+    }
+
+    return () => themeMusic.pause();
+  }, [stage])
+
   switch (stage) {
-    case "splash":
-      return <SplashScreens {...{ setStage }} />;
+    case "splash1":
+      return <SplashScreen1 {...{ setStage }} />;
+    case "splash2":
+      return <SplashScreen2 {...{ setStage }} />;
     case "menu":
       initialLevel.current = 1;
       return <MainMenu {...{ setStage, initialLevel }} />;
