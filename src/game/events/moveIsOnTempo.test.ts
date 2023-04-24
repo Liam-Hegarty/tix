@@ -163,4 +163,31 @@ describe("moveIsOnTempo", () => {
       })
     ).toMatchObject({});
   });
+  test("cannot double tap a beat", () => {
+    const listener = moveIsOnTempo(fakeRef({ jsTime: 500, audioTime: 500 }), {
+      rhythm: [{ time: 500, tock: false }, { time: 500, tock: false }],
+      audioPath: "",
+      rhythmOffset: 0,
+      tolerance: 100,
+    });
+    expect(
+      listener({
+        action: false,
+        ts: 490,
+        newLocation: { x: 0, y: 0 },
+        oldLocation: { x: 0, y: 0 },
+      })
+    ).toMatchObject({});
+    expect(
+      listener({
+        action: false,
+        ts: 510,
+        newLocation: { x: 0, y: 0 },
+        oldLocation: { x: 0, y: 0 },
+      })
+    ).toMatchObject({
+      canMove: false,
+      crashed: true,
+    });
+  });
 });
