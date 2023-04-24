@@ -1,6 +1,6 @@
 import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { Box } from "@mui/material";
-import {mui as palette} from "./palette";
+import { mui as palette } from "./palette";
 
 export const SplashScreen1 = ({
   setStage,

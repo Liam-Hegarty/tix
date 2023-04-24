@@ -64,7 +64,13 @@ export const moveIsOnTempo = (
     if (distanceFromBeat < music.tolerance && nearestBeat.tock === e.action) {
       return {};
     } else {
-      console.log({msProgressOfCurrentLoop, previousBeat, nextBeat, nextBeatIndex, distanceFromBeat})
+      console.log({
+        msProgressOfCurrentLoop,
+        previousBeat,
+        nextBeat,
+        nextBeatIndex,
+        distanceFromBeat,
+      });
       return {
         canMove: false,
         crashed: true,
