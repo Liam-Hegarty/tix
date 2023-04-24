@@ -18,7 +18,7 @@ import { Graphics } from "@pixi/graphics";
 import { DetectedRobot } from "./DetectedRobot";
 import { ElevatorRobot } from "./ElevatorRobot";
 import { MusicInfo, Point } from "../levels/LevelTypes";
-import { cumulativeRhythmTimes, currentBeatTime } from "../rhythmUtils";
+import { cumulativeRhythmTimes, currentBeatTime, sumRhythmTimes } from "../rhythmUtils";
 
 const crashSound = new Audio(`${process.env.PUBLIC_URL}/audio/crash.mp3`);
 const detectedSound = new Audio(`${process.env.PUBLIC_URL}/audio/alarm.mp3`);
@@ -290,17 +290,19 @@ const publishEventAtTheStartOfEachBeat = (
   ) => void,
   animDone: MutableRefObject<boolean>
 ) => {
-  const cumulativeBeatTimes = cumulativeRhythmTimes(music.rhythm);
+  const cumulativeBeatTimes = [
+    ...cumulativeRhythmTimes(music.rhythm),
+    { tock: music.rhythm[0].tock, time: sumRhythmTimes(music.rhythm) },
+  ];
   const msProgressOfCurrentLoop = currentBeatTime(music, rhythmTime, now);
 
-  const nextBeatIndex = Math.max(
-    cumulativeBeatTimes.findIndex((b) => b.time > msProgressOfCurrentLoop),
-    0
-  );
+  // console.log(msProgressOfCurrentLoop)
+
+  const nextBeat = cumulativeBeatTimes.find((b) => b.time > msProgressOfCurrentLoop) ?? {time: 0}
 
   if (
-    cumulativeBeatTimes[nextBeatIndex].time - msProgressOfCurrentLoop <
-    delta * 10
+    nextBeat.time - msProgressOfCurrentLoop <
+    delta
   ) {
     // console.log({
     //   left1: cumulativeBeatTimes[nextBeatIndex].time,

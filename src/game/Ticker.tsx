@@ -14,25 +14,23 @@ import React, {
 } from "react";
 import palette from "../palette";
 import { OutlineFilter } from "@pixi/filter-outline";
+import { MusicInfo } from "./levels/LevelTypes";
+import { sumRhythmTimes } from "./rhythmUtils";
 
 const sixthRotation = Math.PI / 3;
 
 export const Ticker = ({
   rhythm,
   rhythmTime,
-  tolerance,
-  offset,
-  audioTrack,
+  music
 }: {
   rhythm: Array<{ tock: boolean; time: number }>;
   rhythmTime: MutableRefObject<{ audioTime: number; jsTime: number }>;
-  tolerance: number;
-  offset: number;
-  audioTrack: string;
+  music: MusicInfo;
 }) => {
   const audio = useMemo(
-    () => new Audio(`${process.env.PUBLIC_URL}/${audioTrack}`),
-    [audioTrack]
+    () => new Audio(`${process.env.PUBLIC_URL}/${music.audioPath}`),
+    [music]
   );
 
   const [rotation, setRotation] = useState(0);
@@ -47,16 +45,16 @@ export const Ticker = ({
       audio.play();
     }
     const audioTime =
-      audio.currentTime * 1000 > offset
-        ? audio.currentTime * 1000 - offset
-        : (audio.currentTime + audio.duration) * 1000 - offset;
+      audio.currentTime * 1000 > music.rhythmOffset
+        ? audio.currentTime * 1000 - music.rhythmOffset
+        : (audio.currentTime + audio.duration) * 1000 - music.rhythmOffset;
 
     rhythmTime.current = {
       audioTime,
       jsTime: performance.now(),
     };
 
-    var beatRemainder = rhythmTime.current.audioTime;
+    var beatRemainder = rhythmTime.current.audioTime % sumRhythmTimes(music.rhythm);
     var currentBeatLength = rhythm[0].time;
 
     var currentBeatIndex = 3;
@@ -78,13 +76,13 @@ export const Ticker = ({
       rhythm[(currentBeatIndex + 3) % rhythm.length].tock,
     ]);
 
-    if (beatRemainder < tolerance) {
+    if (beatRemainder < music.tolerance) {
       setRotation(0);
-    } else if (beatRemainder > currentBeatLength - tolerance) {
+    } else if (beatRemainder > currentBeatLength - music.tolerance) {
       setRotation(sixthRotation);
     } else {
-      const crashLength = currentBeatLength - 2 * tolerance;
-      setRotation(((beatRemainder - tolerance) / crashLength) * sixthRotation);
+      const crashLength = currentBeatLength - 2 * music.tolerance;
+      setRotation(((beatRemainder - music.tolerance) / crashLength) * sixthRotation);
     }
   });
 

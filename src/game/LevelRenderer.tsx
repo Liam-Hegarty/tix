@@ -94,9 +94,7 @@ export const LevelRenderer = ({
         {...{
           rhythm: level.music.rhythm,
           rhythmTime,
-          tolerance: level.music.tolerance,
-          offset: level.music.rhythmOffset,
-          audioTrack: level.music.audioPath,
+          music: level.music,
         }}
       />
     </>
