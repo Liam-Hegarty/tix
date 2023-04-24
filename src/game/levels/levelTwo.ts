@@ -17,13 +17,16 @@ export const levelTwo: Level = {
   ...parseGrid(levelTwoRaw),
   music: {
     rhythm: [
-      { tock: false, time: 400 },
-      { tock: false, time: 400 },
-      { tock: false, time: 400 },
       { tock: true, time: 400 },
+      { tock: false, time: 400 },
+      { tock: false, time: 400 },
+      { tock: false, time: 400 },
+      { tock: false, time: 400 },
+      { tock: false, time: 400 },
+      { tock: false, time: 400 },
     ],
-    rhythmOffset: 200,
-    audioPath: "audio/4-4.mp3",
+    rhythmOffset: 25,
+    audioPath: "audio/music/level2.mp3",
     tolerance: 150,
   },
   scannerDrones: [

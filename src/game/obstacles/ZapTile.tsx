@@ -77,9 +77,9 @@ const TileGroup = ({
         marshalledCoords.includes(JSON.stringify(e.oldLocation))
       ) {
         return {
-          canMove: false,
-          crashed: true,
-          detected: true,
+          // canMove: false,
+          // crashed: true,
+          // detected: true,
         };
       } else {
         return {};
