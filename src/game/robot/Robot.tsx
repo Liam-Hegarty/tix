@@ -300,18 +300,11 @@ const publishEventAtTheStartOfEachBeat = (
   ];
   const msProgressOfCurrentLoop = currentBeatTime(music, rhythmTime, now);
 
-  // console.log(msProgressOfCurrentLoop)
-
   const nextBeat = cumulativeBeatTimes.find(
     (b) => b.time > msProgressOfCurrentLoop
   ) ?? { time: 0 };
 
-  if (nextBeat.time - msProgressOfCurrentLoop < delta) {
-    // console.log({
-    //   left1: cumulativeBeatTimes[nextBeatIndex].time,
-    //   left2: msProgressOfCurrentLoop,
-    //   delta,
-    // });
+  if (nextBeat.time - msProgressOfCurrentLoop <= delta * 10) {
     const periodicEvent = {
       action: false,
       move: false,
@@ -323,7 +316,5 @@ const publishEventAtTheStartOfEachBeat = (
     const response = listeners.tryMove(periodicEvent);
 
     handleEventResponse(response, periodicEvent);
-  } else {
-    // console.log("SKIP");
   }
 };
