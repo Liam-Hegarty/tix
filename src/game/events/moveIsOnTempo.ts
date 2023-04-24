@@ -41,8 +41,6 @@ export const moveIsOnTempo = (
         ? nextBeat
         : previousBeat;
 
-    console.log({ cumulativeBeatTimes, previousBeat, nextBeat, nearestBeat });
-
     const distanceFromBeat = Math.abs(
       nearestBeat.time - msProgressOfCurrentLoop
     );
