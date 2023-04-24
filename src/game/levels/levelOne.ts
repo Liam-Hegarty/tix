@@ -27,10 +27,10 @@ export const levelOne: Level = {
   ],
   music: {
     rhythm: [
-      { tock: true, time: 400 },
-      { tock: false, time: 400 },
-      { tock: false, time: 400 },
-      { tock: false, time: 400 },
+      { tock: true, time: 428 },
+      { tock: false, time: 428 },
+      { tock: false, time: 428 },
+      { tock: false, time: 428 },
     ],
     rhythmOffset: 0,
     audioPath: "audio/level1.mp3",
