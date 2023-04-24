@@ -18,7 +18,11 @@ import { Graphics } from "@pixi/graphics";
 import { DetectedRobot } from "./DetectedRobot";
 import { ElevatorRobot } from "./ElevatorRobot";
 import { MusicInfo, Point } from "../levels/LevelTypes";
-import { cumulativeRhythmTimes, currentBeatTime, sumRhythmTimes } from "../rhythmUtils";
+import {
+  cumulativeRhythmTimes,
+  currentBeatTime,
+  sumRhythmTimes,
+} from "../rhythmUtils";
 
 const crashSound = new Audio(`${process.env.PUBLIC_URL}/audio/crash.mp3`);
 const detectedSound = new Audio(`${process.env.PUBLIC_URL}/audio/alarm.mp3`);
@@ -298,12 +302,11 @@ const publishEventAtTheStartOfEachBeat = (
 
   // console.log(msProgressOfCurrentLoop)
 
-  const nextBeat = cumulativeBeatTimes.find((b) => b.time > msProgressOfCurrentLoop) ?? {time: 0}
+  const nextBeat = cumulativeBeatTimes.find(
+    (b) => b.time > msProgressOfCurrentLoop
+  ) ?? { time: 0 };
 
-  if (
-    nextBeat.time - msProgressOfCurrentLoop <
-    delta
-  ) {
+  if (nextBeat.time - msProgressOfCurrentLoop < delta) {
     // console.log({
     //   left1: cumulativeBeatTimes[nextBeatIndex].time,
     //   left2: msProgressOfCurrentLoop,

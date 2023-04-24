@@ -22,7 +22,7 @@ const sixthRotation = Math.PI / 3;
 export const Ticker = ({
   rhythm,
   rhythmTime,
-  music
+  music,
 }: {
   rhythm: Array<{ tock: boolean; time: number }>;
   rhythmTime: MutableRefObject<{ audioTime: number; jsTime: number }>;
@@ -54,7 +54,8 @@ export const Ticker = ({
       jsTime: performance.now(),
     };
 
-    var beatRemainder = rhythmTime.current.audioTime % sumRhythmTimes(music.rhythm);
+    var beatRemainder =
+      rhythmTime.current.audioTime % sumRhythmTimes(music.rhythm);
     var currentBeatLength = rhythm[0].time;
 
     var currentBeatIndex = 3;
@@ -82,7 +83,9 @@ export const Ticker = ({
       setRotation(sixthRotation);
     } else {
       const crashLength = currentBeatLength - 2 * music.tolerance;
-      setRotation(((beatRemainder - music.tolerance) / crashLength) * sixthRotation);
+      setRotation(
+        ((beatRemainder - music.tolerance) / crashLength) * sixthRotation
+      );
     }
   });
 
