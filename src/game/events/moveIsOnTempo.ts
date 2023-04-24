@@ -1,5 +1,9 @@
 import { MusicInfo } from "../levels/Level";
-import { cumulativeRhythmTimes, currentBeatTime, sumRhythmTimes } from "../rhythmUtils";
+import {
+  cumulativeRhythmTimes,
+  currentBeatTime,
+  sumRhythmTimes,
+} from "../rhythmUtils";
 import { EventResponse, TixEvent } from "./Events";
 
 export const moveIsOnTempo = (
@@ -11,8 +15,8 @@ export const moveIsOnTempo = (
 ) => {
   const cumulativeBeatTimes = cumulativeRhythmTimes(music.rhythm);
 
-  var lastMoveTs = -10000
-  var lastMatchedBeatTs = -10000
+  var lastMoveTs = -10000;
+  var lastMatchedBeatTs = -10000;
 
   return (e: TixEvent): Partial<EventResponse> => {
     const msProgressOfCurrentLoop = currentBeatTime(music, rhythmTime, e.ts);
@@ -48,8 +52,8 @@ export const moveIsOnTempo = (
         : previousBeat;
 
     if (
-      nearestBeat.time === lastMatchedBeatTs && 
-      (e.ts - lastMoveTs) < sumRhythmTimes(music.rhythm)
+      nearestBeat.time === lastMatchedBeatTs &&
+      e.ts - lastMoveTs < sumRhythmTimes(music.rhythm)
     ) {
       return {
         canMove: false,
@@ -57,7 +61,7 @@ export const moveIsOnTempo = (
       };
     } else {
       lastMoveTs = e.ts;
-      lastMatchedBeatTs = nearestBeat.time
+      lastMatchedBeatTs = nearestBeat.time;
     }
 
     if (distanceFromBeat < music.tolerance && nearestBeat.tock === e.action) {

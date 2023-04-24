@@ -165,7 +165,10 @@ describe("moveIsOnTempo", () => {
   });
   test("cannot double tap a beat", () => {
     const listener = moveIsOnTempo(fakeRef({ jsTime: 500, audioTime: 500 }), {
-      rhythm: [{ time: 500, tock: false }, { time: 500, tock: false }],
+      rhythm: [
+        { time: 500, tock: false },
+        { time: 500, tock: false },
+      ],
       audioPath: "",
       rhythmOffset: 0,
       tolerance: 100,
