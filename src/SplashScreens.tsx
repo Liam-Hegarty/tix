@@ -1,5 +1,6 @@
 import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { Box } from "@mui/material";
+import {mui as palette} from "./palette";
 
 export const SplashScreen1 = ({
   setStage,
@@ -68,8 +69,8 @@ export const SplashScreen2 = ({
         width: "100%",
         height: "100vh",
         flexDirection: "column",
-        fontSize: "50",
-        backgroundColor: "#111111",
+        fontSize: "min(100vw, 100vh)",
+        backgroundColor: palette.darkBlue,
         color: "white",
       }}
     >

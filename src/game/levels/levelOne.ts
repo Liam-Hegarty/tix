@@ -33,7 +33,7 @@ export const levelOne: Level = {
       { tock: false, time: 400 },
     ],
     rhythmOffset: 25,
-    audioPath: "audio/music/level1-fast.mp3",
+    audioPath: "audio/music/level1.mp3",
     tolerance: 150,
   },
   zapTiles: [],
