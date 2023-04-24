@@ -68,7 +68,6 @@ const TileGroup = ({
     [tiles]
   );
   // console.log(marshalledCoords);
-  isZappingRef.current = isZapping;
 
   const robotHasBeenZapped = useCallback(
     (e: TixEvent) => {
@@ -78,7 +77,7 @@ const TileGroup = ({
         marshalledCoords.includes(JSON.stringify(e.oldLocation))
       ) {
         return {
-          canMove: true,
+          canMove: false,
           crashed: true,
           detected: true,
         };
@@ -100,7 +99,9 @@ const TileGroup = ({
     const beatIndex = cumulativeRhythmTimes(musicInfo.rhythm).findIndex(
       (b) => Math.abs(beatTime - b.time) < musicInfo.tolerance
     );
-    setIsZapping(tiles.rhythm[beatIndex % tiles.rhythm.length]);
+    const toggleZap = tiles.rhythm[beatIndex % tiles.rhythm.length];
+    isZappingRef.current = toggleZap;
+    setIsZapping(toggleZap);
   });
 
   return (

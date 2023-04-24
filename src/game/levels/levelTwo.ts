@@ -22,7 +22,7 @@ export const levelTwo: Level = {
       { tock: false, time: 400 },
       { tock: true, time: 400 },
     ],
-    rhythmOffset: 180,
+    rhythmOffset: 200,
     audioPath: "audio/4-4.mp3",
     tolerance: 150,
   },
@@ -58,7 +58,7 @@ export const levelTwo: Level = {
         { x: 9, y: 0 },
         { x: 9, y: 1 },
       ],
-      rhythm: [false, true],
+      rhythm: [false, false, true, true],
     },
     {
       tiles: [
@@ -73,7 +73,7 @@ export const levelTwo: Level = {
         { x: 9, y: 3 },
         { x: 9, y: 4 },
       ],
-      rhythm: [true, false],
+      rhythm: [true, true, false, false],
     },
   ],
 };
