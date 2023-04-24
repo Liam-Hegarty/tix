@@ -19,6 +19,9 @@ export const moveIsOnTempo = (
   var lastMatchedBeatTs = -10000;
 
   return (e: TixEvent): Partial<EventResponse> => {
+    if (!e.move) {
+      return {}
+    }
     const msProgressOfCurrentLoop = currentBeatTime(music, rhythmTime, e.ts);
 
     const nextBeatIndex = Math.max(

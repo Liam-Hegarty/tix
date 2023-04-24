@@ -57,40 +57,10 @@ export const Robot = ({
   const lastMoveTs = useRef(-100000);
 
   useTick((delta) => {
-    const panSpeed = 5 * delta;
     const now = performance.now();
+    updateScreenOffset(delta, anim, setOffset, offset, now);
 
-    if (anim.x > window.innerWidth * 0.7) {
-      setOffset({ x: offset.x - panSpeed, y: offset.y });
-    }
-    if (anim.x < window.innerWidth * 0.3) {
-      setOffset({ x: offset.x + panSpeed, y: offset.y });
-    }
-    if (anim.y > window.innerHeight * 0.7) {
-      setOffset({ y: offset.y - panSpeed, x: offset.x });
-    }
-    if (anim.y < window.innerHeight * 0.3) {
-      setOffset({ y: offset.y + panSpeed, x: offset.x });
-    }
-
-    const animTime = 100;
-    const diff = now - lastMoveTs.current;
-    if (diff < animTime) {
-      animDone.current = false;
-      const animProgress = diff / animTime;
-      const deltaX = tix.new.x - tix.old.x;
-      const deltaY = tix.new.y - tix.old.y;
-      setAnim({
-        x: offset.x + spacing * (tix.old.x + deltaX * animProgress),
-        y: offset.y + spacing * (tix.old.y + deltaY * animProgress),
-      });
-    } else {
-      animDone.current = true;
-      setAnim({
-        x: offset.x + tix.new.x * spacing,
-        y: offset.y + tix.new.y * spacing,
-      });
-    }
+    handleMovementAnim(now, lastMoveTs, animDone, tix, setAnim, offset, spacing);
   });
 
   const handleMovement = (e: any) => {
@@ -122,6 +92,7 @@ export const Robot = ({
     if (newerTix) {
       const moveEvent: TixEvent = {
         action: false,
+        move: true,
         newLocation: newerTix,
         oldLocation: tix.new,
         ts: e.timeStamp,
@@ -200,3 +171,47 @@ export const Robot = ({
     </Container>
   );
 };
+
+function handleMovementAnim(now: number, lastMoveTs: React.MutableRefObject<number>, animDone: React.MutableRefObject<boolean>, tix: { new: { x: number; y: number; }; old: { x: number; y: number; }; }, setAnim: React.Dispatch<React.SetStateAction<{ x: number; y: number; }>>, offset: { x: number; y: number; }, spacing: number) {
+  const animTime = 100;
+  const diff = now - lastMoveTs.current;
+  if (diff < animTime) {
+    animDone.current = false;
+    const animProgress = diff / animTime;
+    const deltaX = tix.new.x - tix.old.x;
+    const deltaY = tix.new.y - tix.old.y;
+    setAnim({
+      x: offset.x + spacing * (tix.old.x + deltaX * animProgress),
+      y: offset.y + spacing * (tix.old.y + deltaY * animProgress),
+    });
+  } else {
+    animDone.current = true;
+    setAnim({
+      x: offset.x + tix.new.x * spacing,
+      y: offset.y + tix.new.y * spacing,
+    });
+  }
+}
+
+function updateScreenOffset(
+  delta: number,
+  anim: { x: number; y: number },
+  setOffset: React.Dispatch<React.SetStateAction<{ x: number; y: number }>>,
+  offset: { x: number; y: number },
+  now: number,
+) {
+  const panSpeed = 5 * delta;
+
+  if (anim.x > window.innerWidth * 0.7) {
+    setOffset({ x: offset.x - panSpeed, y: offset.y });
+  }
+  if (anim.x < window.innerWidth * 0.3) {
+    setOffset({ x: offset.x + panSpeed, y: offset.y });
+  }
+  if (anim.y > window.innerHeight * 0.7) {
+    setOffset({ y: offset.y - panSpeed, x: offset.x });
+  }
+  if (anim.y < window.innerHeight * 0.3) {
+    setOffset({ y: offset.y + panSpeed, x: offset.x });
+  }
+}
