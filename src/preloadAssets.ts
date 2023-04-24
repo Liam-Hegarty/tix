@@ -14,6 +14,8 @@ const assetsToPreload = [
   "sprite/drone-1.png",
   "sprite/big-gear.png",
   "sprite/robot.png",
+  "sprite/longarms.png",
+  "sprite/shortarms.png",
   "texture/stripes.png",
   "texture/floor.png",
 ];
