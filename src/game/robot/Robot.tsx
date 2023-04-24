@@ -60,7 +60,15 @@ export const Robot = ({
     const now = performance.now();
     updateScreenOffset(delta, anim, setOffset, offset, now);
 
-    handleMovementAnim(now, lastMoveTs, animDone, tix, setAnim, offset, spacing);
+    handleMovementAnim(
+      now,
+      lastMoveTs,
+      animDone,
+      tix,
+      setAnim,
+      offset,
+      spacing
+    );
   });
 
   const handleMovement = (e: any) => {
@@ -172,7 +180,15 @@ export const Robot = ({
   );
 };
 
-function handleMovementAnim(now: number, lastMoveTs: React.MutableRefObject<number>, animDone: React.MutableRefObject<boolean>, tix: { new: { x: number; y: number; }; old: { x: number; y: number; }; }, setAnim: React.Dispatch<React.SetStateAction<{ x: number; y: number; }>>, offset: { x: number; y: number; }, spacing: number) {
+function handleMovementAnim(
+  now: number,
+  lastMoveTs: React.MutableRefObject<number>,
+  animDone: React.MutableRefObject<boolean>,
+  tix: { new: { x: number; y: number }; old: { x: number; y: number } },
+  setAnim: React.Dispatch<React.SetStateAction<{ x: number; y: number }>>,
+  offset: { x: number; y: number },
+  spacing: number
+) {
   const animTime = 100;
   const diff = now - lastMoveTs.current;
   if (diff < animTime) {
@@ -198,7 +214,7 @@ function updateScreenOffset(
   anim: { x: number; y: number },
   setOffset: React.Dispatch<React.SetStateAction<{ x: number; y: number }>>,
   offset: { x: number; y: number },
-  now: number,
+  now: number
 ) {
   const panSpeed = 5 * delta;
 

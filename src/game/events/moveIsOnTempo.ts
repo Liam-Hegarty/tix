@@ -20,7 +20,7 @@ export const moveIsOnTempo = (
 
   return (e: TixEvent): Partial<EventResponse> => {
     if (!e.move) {
-      return {}
+      return {};
     }
     const msProgressOfCurrentLoop = currentBeatTime(music, rhythmTime, e.ts);
 
