@@ -13,7 +13,10 @@ export const moveIsOnTempo = (
   }>,
   music: MusicInfo
 ) => {
-  const cumulativeBeatTimes = cumulativeRhythmTimes(music.rhythm);
+  const cumulativeBeatTimes = [
+    ...cumulativeRhythmTimes(music.rhythm),
+    { tock: music.rhythm[0].tock, time: sumRhythmTimes(music.rhythm) },
+  ];
 
   var lastMoveTs = -10000;
   var lastMatchedBeatTs = -10000;
@@ -26,27 +29,11 @@ export const moveIsOnTempo = (
 
     const nextBeatIndex = Math.max(
       cumulativeBeatTimes.findIndex((b) => b.time > msProgressOfCurrentLoop),
-      0
+      1
     );
 
-    var nextBeat = cumulativeBeatTimes[nextBeatIndex];
-
-    const previousBeat =
-      nextBeatIndex === 0
-        ? cumulativeBeatTimes[cumulativeBeatTimes.length - 1]
-        : cumulativeBeatTimes[nextBeatIndex - 1];
-
-    if (nextBeatIndex === 0) {
-      nextBeat = {
-        ...nextBeat,
-        time: previousBeat.time + music.rhythm[music.rhythm.length - 1].time,
-      };
-    }
-
-    const distanceFromBeat = Math.min(
-      msProgressOfCurrentLoop - previousBeat.time,
-      nextBeat.time - msProgressOfCurrentLoop
-    );
+    const nextBeat = cumulativeBeatTimes[nextBeatIndex];
+    const previousBeat = cumulativeBeatTimes[nextBeatIndex - 1];
 
     const nearestBeat =
       msProgressOfCurrentLoop - previousBeat.time >
@@ -54,8 +41,17 @@ export const moveIsOnTempo = (
         ? nextBeat
         : previousBeat;
 
+    console.log({ cumulativeBeatTimes, previousBeat, nextBeat, nearestBeat });
+
+    const distanceFromBeat = Math.abs(
+      nearestBeat.time - msProgressOfCurrentLoop
+    );
+
     if (
-      nearestBeat.time === lastMatchedBeatTs &&
+      (nearestBeat.time === lastMatchedBeatTs ||
+        (nearestBeat.time === 0 && // wraparound logic
+          lastMatchedBeatTs ===
+            cumulativeBeatTimes[cumulativeBeatTimes.length - 1].time)) &&
       e.ts - lastMoveTs < sumRhythmTimes(music.rhythm)
     ) {
       return {

@@ -46,7 +46,10 @@ export const Ticker = ({
     if (audio.paused) {
       audio.play();
     }
-    const audioTime = audio.currentTime * 1000 - offset;
+    const audioTime =
+      audio.currentTime * 1000 > offset
+        ? audio.currentTime * 1000 - offset
+        : (audio.currentTime + audio.duration) * 1000 - offset;
 
     rhythmTime.current = {
       audioTime,

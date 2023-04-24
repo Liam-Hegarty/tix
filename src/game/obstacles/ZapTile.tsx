@@ -5,6 +5,7 @@ import React, {
   MutableRefObject,
   useCallback,
   useEffect,
+  useMemo,
   useRef,
   useState,
 } from "react";
@@ -62,21 +63,37 @@ const TileGroup = ({
 }) => {
   const [isZapping, setIsZapping] = useState(false);
   const isZappingRef = useRef(false);
+  const marshalledCoords = useMemo(
+    () => tiles.tiles.map((p) => JSON.stringify(p)),
+    [tiles]
+  );
+  // console.log(marshalledCoords);
   isZappingRef.current = isZapping;
 
   const robotHasBeenZapped = useCallback(
     (e: TixEvent) => {
-      // FUCK
-      return {};
+      // console.log(e)
+      if (
+        isZappingRef.current &&
+        marshalledCoords.includes(JSON.stringify(e.oldLocation))
+      ) {
+        return {
+          canMove: true,
+          crashed: true,
+          detected: true,
+        };
+      } else {
+        return {};
+      }
     },
-    [isZappingRef]
+    [isZappingRef, marshalledCoords]
   );
 
   useEffect(() => {
     const id = `zap-${JSON.stringify(tiles)}`;
     listenerRegistry.register(id, robotHasBeenZapped);
     return () => listenerRegistry.deregister(id);
-  }, [listenerRegistry]);
+  }, [listenerRegistry, robotHasBeenZapped, tiles]);
 
   useTick(() => {
     const beatTime = currentBeatTime(musicInfo, rhythm, performance.now());

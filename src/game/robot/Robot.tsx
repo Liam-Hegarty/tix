@@ -1,7 +1,9 @@
 import { Container, useTick } from "@pixi/react";
 import React, {
   Dispatch,
+  MutableRefObject,
   SetStateAction,
+  useCallback,
   useEffect,
   useRef,
   useState,
@@ -48,9 +50,12 @@ export const Robot = ({
   music: MusicInfo;
 }) => {
   const [tix, setTix] = useState({ new: start, old: start });
-  const setNewTix = (newTix: { x: number; y: number }) => {
-    setTix({ old: tix.new, new: newTix });
-  };
+  const setNewTix = useCallback(
+    (newTix: { x: number; y: number }) => {
+      setTix({ old: tix.new, new: newTix });
+    },
+    [setTix, tix]
+  );
   const [anim, setAnim] = useState({
     x: offset.x + start.x * spacing,
     y: offset.y + start.y * spacing,
@@ -65,72 +70,85 @@ export const Robot = ({
 
   const lastMoveTs = useRef(-100000);
 
-  const handleEventResponse = (
-    moveResponse: EventResponse,
-    moveEvent: TixEvent
-  ) => {
-    if (moveResponse.canMove) {
-      animDone.current = false;
-      setNewTix(moveEvent.newLocation);
-      lastMoveTs.current = moveEvent.ts;
-    }
-    if (moveResponse.crashed) {
-      crashSound.play();
-      setCrashedUntil(moveEvent.ts + 1000);
-    }
-    if (moveResponse.detected) {
-      detectedSound.play();
-      setDetectedAt(moveEvent.ts);
-    }
-    if (moveResponse.frozen) {
-      isFrozen.current = true;
-    }
-    if (moveResponse.win) {
-      setTimeout(nextLevel, 2000);
-      setHasWon(true);
-    }
-  };
+  const handleEventResponse = useCallback(
+    (moveResponse: EventResponse, moveEvent: TixEvent) => {
+      if (moveResponse.canMove) {
+        animDone.current = false;
+        setNewTix(moveEvent.newLocation);
+        lastMoveTs.current = moveEvent.ts;
+      }
+      if (moveResponse.crashed) {
+        crashSound.play();
+        setCrashedUntil(moveEvent.ts + 1000);
+      }
+      if (moveResponse.detected) {
+        if (!detectedAt) {
+          detectedSound.play();
+          setDetectedAt(moveEvent.ts);
+        }
+      }
+      if (moveResponse.frozen) {
+        isFrozen.current = true;
+      }
+      if (moveResponse.win) {
+        setTimeout(nextLevel, 2000);
+        setHasWon(true);
+      }
+    },
+    [
+      animDone,
+      setHasWon,
+      setDetectedAt,
+      setCrashedUntil,
+      setNewTix,
+      detectedAt,
+      nextLevel,
+    ]
+  );
 
-  const handleMovement = (e: any) => {
-    if (e.repeat || paused || isCrashed || isFrozen.current) {
-      return;
-    }
+  const handleMovement = useCallback(
+    (e: any) => {
+      if (e.repeat || paused || isCrashed || isFrozen.current) {
+        return;
+      }
 
-    var newerTix;
+      var newerTix;
 
-    switch (e.key) {
-      case "w":
-      case "ArrowUp":
-        newerTix = { x: tix.new.x, y: tix.new.y - 1 };
-        break;
-      case "a":
-      case "ArrowLeft":
-        newerTix = { x: tix.new.x - 1, y: tix.new.y };
-        break;
-      case "s":
-      case "ArrowDown":
-        newerTix = { x: tix.new.x, y: tix.new.y + 1 };
-        break;
-      case "d":
-      case "ArrowRight":
-        newerTix = { x: tix.new.x + 1, y: tix.new.y };
-        break;
-    }
+      switch (e.key) {
+        case "w":
+        case "ArrowUp":
+          newerTix = { x: tix.new.x, y: tix.new.y - 1 };
+          break;
+        case "a":
+        case "ArrowLeft":
+          newerTix = { x: tix.new.x - 1, y: tix.new.y };
+          break;
+        case "s":
+        case "ArrowDown":
+          newerTix = { x: tix.new.x, y: tix.new.y + 1 };
+          break;
+        case "d":
+        case "ArrowRight":
+          newerTix = { x: tix.new.x + 1, y: tix.new.y };
+          break;
+      }
 
-    if (newerTix) {
-      const moveEvent: TixEvent = {
-        action: false,
-        move: true,
-        newLocation: newerTix,
-        oldLocation: tix.new,
-        ts: e.timeStamp,
-      };
+      if (newerTix) {
+        const moveEvent: TixEvent = {
+          action: false,
+          move: true,
+          newLocation: newerTix,
+          oldLocation: tix.new,
+          ts: e.timeStamp,
+        };
 
-      const moveResponse = listeners.tryMove(moveEvent);
+        const moveResponse = listeners.tryMove(moveEvent);
 
-      handleEventResponse(moveResponse, moveEvent);
-    }
-  };
+        handleEventResponse(moveResponse, moveEvent);
+      }
+    },
+    [tix, listeners, paused, isCrashed, handleEventResponse]
+  );
 
   useTick((delta) => {
     const now = performance.now();
@@ -153,7 +171,8 @@ export const Robot = ({
       music,
       listeners,
       tix,
-      handleEventResponse
+      handleEventResponse,
+      animDone
     );
   });
 
@@ -268,7 +287,8 @@ const publishEventAtTheStartOfEachBeat = (
   handleEventResponse: (
     moveResponse: EventResponse,
     moveEvent: TixEvent
-  ) => void
+  ) => void,
+  animDone: MutableRefObject<boolean>
 ) => {
   const cumulativeBeatTimes = cumulativeRhythmTimes(music.rhythm);
   const msProgressOfCurrentLoop = currentBeatTime(music, rhythmTime, now);
@@ -278,17 +298,27 @@ const publishEventAtTheStartOfEachBeat = (
     0
   );
 
-  if (nextBeatIndex - msProgressOfCurrentLoop < delta) {
+  if (
+    cumulativeBeatTimes[nextBeatIndex].time - msProgressOfCurrentLoop <
+    delta * 10
+  ) {
+    // console.log({
+    //   left1: cumulativeBeatTimes[nextBeatIndex].time,
+    //   left2: msProgressOfCurrentLoop,
+    //   delta,
+    // });
     const periodicEvent = {
       action: false,
       move: false,
       newLocation: tix.new,
-      oldLocation: tix.old,
+      oldLocation: animDone.current ? tix.new : tix.old,
       ts: now,
     };
 
     const response = listeners.tryMove(periodicEvent);
 
     handleEventResponse(response, periodicEvent);
+  } else {
+    // console.log("SKIP");
   }
 };
