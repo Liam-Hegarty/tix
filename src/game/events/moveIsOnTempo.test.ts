@@ -23,6 +23,7 @@ describe("moveIsOnTempo", () => {
     expect(
       listener({
         action: false,
+        move: true,
         ts: 500,
         newLocation: { x: 0, y: 0 },
         oldLocation: { x: 0, y: 0 },
@@ -39,6 +40,7 @@ describe("moveIsOnTempo", () => {
     expect(
       listener({
         action: false,
+        move: true,
         ts: 250,
         newLocation: { x: 0, y: 0 },
         oldLocation: { x: 0, y: 0 },
@@ -55,6 +57,7 @@ describe("moveIsOnTempo", () => {
     expect(
       listener({
         action: true,
+        move: true,
         ts: 250,
         newLocation: { x: 0, y: 0 },
         oldLocation: { x: 0, y: 0 },
@@ -71,6 +74,7 @@ describe("moveIsOnTempo", () => {
     expect(
       listener({
         action: false,
+        move: true,
         ts: 500,
         newLocation: { x: 0, y: 0 },
         oldLocation: { x: 0, y: 0 },
@@ -87,6 +91,7 @@ describe("moveIsOnTempo", () => {
     expect(
       listener({
         action: true,
+        move: true,
         ts: 500,
         newLocation: { x: 0, y: 0 },
         oldLocation: { x: 0, y: 0 },
@@ -103,6 +108,7 @@ describe("moveIsOnTempo", () => {
     expect(
       listener({
         action: true,
+        move: true,
         ts: 401,
         newLocation: { x: 0, y: 0 },
         oldLocation: { x: 0, y: 0 },
@@ -119,6 +125,7 @@ describe("moveIsOnTempo", () => {
     expect(
       listener({
         action: true,
+        move: true,
         ts: 399,
         newLocation: { x: 0, y: 0 },
         oldLocation: { x: 0, y: 0 },
@@ -138,6 +145,7 @@ describe("moveIsOnTempo", () => {
     expect(
       listener({
         action: false,
+        move: true,
         ts: 50,
         newLocation: { x: 0, y: 0 },
         oldLocation: { x: 0, y: 0 },
@@ -157,6 +165,7 @@ describe("moveIsOnTempo", () => {
     expect(
       listener({
         action: true,
+        move: true,
         ts: 550,
         newLocation: { x: 0, y: 0 },
         oldLocation: { x: 0, y: 0 },
@@ -176,6 +185,7 @@ describe("moveIsOnTempo", () => {
     expect(
       listener({
         action: false,
+        move: true,
         ts: 490,
         newLocation: { x: 0, y: 0 },
         oldLocation: { x: 0, y: 0 },
@@ -184,6 +194,7 @@ describe("moveIsOnTempo", () => {
     expect(
       listener({
         action: false,
+        move: true,
         ts: 510,
         newLocation: { x: 0, y: 0 },
         oldLocation: { x: 0, y: 0 },
