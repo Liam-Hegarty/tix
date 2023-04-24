@@ -1,4 +1,4 @@
-import { MusicInfo, Point, ZapTilesInfo } from "../levels/Level";
+import { MusicInfo, Point, ZapTilesInfo } from "../levels/LevelTypes";
 import { Graphics as GraphicsElement, Container, useTick } from "@pixi/react";
 import { Graphics } from "@pixi/graphics";
 import React, {

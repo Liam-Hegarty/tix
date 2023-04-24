@@ -1,4 +1,4 @@
-import { MusicInfo } from "../levels/Level";
+import { MusicInfo } from "../levels/LevelTypes";
 import {
   cumulativeRhythmTimes,
   currentBeatTime,

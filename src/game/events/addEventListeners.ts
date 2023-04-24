@@ -1,4 +1,4 @@
-import { Level } from "../levels/Level";
+import { Level } from "../levels/LevelTypes";
 import { EventResponse, TixEvent } from "./Events";
 import { moveIsOnTempo } from "./moveIsOnTempo";
 import { RobotListenerRegistry } from "./robotListenerRegistry";

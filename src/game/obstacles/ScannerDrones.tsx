@@ -6,7 +6,7 @@ import React, {
   useMemo,
   useState,
 } from "react";
-import { Point, ScannerDrone } from "../levels/Level";
+import { Point, ScannerDrone } from "../levels/LevelTypes";
 import { AnimatedSprite, Container, Sprite, useTick } from "@pixi/react";
 import { Graphics as GraphicsElement } from "@pixi/react";
 import { Graphics } from "@pixi/graphics";

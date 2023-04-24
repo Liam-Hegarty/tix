@@ -1,6 +1,6 @@
 import { TilingSprite } from "@pixi/react";
 import React from "react";
-import { Point } from "../levels/Level";
+import { Point } from "../levels/LevelTypes";
 
 export const StripedTile = ({
   x,

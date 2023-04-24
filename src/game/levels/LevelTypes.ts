@@ -31,7 +31,7 @@ export type Level = {
   grid: boolean[][];
   start: Point;
   end: Point;
-  scannerDrones: ScannerDrone[] = [];
+  scannerDrones: ScannerDrone[];
   music: MusicInfo;
   zapTiles: ZapTilesInfo[];
 };

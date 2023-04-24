@@ -1,4 +1,4 @@
-import { Level } from "./Level";
+import { Level } from "./LevelTypes";
 import { parseGrid } from "./gridParser";
 
 const levelThreeRaw = `

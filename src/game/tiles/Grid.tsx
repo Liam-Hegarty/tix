@@ -1,5 +1,5 @@
 import React, { useCallback } from "react";
-import { Level } from "../levels/Level";
+import { Level } from "../levels/LevelTypes";
 import { Sprite, Graphics as GraphicsElement } from "@pixi/react";
 import { Graphics } from "@pixi/graphics";
 import colors from "../../palette";

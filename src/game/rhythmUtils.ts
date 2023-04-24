@@ -1,5 +1,5 @@
 import { MutableRefObject } from "react";
-import { MusicInfo, Rhythm } from "./levels/Level";
+import { MusicInfo, Rhythm } from "./levels/LevelTypes";
 
 export const sumRhythmTimes = (rhythm: Rhythm) =>
   rhythm.map((b) => b.time).reduce((x, y) => x + y, 0);
