@@ -121,8 +121,9 @@ export const ZapTiles = ({
 }) => {
   return (
     <>
-      {tiles.map((t) => (
+      {tiles.map((t,i) => (
         <TileGroup
+          key={`zap-tile-group-${i}`}
           tiles={t}
           spacing={spacing}
           offset={offset}
