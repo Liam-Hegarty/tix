@@ -5,7 +5,7 @@ import { Game } from "./game/Game";
 import { Credits } from "./main-menu/Credits";
 import { LevelSelect } from "./main-menu/LevelSelect";
 
-const themeMusic = new Audio(`${process.env.PUBLIC_URL}/audio/main-theme.mp3`)
+const themeMusic = new Audio(`${process.env.PUBLIC_URL}/audio/main-theme.mp3`);
 themeMusic.loop = true;
 
 function App() {
@@ -14,15 +14,15 @@ function App() {
 
   useEffect(() => {
     if (stage !== "splash1" && stage !== "game" && themeMusic.paused) {
-      themeMusic.play()
+      themeMusic.play();
     }
 
     if ((stage === "splash1" || stage === "game") && !themeMusic.paused) {
-      themeMusic.pause()
+      themeMusic.pause();
     }
 
     return () => themeMusic.pause();
-  }, [stage])
+  }, [stage]);
 
   switch (stage) {
     case "splash1":
