@@ -122,4 +122,4 @@ itch-io-web:
 
   script:
     - butler login
-    - butler push itch.io viado-escroto/tix:web --userversion $(git describe --tags --abbrev=0)
+    - butler push itch.io hegcool/tix:web --userversion $(git describe --tags --abbrev=0)
