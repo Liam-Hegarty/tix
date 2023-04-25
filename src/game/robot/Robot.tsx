@@ -75,26 +75,26 @@ export const Robot = ({
   const lastMoveTs = useRef(-100000);
 
   const handleEventResponse = useCallback(
-    (moveResponse: EventResponse, moveEvent: TixEvent) => {
-      if (moveResponse.canMove) {
+    (response: EventResponse, event: TixEvent) => {
+      if (response.canMove) {
         animDone.current = false;
-        setNewTix(moveEvent.newLocation);
-        lastMoveTs.current = moveEvent.ts;
+        setNewTix(event.newLocation);
+        lastMoveTs.current = event.ts;
       }
-      if (moveResponse.crashed) {
+      if (response.crashed) {
         crashSound.play();
-        setCrashedUntil(moveEvent.ts + 1000);
+        setCrashedUntil(event.ts + 1000);
       }
-      if (moveResponse.detected) {
+      if (response.detected) {
         if (!detectedAt) {
           detectedSound.play();
-          setDetectedAt(moveEvent.ts);
+          setDetectedAt(event.ts);
         }
       }
-      if (moveResponse.frozen) {
+      if (response.frozen) {
         isFrozen.current = true;
       }
-      if (moveResponse.win) {
+      if (response.win) {
         setTimeout(nextLevel, 2000);
         setHasWon(true);
       }
@@ -140,8 +140,8 @@ export const Robot = ({
             action: true,
             move: false,
             newLocation: tix.new,
-            oldLocation: animDone.current ? tix.new : tix.old,
-            ts: e.ts,
+            oldLocation: tix.old,
+            ts: e.timeStamp,
           };
           handleEventResponse(listeners.tryMove(actionEvent), actionEvent)
           break

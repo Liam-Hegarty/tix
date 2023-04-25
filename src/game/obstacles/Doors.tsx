@@ -31,14 +31,12 @@ const Door = ({
         crashed: true,
       };
     } else {
-      return { canMove: true };
+      return {};
     }
   }, [x, y, isOpen]);
 
-  const openDoor = useCallback((e: TixEvent) => {
-    console.log(areAdjacent(e.newLocation, { x, y }))
-    console.log(isOpen)
-    if (e.action && areAdjacent(e.newLocation, { x, y })) {
+  const openDoor = useCallback((e: TixEvent, r: EventResponse) => {
+    if (!r.crashed && e.action && areAdjacent(e.newLocation, { x, y })) {
       setIsOpen(true);
     }
     return {};

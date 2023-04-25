@@ -22,7 +22,7 @@ export const moveIsOnTempo = (
   var lastMatchedBeatTs = -10000;
 
   return (e: TixEvent): Partial<EventResponse> => {
-    if (!e.move) {
+    if (!e.move && !e.action) {
       return { canMove: false };
     }
     const msProgressOfCurrentLoop = currentBeatTime(music, rhythmTime, e.ts);
@@ -64,13 +64,6 @@ export const moveIsOnTempo = (
     if (distanceFromBeat < music.tolerance && nearestBeat.tock === e.action) {
       return {};
     } else {
-      console.log({
-        msProgressOfCurrentLoop,
-        previousBeat,
-        nextBeat,
-        nextBeatIndex,
-        distanceFromBeat,
-      });
       return {
         canMove: false,
         crashed: true,
