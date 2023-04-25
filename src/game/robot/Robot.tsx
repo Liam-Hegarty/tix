@@ -135,6 +135,17 @@ export const Robot = ({
         case "ArrowRight":
           newerTix = { x: tix.new.x + 1, y: tix.new.y };
           break;
+        case " ":
+          const actionEvent = {
+            action: true,
+            move: false,
+            newLocation: tix.new,
+            oldLocation: animDone.current ? tix.new : tix.old,
+            ts: e.ts,
+          };
+          handleEventResponse(listeners.tryMove(actionEvent), actionEvent)
+          break
+
       }
 
       if (newerTix) {

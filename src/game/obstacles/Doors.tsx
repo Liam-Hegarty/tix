@@ -6,8 +6,8 @@ import React, { useCallback, useEffect, useState } from "react";
 
 const areAdjacent = (p1: Point, p2: Point) =>
   (p1.x === p2.x || p1.y === p2.y) &&
-  Math.abs(p1.x - p2.x) === 1 &&
-  Math.abs(p1.y - p2.y) === 1;
+  (Math.abs(p1.x - p2.x) === 1 ||
+  Math.abs(p1.y - p2.y) === 1);
 
 const Door = ({
   x,
@@ -28,14 +28,16 @@ const Door = ({
     if (!isOpen && e.newLocation.x === x && e.newLocation.y === y) {
       return {
         canMove: false,
-        crashed: false,
+        crashed: true,
       };
     } else {
-      return {};
+      return { canMove: true };
     }
   }, [x, y, isOpen]);
 
   const openDoor = useCallback((e: TixEvent) => {
+    console.log(areAdjacent(e.newLocation, { x, y }))
+    console.log(isOpen)
     if (e.action && areAdjacent(e.newLocation, { x, y })) {
       setIsOpen(true);
     }
