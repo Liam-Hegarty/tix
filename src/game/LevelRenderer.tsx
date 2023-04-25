@@ -11,7 +11,7 @@ import constants from "../constants";
 import { Level } from "./levels/LevelTypes";
 import { Doors } from "./obstacles/Doors";
 
-const spacing = 100;
+const spacing = 300;
 
 const saveLevelProgress = (number: number) => {
   const currentValue = localStorage.getItem(constants.saveKey);
