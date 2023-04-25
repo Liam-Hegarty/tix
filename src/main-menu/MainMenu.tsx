@@ -75,6 +75,7 @@ export const MainMenu = ({
         <img
           src={`${process.env.PUBLIC_URL}/sprite/tix.png`}
           alt={`/tix.png`}
+          className="outline"
           width={200}
           height={200}
         />
