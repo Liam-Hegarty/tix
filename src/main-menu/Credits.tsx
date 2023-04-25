@@ -65,7 +65,7 @@ export const Credits = ({ exit }: { exit: () => void }) => {
           position: "absolute",
           right: "15vw",
           top: "5vh",
-          zIndex: -1
+          zIndex: -1,
         }}
       />
       <MenuBackground disableRobots={true} />

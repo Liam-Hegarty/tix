@@ -37,7 +37,7 @@ export const LevelRenderer = ({
 }) => {
   const level: Level = levels[levelNumber];
   if (!level) {
-    credits()
+    credits();
   }
   const rhythmTime = useRef({ audioTime: -10000, jsTime: -1000 });
 
