@@ -13,6 +13,14 @@ const levelTwoRaw = `
   +++
 `;
 
+const doorLevel = `
+   X
+   D
+  +++
+  +O+ 
+  +++
+`;
+
 describe("Grid Parser", () => {
   test("parses a grid", () => {
     const level = parseGrid(testLevelOne);
@@ -25,5 +33,10 @@ describe("Grid Parser", () => {
     const level = parseGrid(levelTwoRaw);
     expect(level.start).toMatchObject({ x: 3, y: 1 });
     expect(level.end).toMatchObject({ x: 8, y: 1 });
+  });
+  test("finds doors", () => {
+    const level = parseGrid(doorLevel);
+    console.log(level);
+    expect(level.doors[0]).toMatchObject({ x: 3, y: 1 });
   });
 });
