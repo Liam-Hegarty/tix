@@ -59,3 +59,43 @@ body {
   filter: drop-shadow(1px 1px 0 black) drop-shadow(-1px 1px 0 black)
     drop-shadow(1px -1px 0 black) drop-shadow(-1px -1px 0 black);
 }
+
+.bg-robot {
+  animation: step 0.4s infinite ease-in-out;
+  position: relative;
+}
+
+@keyframes step {
+  from {
+    transform: translate(-75px);
+  }
+  100% {
+    transform: translateX(75px);
+  }
+}
+
+.menu-gear {
+  animation: spin 0.4s infinite ease-in-out;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(60deg);
+  }
+}
+
+.menu-gear2 {
+  animation: spin2 0.4s infinite cubic-bezier(0.45, 0.25, 0.6, 0.95);
+}
+
+@keyframes spin2 {
+  from {
+    transform: rotate(30deg);
+  }
+  100% {
+    transform: rotate(-30deg);
+  }
+}

@@ -3,6 +3,7 @@ import { Box } from "@mui/material";
 import { mui as palette } from "../palette";
 import { Menu } from "./Menu";
 import constants from "../constants";
+import { MenuBackground } from "./MenuBackground";
 
 export const LevelSelect = ({
   setStage,
@@ -28,30 +29,33 @@ export const LevelSelect = ({
     });
 
   return (
-    <Box
-      sx={{
-        justifyContent: "center",
-        alignItems: "center",
-        display: "flex",
-        width: "100vw",
-        height: "100vh",
-        flexDirection: "column",
-        color: palette.darkBlue,
-      }}
-    >
+    <>
       <Box
         sx={{
-          paddingY: "25px",
-          fontSize: "50px",
-          flexDirection: "row",
+          justifyContent: "center",
+          alignItems: "center",
           display: "flex",
-          justifyContent: "space-evenly",
-          alignItems: "baseline",
+          width: "100vw",
+          height: "100vh",
+          flexDirection: "column",
+          color: palette.darkBlue,
         }}
       >
-        Level Select
+        <Box
+          sx={{
+            paddingY: "25px",
+            fontSize: "50px",
+            flexDirection: "row",
+            display: "flex",
+            justifyContent: "space-evenly",
+            alignItems: "baseline",
+          }}
+        >
+          Level Select
+        </Box>
+        <Menu {...{ buttons }} />
       </Box>
-      <Menu {...{ buttons }} />
-    </Box>
+      <MenuBackground disableRobots={true} />
+    </>
   );
 };
