@@ -16,7 +16,7 @@ export const Tutorial = ({ nextStage }: { nextStage: () => void }) => {
 
     return () => {
       window.removeEventListener("keydown", nextStage);
-      document.removeEventListener("mousedown", nextStage);
+      window.removeEventListener("mousedown", nextStage);
       clearTimeout(markAsRead);
     };
   }, [nextStage]);

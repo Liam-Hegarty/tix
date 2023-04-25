@@ -2,15 +2,26 @@ import { Level } from "./LevelTypes";
 import { parseGrid } from "./gridParser";
 
 const levelTwoRaw = `
-       ++++++++++++         .
-  +++++++++++++++++++++     .
-  ++++            +++++X    .
-  +++++++++++++++++++++     .
-    +  ++++++++++++         .
-   +++        .
-   +O+        .
-   +++        .
-              .
+        +++  .
+        +X+  .
+        +++  .
+         +   .
+       +++++ .
+       +++++ .
+       +++++ .
+  ++++++++++ .
+  ++ ++++ ++ .
+  ++++++++++ .
+    +        .
+  +++++      .
+  +++++      .
+  +++++      .
+  +++++      .
+    +        .
+   +++       .
+   +O+       .
+   +++       .
+             .
 `;
 
 export const levelTwo: Level = {
@@ -31,53 +42,26 @@ export const levelTwo: Level = {
   },
   scannerDrones: [
     {
-      location: { x: 16.5, y: -0.5 },
+      location: { x: 4, y: 10 },
       area: {
-        topLeft: { x: 15, y: 0 },
-        width: 4,
-        height: 2,
+        topLeft: { x: 3, y: 11 },
+        width: 3,
+        height: 3,
       },
     },
     {
-      location: { x: 16.5, y: 2.5 },
+      location: { x: 9, y: 3 },
       area: {
-        topLeft: { x: 15, y: 3 },
-        width: 4,
-        height: 2,
+        topLeft: { x: 8, y: 4 },
+        width: 3,
+        height: 3,
       },
     },
   ],
-  zapTiles: [
-    {
-      tiles: [
-        { x: 17, y: 0 },
-        { x: 17, y: 1 },
-        { x: 15, y: 3 },
-        { x: 15, y: 4 },
-        { x: 13, y: 0 },
-        { x: 13, y: 1 },
-        { x: 11, y: 3 },
-        { x: 11, y: 4 },
-        { x: 9, y: 0 },
-        { x: 9, y: 1 },
-      ],
-      rhythm: [false, false, true, true],
-    },
-    {
-      tiles: [
-        { x: 17, y: 3 },
-        { x: 17, y: 4 },
-        { x: 15, y: 0 },
-        { x: 15, y: 1 },
-        { x: 13, y: 3 },
-        { x: 13, y: 4 },
-        { x: 11, y: 0 },
-        { x: 11, y: 1 },
-        { x: 9, y: 3 },
-        { x: 9, y: 4 },
-      ],
-      rhythm: [true, true, false, false],
-    },
+  zapTiles: [],
+  doors: [
+    { x: 4, y: 10 },
+    { x: 4, y: 15 },
+    { x: 9, y: 3 },
   ],
-  doors: [{ x: 4, y: 4 }],
 };
