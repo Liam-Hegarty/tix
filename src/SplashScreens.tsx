@@ -69,7 +69,7 @@ export const SplashScreen2 = ({
         width: "100%",
         height: "100vh",
         flexDirection: "column",
-        fontSize: "min(100vw, 100vh)",
+        fontSize: "min(50vw, 100vh)",
         backgroundColor: palette.darkBlue,
         color: "white",
       }}
