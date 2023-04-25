@@ -66,6 +66,7 @@ export const MenuBackground = ({
             width={150}
             height={150}
             className="bg-robot"
+            key={`bg-robot-${i}`}
           />
         ))}
         {!disableRobots && (
