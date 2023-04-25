@@ -84,19 +84,17 @@ export const ClickToStart = ({
 }: {
   setStage: Dispatch<SetStateAction<string>>;
 }) => {
-
   const [orange, setOrange] = useState(false);
 
   useEffect(() => {
-    const start = () =>  setStage("splash1");
+    const start = () => setStage("splash1");
 
     window.addEventListener("click", start);
 
     return () => {
-      window.removeEventListener("click", start)
-    }
-  }, [setStage])
-
+      window.removeEventListener("click", start);
+    };
+  }, [setStage]);
 
   return (
     <Box
@@ -122,4 +120,4 @@ export const ClickToStart = ({
       </Box>
     </Box>
   );
-}
+};
