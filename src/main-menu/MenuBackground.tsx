@@ -7,9 +7,7 @@ export const MenuBackground = ({
   disableRobots?: boolean;
 }) => {
   return (
-    <Box
-      zIndex={-1}
-    >
+    <Box zIndex={-1}>
       <img
         src={`${process.env.PUBLIC_URL}/screens/gear-dark.png`}
         alt={`/robot.png`}
