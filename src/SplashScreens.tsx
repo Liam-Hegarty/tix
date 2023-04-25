@@ -78,3 +78,48 @@ export const SplashScreen2 = ({
     </Box>
   );
 };
+
+export const ClickToStart = ({
+  setStage,
+}: {
+  setStage: Dispatch<SetStateAction<string>>;
+}) => {
+
+  const [orange, setOrange] = useState(false);
+
+  useEffect(() => {
+    const start = () =>  setStage("splash1");
+
+    window.addEventListener("click", start);
+
+    return () => {
+      window.removeEventListener("click", start)
+    }
+  }, [setStage])
+
+
+  return (
+    <Box
+      sx={{
+        cursor: "pointer",
+        justifyContent: "center",
+        alignItems: "center",
+        display: "flex",
+        width: "100%",
+        height: "100vh",
+        flexDirection: "column",
+        fontSize: "min(5vw, 10vh)",
+        backgroundColor: palette.black,
+        color: orange ? palette.orange : palette.white,
+      }}
+    >
+      <Box
+        onMouseEnter={() => setOrange(true)}
+        onMouseLeave={() => setOrange(false)}
+        p="5%"
+      >
+        Click To Start
+      </Box>
+    </Box>
+  );
+}

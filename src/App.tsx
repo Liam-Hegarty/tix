@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { SplashScreen1, SplashScreen2 } from "./SplashScreens";
+import { ClickToStart, SplashScreen1, SplashScreen2 } from "./SplashScreens";
 import { MainMenu } from "./main-menu/MainMenu";
 import { Game } from "./game/Game";
 import { Credits } from "./main-menu/Credits";
@@ -12,15 +12,15 @@ const themeMusic = new Audio(
 themeMusic.loop = true;
 
 function App() {
-  const [stage, setStage] = useState<string>("splash1");
+  const [stage, setStage] = useState<string>("start");
   const initialLevel = useRef(1);
 
   useEffect(() => {
-    if (stage !== "splash1" && stage !== "game" && themeMusic.paused) {
+    if (stage !== "splash1" && stage !== "game" && stage !== "start" && themeMusic.paused) {
       themeMusic.play();
     }
 
-    if ((stage === "splash1" || stage === "game") && !themeMusic.paused) {
+    if ((stage === "splash1" || stage === "game" || stage === "start") && !themeMusic.paused) {
       themeMusic.pause();
     }
 
@@ -28,6 +28,8 @@ function App() {
   }, [stage]);
 
   switch (stage) {
+    case "start":
+      return <ClickToStart {...{ setStage }} />
     case "splash1":
       return <SplashScreen1 {...{ setStage }} />;
     case "splash2":
