@@ -4,6 +4,7 @@ import { MainMenu } from "./main-menu/MainMenu";
 import { Game } from "./game/Game";
 import { Credits } from "./main-menu/Credits";
 import { LevelSelect } from "./main-menu/LevelSelect";
+import { Tutorial } from "./main-menu/Tutorial";
 
 const themeMusic = new Audio(
   `${process.env.PUBLIC_URL}/audio/music/main-theme.mp3`
@@ -38,6 +39,10 @@ function App() {
       return <Credits exit={() => setStage("menu")} />;
     case "select":
       return <LevelSelect {...{ setStage, initialLevel: initialLevel }} />;
+    case "tutorial":
+      return <Tutorial nextStage={() => setStage("menu")} />;
+    case "pregame-tutorial":
+      return <Tutorial nextStage={() => setStage("game")} />;
     case "game":
       return <Game {...{ setStage, initialLevel: initialLevel }} />;
     default:

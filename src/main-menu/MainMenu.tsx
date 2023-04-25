@@ -2,6 +2,7 @@ import React, { Dispatch, SetStateAction } from "react";
 import { Box } from "@mui/material";
 import { mui as palette } from "../palette";
 import { Menu } from "./Menu";
+import constants from "../constants";
 
 export const MainMenu = ({
   setStage,
@@ -9,8 +10,18 @@ export const MainMenu = ({
   setStage: Dispatch<SetStateAction<string>>;
 }) => {
   const buttons = [
-    { text: "Start Game", action: () => setStage("game") },
+    {
+      text: "Start Game",
+      action: () => {
+        if (localStorage.getItem(constants.tutorialKey) === "true") {
+          setStage("game");
+        } else {
+          setStage("pregame-tutorial");
+        }
+      },
+    },
     { text: "Level Select", action: () => setStage("select") },
+    { text: "Tutorial", action: () => setStage("tutorial") },
     { text: "Credits", action: () => setStage("credits") },
     { text: "Exit", action: () => window.close() },
   ];
