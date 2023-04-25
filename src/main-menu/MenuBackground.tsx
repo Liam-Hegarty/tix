@@ -7,7 +7,9 @@ export const MenuBackground = ({
   disableRobots?: boolean;
 }) => {
   return (
-    <Box>
+    <Box
+      zIndex={-1}
+    >
       <img
         src={`${process.env.PUBLIC_URL}/screens/gear-dark.png`}
         alt={`/robot.png`}
@@ -18,6 +20,7 @@ export const MenuBackground = ({
           position: "absolute",
           top: "-50px",
           right: "-50px",
+          zIndex: -1,
         }}
       />
       <img
@@ -30,6 +33,7 @@ export const MenuBackground = ({
           position: "absolute",
           top: "130px",
           right: "45px",
+          zIndex: -1,
         }}
       />
       <img
@@ -42,6 +46,7 @@ export const MenuBackground = ({
           position: "absolute",
           top: "0px",
           right: "75px",
+          zIndex: -1,
         }}
       />
       <Box
