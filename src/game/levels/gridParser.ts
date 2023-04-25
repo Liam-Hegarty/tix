@@ -1,10 +1,12 @@
+import { Point } from "./LevelTypes";
+
 const traversableSymbols = ["+", "O", "X", "D"];
 
-const getDoorsFromLine = (line: string, y: number) =>
+const getDoorsFromLine = (line: string, y: number): Point[] =>
   line
     .split("")
     .map((c, x) => c === "D" && { x, y })
-    .filter((d) => !!d);
+    .filter((d) => !!d) as Point[];
 
 const getDoors = (lines: string[]) =>
   lines.map((l, y) => getDoorsFromLine(l, y)).flat();
