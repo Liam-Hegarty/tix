@@ -1,3 +1,4 @@
+import { Box } from "@mui/material";
 import React from "react";
 
 export const MenuBackground = ({
@@ -6,7 +7,7 @@ export const MenuBackground = ({
   disableRobots?: boolean;
 }) => {
   return (
-    <div>
+    <Box>
       <img
         src={`${process.env.PUBLIC_URL}/screens/gear-dark.png`}
         alt={`/robot.png`}
@@ -43,7 +44,7 @@ export const MenuBackground = ({
           right: "75px",
         }}
       />
-      <div
+      <Box
         style={{
           zIndex: -1,
           position: "fixed",
@@ -51,7 +52,7 @@ export const MenuBackground = ({
           bottom: "20vh",
           overflow: "clip",
           width: "120vw",
-          height: "150px",
+          height: "180px",
           whiteSpace: "nowrap",
         }}
       >
@@ -64,7 +65,10 @@ export const MenuBackground = ({
             className="bg-robot"
           />
         ))}
-      </div>
-    </div>
+        {!disableRobots && (
+          <Box minHeight="10px" minWidth="100vw" className="spin-border" />
+        )}
+      </Box>
+    </Box>
   );
 };
