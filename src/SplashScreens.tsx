@@ -71,7 +71,7 @@ export const SplashScreen2 = ({
         flexDirection: "column",
         fontSize: "min(50vw, 100vh)",
         backgroundColor: palette.darkBlue,
-        color: "white",
+        color: palette.lightBlue,
       }}
     >
       TIX
