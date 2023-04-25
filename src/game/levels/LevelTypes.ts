@@ -34,4 +34,5 @@ export type Level = {
   scannerDrones: ScannerDrone[];
   music: MusicInfo;
   zapTiles: ZapTilesInfo[];
+  doors: Point[]
 };

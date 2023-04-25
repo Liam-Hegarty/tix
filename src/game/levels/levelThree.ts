@@ -27,4 +27,5 @@ export const levelThree: Level = {
   },
   scannerDrones: [],
   zapTiles: [],
+  doors: [],
 };

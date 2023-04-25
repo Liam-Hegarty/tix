@@ -79,4 +79,5 @@ export const levelTwo: Level = {
       rhythm: [true, true, false, false],
     },
   ],
+  doors: [{x: 4, y: 4}]
 };

@@ -8,6 +8,8 @@ import { ScannerDrones } from "./obstacles/ScannerDrones";
 import { levels } from "./levels/levels";
 import { ZapTiles } from "./obstacles/ZapTile";
 import constants from "../constants";
+import { Level } from "./levels/LevelTypes";
+import { Doors } from "./obstacles/Doors";
 
 const spacing = 100;
 
@@ -31,7 +33,7 @@ export const LevelRenderer = ({
   _retryCount: number;
   restart: () => void;
 }) => {
-  const level = levels[levelNumber];
+  const level: Level = levels[levelNumber];
   const rhythmTime = useRef({ audioTime: -10000, jsTime: -1000 });
 
   const listenerRegistry = useMemo(() => {
@@ -57,6 +59,14 @@ export const LevelRenderer = ({
   return (
     <>
       <Grid level={level} spacing={spacing} offset={offset} />
+      {!!level.doors.length && (
+        <Doors
+          coords={level.doors}
+          spacing={spacing}
+          offset={offset}
+          listenerRegistry={listenerRegistry}
+        />
+      )}
       <Robot
         key={`robot-${levelNumber}`}
         {...{
