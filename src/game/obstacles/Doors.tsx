@@ -6,8 +6,7 @@ import React, { useCallback, useEffect, useState } from "react";
 
 const areAdjacent = (p1: Point, p2: Point) =>
   (p1.x === p2.x || p1.y === p2.y) &&
-  (Math.abs(p1.x - p2.x) === 1 ||
-  Math.abs(p1.y - p2.y) === 1);
+  (Math.abs(p1.x - p2.x) === 1 || Math.abs(p1.y - p2.y) === 1);
 
 const Door = ({
   x,
@@ -24,23 +23,29 @@ const Door = ({
 }) => {
   const [isOpen, setIsOpen] = useState(false);
 
-  const cantMoveThroughWhenClosed = useCallback((e: TixEvent): Partial<EventResponse> => {
-    if (!isOpen && e.newLocation.x === x && e.newLocation.y === y) {
-      return {
-        canMove: false,
-        crashed: true,
-      };
-    } else {
-      return {};
-    }
-  }, [x, y, isOpen]);
+  const cantMoveThroughWhenClosed = useCallback(
+    (e: TixEvent): Partial<EventResponse> => {
+      if (!isOpen && e.newLocation.x === x && e.newLocation.y === y) {
+        return {
+          canMove: false,
+          crashed: true,
+        };
+      } else {
+        return {};
+      }
+    },
+    [x, y, isOpen]
+  );
 
-  const openDoor = useCallback((e: TixEvent, r: EventResponse) => {
-    if (!r.crashed && e.action && areAdjacent(e.newLocation, { x, y })) {
-      setIsOpen(true);
-    }
-    return {};
-  }, [setIsOpen, x, y]);
+  const openDoor = useCallback(
+    (e: TixEvent, r: EventResponse) => {
+      if (!r.crashed && e.action && areAdjacent(e.newLocation, { x, y })) {
+        setIsOpen(true);
+      }
+      return {};
+    },
+    [setIsOpen, x, y]
+  );
 
   useEffect(() => {
     const doorId = `door-${x}-${y}`;
@@ -54,8 +59,8 @@ const Door = ({
 
   return (
     <AnimatedSprite
-      x={x * spacing + offset.x - (spacing / 2)}
-      y={y * spacing + offset.y - (spacing / 4)}
+      x={x * spacing + offset.x - spacing / 2}
+      y={y * spacing + offset.y - spacing / 4}
       images={[
         `${process.env.PUBLIC_URL}/sprite/door/door-closed.png`,
         `${process.env.PUBLIC_URL}/sprite/door/door-half.png`,

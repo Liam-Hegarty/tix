@@ -143,9 +143,8 @@ export const Robot = ({
             oldLocation: tix.old,
             ts: e.timeStamp,
           };
-          handleEventResponse(listeners.tryMove(actionEvent), actionEvent)
-          break
-
+          handleEventResponse(listeners.tryMove(actionEvent), actionEvent);
+          break;
       }
 
       if (newerTix) {
