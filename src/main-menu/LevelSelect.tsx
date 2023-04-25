@@ -1,4 +1,9 @@
-import React, { Dispatch, MutableRefObject, SetStateAction } from "react";
+import React, {
+  Dispatch,
+  MutableRefObject,
+  SetStateAction,
+  useEffect,
+} from "react";
 import { Box } from "@mui/material";
 import { mui as palette } from "../palette";
 import { Menu } from "./Menu";
@@ -15,7 +20,18 @@ export const LevelSelect = ({
   const maxLevel = Number.parseInt(
     localStorage.getItem(constants.saveKey) ?? "1"
   );
-  console.log(maxLevel);
+
+  useEffect(() => {
+    const back = (e: any) => {
+      if (e.key === "Escape") {
+        setStage("menu");
+      }
+    };
+
+    window.addEventListener("keydown", back);
+
+    return () => window.removeEventListener("keydown", back);
+  }, [setStage]);
 
   const openLevel = (level: number) => {
     initialLevel.current = level;
