@@ -16,11 +16,19 @@ function App() {
   const initialLevel = useRef(1);
 
   useEffect(() => {
-    if (stage !== "splash1" && stage !== "game" && stage !== "start" && themeMusic.paused) {
+    if (
+      stage !== "splash1" &&
+      stage !== "game" &&
+      stage !== "start" &&
+      themeMusic.paused
+    ) {
       themeMusic.play();
     }
 
-    if ((stage === "splash1" || stage === "game" || stage === "start") && !themeMusic.paused) {
+    if (
+      (stage === "splash1" || stage === "game" || stage === "start") &&
+      !themeMusic.paused
+    ) {
       themeMusic.pause();
     }
 
@@ -29,7 +37,7 @@ function App() {
 
   switch (stage) {
     case "start":
-      return <ClickToStart {...{ setStage }} />
+      return <ClickToStart {...{ setStage }} />;
     case "splash1":
       return <SplashScreen1 {...{ setStage }} />;
     case "splash2":
