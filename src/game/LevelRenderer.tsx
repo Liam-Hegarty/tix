@@ -26,14 +26,19 @@ export const LevelRenderer = ({
   paused,
   _retryCount,
   restart,
+  credits,
 }: {
   levelNumber: number;
   nextLevel: () => void;
   paused: boolean;
   _retryCount: number;
   restart: () => void;
+  credits: () => void;
 }) => {
   const level: Level = levels[levelNumber];
+  if (!level) {
+    credits()
+  }
   const rhythmTime = useRef({ audioTime: -10000, jsTime: -1000 });
 
   const listenerRegistry = useMemo(() => {

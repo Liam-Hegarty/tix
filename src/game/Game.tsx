@@ -99,6 +99,7 @@ export const Game = ({
           _retryCount={retryCount}
           restart={restart}
           key={`game-${retryCount}`}
+          credits={() => setStage("credits")}
         />
       </Stage>
     </Box>

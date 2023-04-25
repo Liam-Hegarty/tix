@@ -42,7 +42,7 @@ const droneListener =
       e.oldLocation.y < topLeft.y + height
     ) {
       if (r.crashed) {
-        setRobotFound({ where: e.oldLocation, when: e.ts });
+        setRobotFound({ where: r.canMove ? e.newLocation : e.oldLocation, when: e.ts });
         return {
           detected: true,
           frozen: true,
