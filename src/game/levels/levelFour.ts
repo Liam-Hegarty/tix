@@ -2,11 +2,13 @@ import { Level } from "./LevelTypes";
 import { parseGrid } from "./gridParser";
 
 const levelFourRaw = `
-        .
- +++    .
- +O++X  .
- +++    .
-        .
++++++++  .
++     D  .
++ +++ +  .
++ +O+++  .
++ +++    .
+D        .
+++++++X  .
 `;
 
 export const levelFour: Level = {
