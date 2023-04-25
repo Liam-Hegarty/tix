@@ -41,7 +41,7 @@ export const Tutorial = ({ nextStage }: { nextStage: () => void }) => {
           maxWidth: "95vw",
           maxHeight: "95vh",
           height: "auto",
-          border: "3px solid #FFFFFF"
+          border: "3px solid #FFFFFF",
         }}
       />
     </Box>
