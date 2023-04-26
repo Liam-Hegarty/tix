@@ -1,7 +1,7 @@
-import { levelFour } from "./levelFour";
-import { levelOne } from "./levelOne";
-import { levelThree } from "./levelThree";
 import { levelTwo } from "./levelTwo";
+import { levelOne } from "./levelOne";
+import { levelFour } from "./levelFour";
+import { levelThree } from "./levelThree";
 
 export const levels = {
   1: levelOne,

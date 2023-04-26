@@ -2,21 +2,26 @@ import { Level } from "./LevelTypes";
 import { parseGrid } from "./gridParser";
 
 const levelThreeRaw = `
-  O++   .
-    D   .
-    +++ .
-      D .
-    +++ .
-     D  .
-    +++ .
-      D .
-    +++ .
-    D   .
-    +++ .
-      D .
-    +++ .
-     D   .
-  X+++  .
+        +++  .
+        +X+  .
+        +++  .
+         D   .
+       +++++ .
+       +++++ .
+       +++++ .
+  ++++++++++ .
+  ++ ++++ ++ .
+  ++++++++++ .
+    D        .
+  +++++      .
+  +++++      .
+  +++++      .
+  +++++      .
+    D        .
+   +++       .
+   +O+       .
+   +++       .
+             .
 `;
 
 export const levelThree: Level = {
@@ -27,58 +32,29 @@ export const levelThree: Level = {
       { tock: false, time: 400 },
       { tock: false, time: 400 },
       { tock: false, time: 400 },
+      { tock: false, time: 400 },
+      { tock: false, time: 400 },
+      { tock: false, time: 400 },
     ],
     rhythmOffset: 25,
-    audioPath: "audio/music/future-chase-level.mp3",
-    tolerance: 160,
+    audioPath: "audio/music/level2.mp3",
+    tolerance: 150,
   },
   scannerDrones: [
     {
-      location: { x: 5, y: 1 },
+      location: { x: 4, y: 10 },
       area: {
-        topLeft: { x: 4, y: 2 },
+        topLeft: { x: 3, y: 11 },
         width: 3,
-        height: 1,
+        height: 3,
       },
     },
     {
-      location: { x: 5, y: 3 },
+      location: { x: 9, y: 3 },
       area: {
-        topLeft: { x: 4, y: 4 },
+        topLeft: { x: 8, y: 4 },
         width: 3,
-        height: 1,
-      },
-    },
-    {
-      location: { x: 5, y: 5 },
-      area: {
-        topLeft: { x: 4, y: 6 },
-        width: 3,
-        height: 1,
-      },
-    },
-    {
-      location: { x: 5, y: 7 },
-      area: {
-        topLeft: { x: 4, y: 8 },
-        width: 3,
-        height: 1,
-      },
-    },
-    {
-      location: { x: 5, y: 9 },
-      area: {
-        topLeft: { x: 4, y: 10 },
-        width: 3,
-        height: 1,
-      },
-    },
-    {
-      location: { x: 5, y: 11 },
-      area: {
-        topLeft: { x: 4, y: 12 },
-        width: 3,
-        height: 1,
+        height: 3,
       },
     },
   ],
