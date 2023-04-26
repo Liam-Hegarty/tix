@@ -24,6 +24,7 @@ export const levelTwo: Level = {
     rhythmOffset: 25,
     audioPath: "audio/music/main-theme.mp3",
     tolerance: 150,
+    endTrim: 0,
   },
   zapTiles: [],
 };

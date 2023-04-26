@@ -25,6 +25,7 @@ export type MusicInfo = {
   audioPath: string;
   rhythmOffset: number;
   tolerance: number;
+  endTrim: number;
 };
 
 export type Level = {

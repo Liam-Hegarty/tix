@@ -22,6 +22,7 @@ describe("moveIsOnTempo", () => {
       audioPath: "",
       rhythmOffset: 0,
       tolerance: 1,
+      endTrim: 0,
     });
     expect(
       JSON.stringify(
@@ -41,6 +42,7 @@ describe("moveIsOnTempo", () => {
       audioPath: "",
       rhythmOffset: 0,
       tolerance: 1,
+      endTrim: 0,
     });
     expect(
       JSON.stringify(
@@ -60,6 +62,7 @@ describe("moveIsOnTempo", () => {
       audioPath: "",
       rhythmOffset: 0,
       tolerance: 1,
+      endTrim: 0,
     });
     expect(
       JSON.stringify(
@@ -79,6 +82,7 @@ describe("moveIsOnTempo", () => {
       audioPath: "",
       rhythmOffset: 0,
       tolerance: 1,
+      endTrim: 0,
     });
     expect(
       JSON.stringify(
@@ -98,6 +102,7 @@ describe("moveIsOnTempo", () => {
       audioPath: "",
       rhythmOffset: 0,
       tolerance: 1,
+      endTrim: 0,
     });
     expect(
       JSON.stringify(
@@ -117,6 +122,7 @@ describe("moveIsOnTempo", () => {
       audioPath: "",
       rhythmOffset: 0,
       tolerance: 100,
+      endTrim: 0,
     });
     expect(
       JSON.stringify(
@@ -136,6 +142,7 @@ describe("moveIsOnTempo", () => {
       audioPath: "",
       rhythmOffset: 0,
       tolerance: 100,
+      endTrim: 0,
     });
     expect(
       JSON.stringify(
@@ -158,6 +165,7 @@ describe("moveIsOnTempo", () => {
       audioPath: "",
       rhythmOffset: 0,
       tolerance: 100,
+      endTrim: 0,
     });
     expect(
       JSON.stringify(
@@ -180,6 +188,7 @@ describe("moveIsOnTempo", () => {
       audioPath: "",
       rhythmOffset: 0,
       tolerance: 100,
+      endTrim: 0,
     });
     expect(
       JSON.stringify(
@@ -202,6 +211,7 @@ describe("moveIsOnTempo", () => {
       audioPath: "",
       rhythmOffset: 0,
       tolerance: 100,
+      endTrim: 0,
     });
     expect(
       JSON.stringify(

@@ -39,6 +39,7 @@ export const levelThree: Level = {
     rhythmOffset: 25,
     audioPath: "audio/music/level2.mp3",
     tolerance: 150,
+    endTrim: 0,
   },
   scannerDrones: [
     {

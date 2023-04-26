@@ -35,6 +35,7 @@ export const levelOne: Level = {
     rhythmOffset: 25,
     audioPath: "audio/music/level1.mp3",
     tolerance: 150,
+    endTrim: 140,
   },
   zapTiles: [],
   doors: [],

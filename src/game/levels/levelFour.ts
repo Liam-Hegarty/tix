@@ -31,6 +31,7 @@ export const levelFour: Level = {
     rhythmOffset: 25,
     audioPath: "audio/music/future-chase-level.mp3",
     tolerance: 160,
+    endTrim: 0,
   },
   scannerDrones: [
     {
