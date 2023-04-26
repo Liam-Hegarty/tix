@@ -10,6 +10,7 @@ import React, {
   useCallback,
   useEffect,
   useMemo,
+  useRef,
   useState,
 } from "react";
 import palette from "../palette";
@@ -39,6 +40,7 @@ export const Ticker = ({
     rhythm[1].tock,
     rhythm[2].tock,
   ]);
+  const recentlyReset = useRef(false);
 
   useTick(() => {
     if (audio.paused) {
@@ -49,8 +51,11 @@ export const Ticker = ({
         ? audio.currentTime * 1000 - music.rhythmOffset
         : (audio.currentTime + audio.duration) * 1000 - music.rhythmOffset;
 
-    if (audio.duration * 1000 - audioTime < music.endTrim) {
+    console.log({d: audio.duration, audioTime, t: music.endTrim})
+    if ((audio.duration * 1000) - audioTime < music.endTrim && !recentlyReset.current) {
       audio.currentTime = 0.01;
+      recentlyReset.current = true
+      setTimeout(() => recentlyReset.current = false, 1000)
     }
 
     rhythmTime.current = {
