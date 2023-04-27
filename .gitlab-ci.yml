@@ -2,7 +2,7 @@
 stages:
   - test
   - hegserver
-  - itch-io-web
+  # - itch-io-web
   - pages
   - electron-macos-apple-silicon
   
@@ -126,6 +126,8 @@ itch-io-web:
     - butler push itch.io hegcool/tix:web --userversion $(git describe --tags --abbrev=0)
 
 electron-macos-apple-silicon:
+
+  image: arm64v8/node
 
   stage: electron-macos-apple-silicon
 
