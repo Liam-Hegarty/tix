@@ -127,7 +127,7 @@ itch-io-web:
 
 electron-macos-apple-silicon:
 
-  image: arm64v8/node
+  image: node:19-alpine
 
   stage: electron-macos-apple-silicon
 
