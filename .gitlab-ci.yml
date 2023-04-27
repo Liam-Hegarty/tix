@@ -123,3 +123,22 @@ itch-io-web:
   script:
     - butler login
     - butler push itch.io hegcool/tix:web --userversion $(git describe --tags --abbrev=0)
+
+electron-macos-apple-silicon:
+
+  stage: electron-macos-apple-silicon
+
+  only:
+    - main
+  
+  needs:
+   - test
+
+  scripts:
+   - yarn package
+   - yarn make
+  
+  artifacts:
+    name: tix-darwin-arm64
+    paths:
+      - out/make/zip/darwin/arm64/*
