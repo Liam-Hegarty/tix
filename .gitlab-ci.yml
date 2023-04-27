@@ -2,7 +2,7 @@
 stages:
   - test
   - hegserver
-  # - itch-io-web
+  - itch-io-web
   - pages
   - electron-macos-apple-silicon
   
@@ -116,7 +116,7 @@ itch-io-web:
   stage: itch-io-web
 
   only:
-    - main
+    - main-never
 
   needs:
     - test
