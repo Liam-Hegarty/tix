@@ -141,6 +141,10 @@ electron-macos-apple-silicon:
   needs:
     - test
 
+
+  before_script:
+  - apk git
+
   script:
     - yarn install
     - yarn build:electron
