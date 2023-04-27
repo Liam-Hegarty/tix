@@ -4,6 +4,7 @@ stages:
   - hegserver
   - itch-io-web
   - pages
+  - electron-macos-apple-silicon
   
 test:
 
@@ -130,13 +131,19 @@ electron-macos-apple-silicon:
 
   only:
     - main
+
+  cache:
+    paths:
+    - node_modules
   
   needs:
-   - test
+    - test
 
-  scripts:
-   - yarn package
-   - yarn make
+  script:
+    - yarn install
+    - yarn build:electron
+    - yarn package
+    - yarn make --platorm darwin
   
   artifacts:
     name: tix-darwin-arm64
