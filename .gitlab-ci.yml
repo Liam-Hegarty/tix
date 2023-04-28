@@ -141,17 +141,14 @@ electron-windows:
   needs:
     - test
 
-
-  before_script:
-  - apk add git dpkg fakeroot rpm
-
   script:
     - yarn install
     - yarn build:electron
     - yarn package
-    - yarn makex
+    - yarn make
+    - find .
   
   artifacts:
-    name: tix-darwin-arm64
+    name: tix-windows
     paths:
       - out/make/zip/darwin/arm64/*
