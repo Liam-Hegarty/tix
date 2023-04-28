@@ -1,6 +1,6 @@
 {
   "name": "tix",
-  "version": "1.0.11",
+  "version": "1.0.12",
   "license": "GPL-3.0",
   "main": "electron/main.js",
   "homepage": "./",
