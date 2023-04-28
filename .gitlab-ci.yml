@@ -127,7 +127,7 @@ itch-io-web:
 
 electron-windows:
 
-  image: cettoana/docker-node-wine
+  image: electronuserland/builder:18-wine
 
   stage: electron-macos-apple-silicon
 
