@@ -125,9 +125,9 @@ itch-io-web:
     - butler login
     - butler push itch.io hegcool/tix:web --userversion $(git describe --tags --abbrev=0)
 
-electron-macos-apple-silicon:
+electron-windows:
 
-  image: arm64v8/node:19-alpine
+  image: electronuserland/builder:wine-01.19
 
   stage: electron-macos-apple-silicon
 
@@ -149,7 +149,7 @@ electron-macos-apple-silicon:
     - yarn install
     - yarn build:electron
     - yarn package
-    - yarn make --platorm darwin
+    - yarn makex
   
   artifacts:
     name: tix-darwin-arm64
