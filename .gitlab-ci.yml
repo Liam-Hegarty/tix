@@ -4,7 +4,7 @@ stages:
   - hegserver
   - itch-io-web
   - pages
-  - electron-macos-apple-silicon
+  - electron-windows
   
 test:
 
@@ -129,7 +129,7 @@ electron-windows:
 
   image: electronuserland/builder:18-wine
 
-  stage: electron-macos-apple-silicon
+  stage: electron-windows
 
   only:
     - main
@@ -142,7 +142,7 @@ electron-windows:
     - test
 
   before_script:
-   - apt install dpkg fakeroot
+   - apt-get install dpkg fakeroot
 
   script:
     - yarn install
