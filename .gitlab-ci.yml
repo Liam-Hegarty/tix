@@ -141,6 +141,9 @@ electron-windows:
   needs:
     - test
 
+  before_script:
+   - apt install dpkg fakeroot
+
   script:
     - yarn install
     - yarn build:electron
