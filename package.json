@@ -3,6 +3,7 @@
   "version": "1.0.16",
   "license": "GPL-3.0",
   "main": "electron/main.js",
+  "description": "A rhythm game made for gamedev.js 2023",
   "homepage": "./",
   "dependencies": {
     "@emotion/react": "^11.10.6",
