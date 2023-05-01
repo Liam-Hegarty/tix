@@ -149,7 +149,7 @@ electron-windows:
     - yarn install
     - yarn build:electron
     - yarn package
-    - yarn make
+    - yarn make --platform win32  
     - find .
   
   artifacts:
