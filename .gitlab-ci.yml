@@ -127,7 +127,7 @@ itch-io-web:
 
 electron-windows:
 
-  image: node:19-alpine
+  image: node:17-alpine
 
   stage: electron-windows
 
