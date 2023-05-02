@@ -127,7 +127,7 @@ itch-io-web:
 
 electron-windows:
 
-  image: electronuserland/builder:18-wine
+  image: node:19-alpine
 
   stage: electron-windows
 
@@ -142,8 +142,7 @@ electron-windows:
     - test
 
   before_script:
-   - apt-get update -y
-   - apt-get install dpkg fakeroot
+   - apk add dpkg fakeroot wine mono
 
   script:
     - yarn install
@@ -151,8 +150,3 @@ electron-windows:
     - yarn package --platform win32 --arch ia32
     - yarn make --platform win32 --arch ia32
     - find .
-  
-  artifacts:
-    name: tix-windows
-    paths:
-      - out/make/zip/darwin/arm64/*
