@@ -148,8 +148,8 @@ electron-windows:
   script:
     - yarn install
     - yarn build:electron
-    - yarn package --platform win32 
-    - yarn make --platform win32  
+    - yarn package --platform win32 --arch ia32
+    - yarn make --platform win32 --arch ia32
     - find .
   
   artifacts:
