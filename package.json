@@ -5,6 +5,8 @@
   "main": "electron/main.js",
   "description": "A rhythm game made for gamedev.js 2023",
   "homepage": "./",
+  "author": "Liam Hegarty",
+  "contributors": ["Liam Hegarty", "Fairooz Islam", "Michael Hegarty"],
   "dependencies": {
     "@emotion/react": "^11.10.6",
     "@emotion/styled": "^11.10.6",
