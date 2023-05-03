@@ -76,6 +76,9 @@ hegserver:
 
   script: 
     - NODE_ENV=production yarn run build --prod  
+    # fix weird font issue
+    - mkdir -p build/static/css/tix/static
+    - cp -R build/static/media build/static/css/tix/static
     # upload to hegserver
     - cd build
     - zip -r web.zip *
@@ -89,7 +92,7 @@ pages:
   stage: pages
 
   only:
-    - main
+    - main-never
 
   needs:
     - test
