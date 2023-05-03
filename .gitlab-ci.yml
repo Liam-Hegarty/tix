@@ -145,7 +145,7 @@ electron-windows:
     - test
 
   before_script:
-  #  - echo "@testing http://dl-4.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories
+   - dpkg --add-architecture i386
    - apt-get update -y
    - apt-get install -y dpkg fakeroot wine32 mono-devel
 
