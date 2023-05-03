@@ -130,7 +130,7 @@ itch-io-web:
 
 electron-windows:
 
-  image: node:17-alpine
+  image: electronuserland/builder
 
   stage: electron-windows
 
