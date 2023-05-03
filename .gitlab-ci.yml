@@ -155,4 +155,9 @@ electron-windows:
     - yarn build:electron
     - yarn package --platform win32 --arch ia32
     - yarn make --platform win32 --arch ia32
-    - find .
+    - find /builds/heggroup/tix/out/make
+
+  artifacts:
+    name: tix-windoqs
+    paths:
+     - /builds/heggroup/tix/out/make
