@@ -1,6 +1,6 @@
 {
   "name": "tix",
-  "version": "1.0.26",
+  "version": "1.0.27",
   "license": "GPL-3.0",
   "main": "electron/main.js",
   "description": "A rhythm game made for gamedev.js 2023",
