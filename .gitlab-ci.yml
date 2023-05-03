@@ -146,8 +146,8 @@ electron-windows:
 
   before_script:
   #  - echo "@testing http://dl-4.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories
-   - apt-get update
-   - apt-get install dpkg fakeroot wine yarn
+   - apt-get update -y
+   - apt-get install -y dpkg fakeroot wine yarn
 
   script:
     - yarn install
