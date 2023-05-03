@@ -147,7 +147,7 @@ electron-windows:
   before_script:
    - dpkg --add-architecture i386
    - apt-get update -y
-   - apt-get install -y dpkg fakeroot wine32 mono-devel
+   - apt-get install -y dpkg fakeroot wine32 wine64 mono-devel
 
 
   script:
