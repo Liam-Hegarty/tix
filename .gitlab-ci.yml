@@ -187,8 +187,8 @@ electron-linux:
   script:
     - yarn install
     - yarn build:electron
-    - yarn package --platform linux --arch universal
-    - yarn make --platform linux --arch universal
+    - yarn package --platform linux
+    - yarn make --platform linux
     - find /builds/heggroup/tix/out/make
 
   artifacts:
