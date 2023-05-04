@@ -1,5 +1,5 @@
 
-const { app, BrowserWindow } = require('electron')
+const { app, BrowserWindow, nativeImage } = require('electron')
 const path = require('path')
 
 const createWindow = () => {
@@ -11,7 +11,8 @@ const createWindow = () => {
       nodeIntegration: true,
       contextIsolation: false,
       enableRemoteModule: true,
-    }
+    },
+    icon: __dirname + "tix-icon.ico"
   })
 
   mainWindow.loadFile('build/index.html')
@@ -29,3 +30,6 @@ app.whenReady().then(() => {
 app.on('window-all-closed', () => {
   app.quit()
 })
+
+const icon = nativeImage.createFromPath(__dirname + "/docs/tix-icon.ico")
+app.dock.setIcon(icon)
