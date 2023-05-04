@@ -181,7 +181,7 @@ electron-linux:
 
   before_script:
    - apt-get update -y
-   - apt-get install -y dpkg fakeroot wine32 wine64 mono-devel
+   - apt-get install -y dpkg fakeroot
 
 
   script:
