@@ -5,6 +5,7 @@ stages:
   - itch-io-web
   - pages
   - electron-windows
+  - electron-linux
   
 test:
 
@@ -158,6 +159,40 @@ electron-windows:
     - find /builds/heggroup/tix/out/make
 
   artifacts:
-    name: tix-windoqs
+    name: tix-windows
     paths:
      - /builds/heggroup/tix/out/make
+
+electron-linux:
+
+  image: electronuserland/builder
+
+  stage: electron-linux
+
+  only:
+    - main
+
+  cache:
+    paths:
+    - node_modules
+  
+  needs:
+    - test
+
+  before_script:
+   - apt-get update -y
+   - apt-get install -y dpkg fakeroot wine32 wine64 mono-devel
+
+
+  script:
+    - yarn install
+    - yarn build:electron
+    - yarn package --platform linux --arch universal
+    - yarn make --platform linux --arch universal
+    - find /builds/heggroup/tix/out/make
+
+  artifacts:
+    name: tix-linux
+    paths:
+     - /builds/heggroup/tix/out/make
+  
