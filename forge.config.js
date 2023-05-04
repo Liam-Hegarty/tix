@@ -3,10 +3,10 @@ module.exports = {
     ignore: [
         "^\\/public$",
         "^\\/src$",
-        // "^\\/node_modules$",
+        "^\\/node_modules$",
         "^\\/[.].+",
     ],
-    asar: true
+    // asar: true
   },
   rebuildConfig: {},
   makers: [
