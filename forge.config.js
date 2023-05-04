@@ -6,7 +6,7 @@ module.exports = {
         "^\\/node_modules$",
         "^\\/[.].+",
     ],
-    // asar: true
+    asar: false
   },
   rebuildConfig: {},
   makers: [
