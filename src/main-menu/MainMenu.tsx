@@ -4,26 +4,27 @@ import { mui as palette } from "../palette";
 import { Menu } from "./Menu";
 import constants from "../constants";
 import { MenuBackground } from "./MenuBackground";
+import { StageEnum } from "../App";
 
 export const MainMenu = ({
   setStage,
 }: {
-  setStage: Dispatch<SetStateAction<string>>;
+  setStage: Dispatch<SetStateAction<StageEnum>>;
 }) => {
   const buttons = [
     {
       text: "Start Game",
       action: () => {
         if (localStorage.getItem(constants.tutorialKey) === "true") {
-          setStage("game");
+          setStage(StageEnum.GAME);
         } else {
-          setStage("pregame-tutorial");
+          setStage(StageEnum.PREGAME_TUTORIAL);
         }
       },
     },
-    { text: "Level Select", action: () => setStage("select") },
-    { text: "Tutorial", action: () => setStage("tutorial") },
-    { text: "Credits", action: () => setStage("credits") },
+    { text: "Level Select", action: () => setStage(StageEnum.SELECT) },
+    { text: "Tutorial", action: () => setStage(StageEnum.TUTORIAL) },
+    { text: "Credits", action: () => setStage(StageEnum.CREDITS) },
     { text: "Exit", action: () => window.close() },
   ];
 

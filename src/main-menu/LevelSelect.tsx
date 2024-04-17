@@ -9,12 +9,13 @@ import { mui as palette } from "../palette";
 import { Menu } from "./Menu";
 import constants from "../constants";
 import { MenuBackground } from "./MenuBackground";
+import { StageEnum } from "../App";
 
 export const LevelSelect = ({
   setStage,
   initialLevel,
 }: {
-  setStage: Dispatch<SetStateAction<string>>;
+  setStage: Dispatch<SetStateAction<StageEnum>>;
   initialLevel: MutableRefObject<number>;
 }) => {
   const maxLevel = Number.parseInt(
@@ -24,7 +25,7 @@ export const LevelSelect = ({
   useEffect(() => {
     const back = (e: any) => {
       if (e.key === "Escape") {
-        setStage("menu");
+        setStage(StageEnum.MENU);
       }
     };
 
@@ -35,7 +36,7 @@ export const LevelSelect = ({
 
   const openLevel = (level: number) => {
     initialLevel.current = level;
-    setStage("game");
+    setStage(StageEnum.GAME);
   };
 
   const buttons = [...Array(maxLevel + 1).keys()]

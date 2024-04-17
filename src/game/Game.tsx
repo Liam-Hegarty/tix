@@ -12,6 +12,7 @@ import { PauseMenu } from "./PauseMenu";
 import { LevelRenderer } from "./LevelRenderer";
 import { Stage } from "@pixi/react";
 import { SCALE_MODES, settings } from "@pixi/core";
+import { StageEnum } from "../App";
 
 settings.SCALE_MODE = SCALE_MODES.NEAREST;
 
@@ -19,7 +20,7 @@ export const Game = ({
   setStage,
   initialLevel,
 }: {
-  setStage: Dispatch<SetStateAction<string>>;
+  setStage: Dispatch<SetStateAction<StageEnum>>;
   initialLevel: MutableRefObject<number>;
 }) => {
   const [levelNumber, setLevelNumber] = useState(initialLevel.current);
@@ -83,8 +84,8 @@ export const Game = ({
       {paused && (
         <PauseMenu
           unpause={() => setPaused(false)}
-          mainMenu={() => setStage("menu")}
-          selectLevel={() => setStage("select")}
+          mainMenu={() => setStage(StageEnum.MENU)}
+          selectLevel={() => setStage(StageEnum.SELECT)}
         />
       )}
       <Stage
@@ -99,7 +100,7 @@ export const Game = ({
           _retryCount={retryCount}
           restart={restart}
           key={`game-${retryCount}`}
-          credits={() => setStage("credits")}
+          credits={() => setStage(StageEnum.CREDITS)}
         />
       </Stage>
     </Box>

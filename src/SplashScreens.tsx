@@ -1,11 +1,12 @@
 import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { Box } from "@mui/material";
 import { mui as palette } from "./palette";
+import { StageEnum } from "./App";
 
 export const SplashScreen1 = ({
   setStage,
 }: {
-  setStage: Dispatch<SetStateAction<string>>;
+  setStage: Dispatch<SetStateAction<StageEnum>>;
 }) => {
   const [className, setClassName] = useState("fade-in");
 
@@ -15,7 +16,7 @@ export const SplashScreen1 = ({
       500
     );
     const coolFadeOut = setTimeout(() => setClassName("fade-out"), 2500);
-    const end = setTimeout(() => setStage("splash2"), 3000);
+    const end = setTimeout(() => setStage(StageEnum.SPLASH2), 3000);
     return () => {
       clearTimeout(end);
       clearTimeout(coolSound);
@@ -53,10 +54,10 @@ export const SplashScreen1 = ({
 export const SplashScreen2 = ({
   setStage,
 }: {
-  setStage: Dispatch<SetStateAction<string>>;
+  setStage: Dispatch<SetStateAction<StageEnum>>;
 }) => {
   useEffect(() => {
-    const end = setTimeout(() => setStage("menu"), 3000);
+    const end = setTimeout(() => setStage(StageEnum.MENU), 3000);
     return () => clearTimeout(end);
   }, [setStage]);
 
@@ -82,12 +83,12 @@ export const SplashScreen2 = ({
 export const ClickToStart = ({
   setStage,
 }: {
-  setStage: Dispatch<SetStateAction<string>>;
+  setStage: Dispatch<SetStateAction<StageEnum>>;
 }) => {
   const [orange, setOrange] = useState(false);
 
   useEffect(() => {
-    const start = () => setStage("splash1");
+    const start = () => setStage(StageEnum.SPLASH2);
 
     window.addEventListener("click", start);
 
