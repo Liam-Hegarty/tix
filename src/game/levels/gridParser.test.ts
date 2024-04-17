@@ -36,7 +36,6 @@ describe("Grid Parser", () => {
   });
   test("finds doors", () => {
     const level = parseGrid(doorLevel);
-    console.log(level);
     expect(level.doors[0]).toMatchObject({ x: 3, y: 1 });
   });
 });
