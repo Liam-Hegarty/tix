@@ -83,5 +83,5 @@ export const levelFour: Level = {
       },
     },
   ],
-  zapTiles: [],
+  dropTiles: [],
 };

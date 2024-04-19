@@ -1,4 +1,4 @@
-import { MusicInfo, Point, ZapTilesInfo } from "../levels/LevelTypes";
+import { MusicInfo, Point, DropTilesInfo } from "../levels/LevelTypes";
 import { Graphics as GraphicsElement, Container, useTick } from "@pixi/react";
 import { Graphics } from "@pixi/graphics";
 import React, {
@@ -14,7 +14,7 @@ import { RobotListenerRegistry } from "../events/robotListenerRegistry";
 import { cumulativeRhythmTimes, currentBeatTime } from "../rhythmUtils";
 import { TixEvent } from "../events/Events";
 
-const ZapTile = ({
+const DropTile = ({
   location,
   spacing,
   offset,
@@ -51,7 +51,7 @@ const TileGroup = ({
   musicInfo,
   rhythm,
 }: {
-  tiles: ZapTilesInfo;
+  tiles: DropTilesInfo;
   spacing: number;
   offset: Point;
   listenerRegistry: RobotListenerRegistry;
@@ -107,7 +107,7 @@ const TileGroup = ({
   return (
     <>
       {tiles.tiles.map((t) => (
-        <ZapTile
+        <DropTile
           key={`zaptile-${t.x}-${t.y}`}
           location={t}
           spacing={spacing}
@@ -127,7 +127,7 @@ export const ZapTiles = ({
   musicInfo,
   rhythm,
 }: {
-  tiles: ZapTilesInfo[];
+  tiles: DropTilesInfo[];
   spacing: number;
   offset: Point;
   listenerRegistry: RobotListenerRegistry;

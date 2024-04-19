@@ -12,7 +12,7 @@ export type ScannerDrone = {
   };
 };
 
-export type ZapTilesInfo = {
+export type DropTilesInfo = {
   tiles: Point[];
   rhythm: boolean[];
 };
@@ -34,6 +34,6 @@ export type Level = {
   end: Point;
   scannerDrones: ScannerDrone[];
   music: MusicInfo;
-  zapTiles: ZapTilesInfo[];
+  dropTiles: DropTilesInfo[];
   doors: Point[];
 };

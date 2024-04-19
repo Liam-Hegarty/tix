@@ -37,6 +37,6 @@ export const levelOne: Level = {
     tolerance: 150,
     endTrim: 140,
   },
-  zapTiles: [],
+  dropTiles: [],
   doors: [],
 };

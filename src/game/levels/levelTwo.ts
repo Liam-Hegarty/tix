@@ -26,5 +26,5 @@ export const levelTwo: Level = {
     tolerance: 150,
     endTrim: 825,
   },
-  zapTiles: [],
+  dropTiles: [],
 };

@@ -6,7 +6,7 @@ import { RobotListenerRegistry } from "./events/robotListenerRegistry";
 import addEventListeners from "./events/addEventListeners";
 import { ScannerDrones } from "./obstacles/ScannerDrones";
 import { levels } from "./levels/levels";
-import { ZapTiles } from "./obstacles/ZapTile";
+import { ZapTiles } from "./obstacles/DropTile";
 import constants from "../constants";
 import { Level } from "./levels/LevelTypes";
 import { Doors } from "./obstacles/Doors";
@@ -87,9 +87,9 @@ export const LevelRenderer = ({
           music: level.music,
         }}
       />
-      {!!level.zapTiles.length && (
+      {!!level.dropTiles.length && (
         <ZapTiles
-          tiles={level.zapTiles}
+          tiles={level.dropTiles}
           spacing={spacing}
           offset={offset}
           listenerRegistry={listenerRegistry}
