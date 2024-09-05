@@ -1,12 +1,7 @@
 module.exports = {
   packagerConfig: {
-    ignore: [
-        "^\\/public$",
-        "^\\/src$",
-        "^\\/node_modules$",
-        "^\\/[.].+",
-    ],
-    asar: false
+    ignore: ["^\\/public$", "^\\/src$", "^\\/node_modules$", "^\\/[.].+"],
+    asar: false,
   },
   rebuildConfig: {},
   makers: [
@@ -16,9 +11,7 @@ module.exports = {
     },
     {
       name: "@electron-forge/maker-zip",
-      platforms: [
-        "darwin"
-      ],
+      platforms: ["darwin"],
     },
     {
       name: "@electron-forge/maker-deb",

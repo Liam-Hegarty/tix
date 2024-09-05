@@ -6,6 +6,8 @@ import { Credits } from "./main-menu/Credits";
 import { LevelSelect } from "./main-menu/LevelSelect";
 import { Tutorial } from "./main-menu/Tutorial";
 
+const firstLevel = Number.parseInt(process.env.REACT_APP_LEVEL ?? "1");
+
 export enum StageEnum {
   START = "start",
   SPLASH1 = "splash1",
@@ -15,7 +17,7 @@ export enum StageEnum {
   SELECT = "select",
   TUTORIAL = "tutorial",
   PREGAME_TUTORIAL = "pregame-tutorial",
-  GAME = "game"
+  GAME = "game",
 }
 
 const themeMusic = new Audio(
@@ -25,7 +27,8 @@ themeMusic.loop = true;
 
 function App() {
   const [stage, setStage] = useState<StageEnum>(StageEnum.START);
-  const initialLevel = useRef(1);
+  const initialLevel = useRef(firstLevel);
+  console.log(initialLevel);
 
   useEffect(() => {
     if (
@@ -55,7 +58,7 @@ function App() {
     case StageEnum.SPLASH2:
       return <SplashScreen2 {...{ setStage }} />;
     case StageEnum.MENU:
-      initialLevel.current = 1;
+      initialLevel.current = firstLevel;
       return <MainMenu {...{ setStage, initialLevel }} />;
     case StageEnum.CREDITS:
       return <Credits exit={() => setStage(StageEnum.MENU)} />;
@@ -68,8 +71,8 @@ function App() {
     case StageEnum.GAME:
       return <Game {...{ setStage, initialLevel: initialLevel }} />;
     default:
-      let _: never = stage
-      return <h1>SOMETHING HAS GONE SERIOUSLY WRONG</h1>
+      let _: never = stage;
+      return <h1>SOMETHING HAS GONE SERIOUSLY WRONG</h1>;
   }
 }
 

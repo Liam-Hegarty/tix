@@ -51,7 +51,6 @@ export const Ticker = ({
         ? audio.currentTime * 1000 - music.rhythmOffset
         : (audio.currentTime + audio.duration) * 1000 - music.rhythmOffset;
 
-    console.log({ d: audio.duration, audioTime, t: music.endTrim });
     if (
       audio.duration * 1000 - audioTime < music.endTrim &&
       !recentlyReset.current

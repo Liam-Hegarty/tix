@@ -9,19 +9,18 @@ enum Squares {
 
 const parseChar = (char: string) => {
   switch (char) {
-  case "+":
-    return Squares.SPACE
-  case "O":
-    return Squares.TIX
-  case "D":
-    return Squares.DOOR
-  case "X":
-    return Squares.EXIT
-  default:
-    return null
+    case "+":
+      return Squares.SPACE;
+    case "O":
+      return Squares.TIX;
+    case "D":
+      return Squares.DOOR;
+    case "X":
+      return Squares.EXIT;
+    default:
+      return null;
   }
-}
-
+};
 
 const getCoordsFromLine = (line: string, y: number, type: Squares): Point[] =>
   line
@@ -32,12 +31,12 @@ const getCoordsFromLine = (line: string, y: number, type: Squares): Point[] =>
 const getCoordinates = (lines: string[], type: Squares) =>
   lines.map((l, y) => getCoordsFromLine(l, y, type)).flat();
 
-export const parseGrid = (raw: string): Omit<Level, "scannerDrones" | "music" | "dropTiles"> => {
+export const parseGrid = (
+  raw: string
+): Omit<Level, "scannerDrones" | "music" | "dropTiles"> => {
   const lines = raw.split("\n").filter((l) => l && !l.includes("//"));
   return {
-    grid: lines.map((line) =>
-      line.split("").map((c) => parseChar(c) != null)
-    ),
+    grid: lines.map((line) => line.split("").map((c) => parseChar(c) != null)),
     start: {
       x: lines.find((l) => l.includes("O"))!!.indexOf("O"),
       y: lines.findIndex((l) => l.includes("O")),

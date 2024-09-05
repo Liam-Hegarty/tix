@@ -5,8 +5,6 @@ import React, {
   MutableRefObject,
   useCallback,
   useEffect,
-  useMemo,
-  useRef,
   useState,
 } from "react";
 import palette from "../../palette";
@@ -18,18 +16,18 @@ const DropTile = ({
   location,
   spacing,
   offset,
-  isZapping,
+  animProgress,
 }: {
   location: Point;
   spacing: number;
   offset: Point;
-  isZapping: boolean;
+  animProgress: number;
 }) => {
-  const warningSign = useCallback((g: Graphics) => {
+  const warningSign = useCallback((animProgress: number) => (g: Graphics) => {
     g.clear();
-    g.beginFill(palette.orange);
+    g.beginFill(palette.black);
     g.lineStyle(1, palette.black, 1);
-    g.drawRect(8, 8, 16, 16);
+    g.drawRect(50 - (50 * animProgress), 0, 100 * animProgress, 100);
     g.endFill();
   }, []);
 
@@ -38,7 +36,7 @@ const DropTile = ({
       x={location.x * spacing + offset.x - spacing / 2}
       y={location.y * spacing + offset.y - spacing / 2}
     >
-      {isZapping && <GraphicsElement draw={warningSign} />}
+      <GraphicsElement draw={warningSign(animProgress)} />
     </Container>
   );
 };
@@ -49,60 +47,60 @@ const TileGroup = ({
   offset,
   listenerRegistry,
   musicInfo,
-  rhythm,
+  musicRef: rhythm,
 }: {
   tiles: DropTilesInfo;
   spacing: number;
   offset: Point;
   listenerRegistry: RobotListenerRegistry;
   musicInfo: MusicInfo;
-  rhythm: MutableRefObject<{
+  musicRef: MutableRefObject<{
     audioTime: number;
     jsTime: number;
   }>;
 }) => {
-  const [isZapping, setIsZapping] = useState(false);
-  const isZappingRef = useRef(false);
-  const marshalledCoords = useMemo(
-    () => tiles.tiles.map((p) => JSON.stringify(p)),
-    [tiles]
-  );
-  // console.log(marshalledCoords);
+  const [animProgress, setAnimProgress] = useState(0);
 
-  const robotHasBeenZapped = useCallback(
-    (e: TixEvent) => {
-      // console.log(e)
-      if (
-        isZappingRef.current &&
-        marshalledCoords.includes(JSON.stringify(e.oldLocation))
-      ) {
-        return {
-          // canMove: false,
-          // crashed: true,
-          // detected: true,
-        };
-      } else {
-        return {};
-      }
-    },
-    [isZappingRef, marshalledCoords]
-  );
+  const robotHasBeenDropped = useCallback((e: TixEvent) => {
+    return {};
+  }, []);
+
+  useTick(() => {
+    const currentTime = currentBeatTime(musicInfo, rhythm, performance.now());
+    const beatTimes = cumulativeRhythmTimes(musicInfo.rhythm).map(
+      (b) => b.time
+    );
+    let nextBeatIndex = beatTimes.findIndex((b) => b > currentTime);
+    if (nextBeatIndex === -1) {
+      nextBeatIndex = 0
+    }
+    const previousBeatIndex = nextBeatIndex === 0 ? beatTimes.length - 1 : nextBeatIndex - 1;
+
+    const wasOpen = tiles.pattern[previousBeatIndex % (tiles.pattern.length)]
+    const willBeOpen = tiles.pattern[nextBeatIndex % (tiles.pattern.length)]
+    const progress = (currentTime - beatTimes[previousBeatIndex]) / (beatTimes[nextBeatIndex] - beatTimes[previousBeatIndex])  
+
+    console.log({wasOpen, willBeOpen, progress})
+
+    // if (willBeOpen && wasOpen) {
+    //   setAnimProgress(0)
+    // }
+    // else if (!willBeOpen && !wasOpen) {
+    //   setAnimProgress(1)
+    // }
+    if (willBeOpen && !wasOpen) {
+      setAnimProgress(progress)
+    }
+    else {
+      setAnimProgress(1 - progress)
+    }
+  });
 
   useEffect(() => {
     const id = `zap-${JSON.stringify(tiles)}`;
-    listenerRegistry.register(id, robotHasBeenZapped);
+    listenerRegistry.register(id, robotHasBeenDropped);
     return () => listenerRegistry.deregister(id);
-  }, [listenerRegistry, robotHasBeenZapped, tiles]);
-
-  useTick(() => {
-    const beatTime = currentBeatTime(musicInfo, rhythm, performance.now());
-    const beatIndex = cumulativeRhythmTimes(musicInfo.rhythm).findIndex(
-      (b) => Math.abs(beatTime - b.time) < musicInfo.tolerance
-    );
-    const toggleZap = tiles.rhythm[beatIndex % tiles.rhythm.length];
-    isZappingRef.current = toggleZap;
-    setIsZapping(toggleZap);
-  });
+  }, [listenerRegistry, robotHasBeenDropped, tiles]);
 
   return (
     <>
@@ -112,7 +110,7 @@ const TileGroup = ({
           location={t}
           spacing={spacing}
           offset={offset}
-          isZapping={isZapping}
+          animProgress={animProgress}
         />
       ))}
     </>
@@ -147,7 +145,7 @@ export const ZapTiles = ({
           offset={offset}
           listenerRegistry={listenerRegistry}
           musicInfo={musicInfo}
-          rhythm={rhythm}
+          musicRef={rhythm}
         />
       ))}
     </>

@@ -14,7 +14,7 @@ export type ScannerDrone = {
 
 export type DropTilesInfo = {
   tiles: Point[];
-  rhythm: boolean[];
+  pattern: boolean[];
 };
 
 export type Beat = { tock: boolean; time: number };
