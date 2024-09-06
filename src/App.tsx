@@ -71,7 +71,7 @@ function App() {
     case StageEnum.GAME:
       return <Game {...{ setStage, initialLevel: initialLevel }} />;
     default:
-      let _: never = stage;
+      // let _: never = stage;
       return <h1>SOMETHING HAS GONE SERIOUSLY WRONG</h1>;
   }
 }
